@@ -54,7 +54,7 @@ create table Coupon
 create table LTpromotion
 (
    ltp_id               int not null,
-   g_id                 int,
+   g_id                 int not null,
    ltp_price            int not null,
    ltp_count            int not null,
    ltp_start_date       date not null,
@@ -78,8 +78,8 @@ create table admin
 /*==============================================================*/
 create table comments
 (
-   u_id                 int,
-   g_id                 int,
+   u_id                 int not null,
+   g_id                 int not null,
    com_msg              varchar(30) not null,
    com_date             date not null,
    com_star             int not null,
@@ -129,7 +129,7 @@ create table full_discount_msg
 create table goods_msg
 (
    g_id                 int not null,
-   type_id              int,
+   type_id              int not null,
    g_name               varchar(20) not null,
    g_price              int not null,
    g_vipprice           int not null,
@@ -145,7 +145,7 @@ create table goods_msg
 create table location
 (
    location_id          int not null,
-   u_id                 int,
+   u_id                 int not null,
    province             varchar(20) not null,
    city                 varchar(20) not null,
    area                 varchar(30) not null,
@@ -204,7 +204,7 @@ create table orders_detail
 create table purchase
 (
    pur_id               int not null,
-   a_id                 int,
+   a_id                 int not null,
    pur_num              int not null,
    pur_status           varchar(20) not null,
    primary key (pur_id)
@@ -234,7 +234,7 @@ create table users
    u_email              varchar(30) not null,
    u_city               varchar(20) not null,
    u_createdate         date not null,
-   u_isvip              bool not null,
+   u_isvip              varchar(10) not null,
    u_vip_end_date       date,
    primary key (u_id)
 );
