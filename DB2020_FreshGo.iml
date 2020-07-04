@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="c3p0-0.9.2.1" level="project" />
     <orderEntry type="library" name="mchange-commons-java-0.2.3.4" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.38" level="project" />
   </component>
 </module>

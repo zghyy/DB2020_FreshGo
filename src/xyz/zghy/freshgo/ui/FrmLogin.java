@@ -1,5 +1,11 @@
 package xyz.zghy.freshgo.ui;
 
+import xyz.zghy.freshgo.control.AdminManage;
+import xyz.zghy.freshgo.control.UserManage;
+import xyz.zghy.freshgo.model.CurrentLogin;
+import xyz.zghy.freshgo.util.BusinessException;
+import xyz.zghy.freshgo.util.BaseException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,7 +27,7 @@ public class FrmLogin extends JDialog implements ActionListener {
     private JLabel labelPwd = new JLabel("密码：");
     private JTextField edtUserName = new JTextField(20);
     private JPasswordField edtPwd = new JPasswordField(20);
-    private JRadioButton jr1 = new JRadioButton("用户",true);
+    private JRadioButton jr1 = new JRadioButton("用户", true);
     private JRadioButton jr2 = new JRadioButton("管理员");
     private GroupLayout glMain = new GroupLayout(workPane);
     private GroupLayout glRadioButton = new GroupLayout(workPane);
@@ -86,14 +92,24 @@ public class FrmLogin extends JDialog implements ActionListener {
             this.LoginAccountType = "管理员";
         } else if (e.getSource() == this.btnCancel) {
             System.exit(0);
-        }else if(e.getSource()==this.btnLogin){
+        } else if (e.getSource() == this.btnLogin) {
             //TODO 用户和管理员登录
             String loginName = this.edtUserName.getText();
             String loginPwd = new String(this.edtPwd.getPassword());
-            if("用户".equals(this.LoginAccountType)){
-
+            try {
+                if ("用户".equals(this.LoginAccountType)) {
+                    CurrentLogin.currentLoginType="用户";
+                    CurrentLogin.currentUser = new UserManage().login(loginName,loginPwd);
+                } else if ("管理员".equals(this.LoginAccountType)) {
+                    CurrentLogin.currentLoginType="管理员";
+                    CurrentLogin.currentAdmin= new AdminManage().login(loginName,loginPwd);
+                } else {
+                    throw new BusinessException("访问出错");
+                }
+            } catch (BaseException e1) {
+                JOptionPane.showMessageDialog(null, e1.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
             }
-        }else if(e.getSource()==this.btnUserReRegister){
+        } else if (e.getSource() == this.btnUserReRegister) {
             //TODO 用户注册 需要注册ui
         }
     }
