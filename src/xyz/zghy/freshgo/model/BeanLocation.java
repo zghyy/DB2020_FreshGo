@@ -4,7 +4,7 @@ package xyz.zghy.freshgo.model;
  * @author ghy
  * @date 2020/7/3 обнГ11:56
  */
-public class Location {
+public class BeanLocation {
     private int locationId;
     private int userId;
     private String province;

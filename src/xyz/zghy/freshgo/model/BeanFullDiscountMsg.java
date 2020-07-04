@@ -6,7 +6,7 @@ import java.util.Date;
  * @author ghy
  * @date 2020/7/4 ионГ12:05
  */
-public class FullDiscountMsg {
+public class BeanFullDiscountMsg {
     private int fullDiscountId;
     private String fullDiscountDesc;
     private int fullDiscountNeedCount;

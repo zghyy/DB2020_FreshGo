@@ -4,7 +4,7 @@ package xyz.zghy.freshgo.model;
  * @author ghy
  * @date 2020/7/3 обнГ8:20
  */
-public class FreshType {
+public class BeanFreshType {
     private int typeId;
     private String typeName;
     private String typeDesc;

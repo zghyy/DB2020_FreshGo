@@ -4,7 +4,7 @@ package xyz.zghy.freshgo.model;
  * @author ghy
  * @date 2020/7/3 обнГ8:25
  */
-public class GoodsMsg {
+public class BeanGoodsMsg {
     private int goodsId;
     private int typeId;
     private String goodsName;

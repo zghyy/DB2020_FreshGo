@@ -6,7 +6,7 @@ import java.util.Date;
  * @author ghy
  * @date 2020/7/4 ионГ12:09
  */
-public class LimitTimePromotion {
+public class BeanLimitTimePromotion {
     private int limitTimePromotionId;
     private int goodsId;
     private int limitTimePromotionPrice;

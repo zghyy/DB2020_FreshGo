@@ -4,7 +4,7 @@ package xyz.zghy.freshgo.model;
  * @author ghy
  * @date 2020/7/3 обнГ11:59
  */
-public class Admin {
+public class BeanAdmin {
     private int adminId;
     private String adminName;
     private String adminPwd;

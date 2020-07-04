@@ -4,7 +4,7 @@ package xyz.zghy.freshgo.model;
  * @author ghy
  * @date 2020/7/3 обнГ8:31
  */
-public class MenuMsg {
+public class BeanMenuMsg {
     private int menuId;
     private String menuName;
     private String menuDesc;

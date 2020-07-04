@@ -4,7 +4,7 @@ package xyz.zghy.freshgo.model;
  * @author ghy
  * @date 2020/7/4 ионГ12:12
  */
-public class Comments {
+public class BeanComments {
     private int userId;
     private int goodsId;
     private String commentMsg;
