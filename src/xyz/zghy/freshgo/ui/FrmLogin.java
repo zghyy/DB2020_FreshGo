@@ -5,6 +5,7 @@ import xyz.zghy.freshgo.control.UserManage;
 import xyz.zghy.freshgo.model.CurrentLogin;
 import xyz.zghy.freshgo.util.BusinessException;
 import xyz.zghy.freshgo.util.BaseException;
+import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,9 +45,9 @@ public class FrmLogin extends JDialog implements ActionListener {
         toolBar.add(btnCancel);
         this.getContentPane().add(toolBar, BorderLayout.SOUTH);
 
-        GroupLayout.SequentialGroup seqGroupUsr = glUser.createSequentialGroup();
-        seqGroupUsr.addComponent(labelUser);
-        seqGroupUsr.addComponent(edtUserName);
+        GroupLayout.SequentialGroup seqGroupUser = glUser.createSequentialGroup();
+        seqGroupUser.addComponent(labelUser);
+        seqGroupUser.addComponent(edtUserName);
         GroupLayout.SequentialGroup seqGroupPwd = glPwd.createSequentialGroup();
         seqGroupPwd.addComponent(labelPwd);
         seqGroupPwd.addComponent(edtPwd);
@@ -57,7 +58,7 @@ public class FrmLogin extends JDialog implements ActionListener {
         seqGroupPwd.addComponent(jr1);
         seqGroupPwd.addComponent(jr2);
         GroupLayout.ParallelGroup paralGroupMain = glMain.createParallelGroup();
-        paralGroupMain.addGroup(seqGroupUsr);
+        paralGroupMain.addGroup(seqGroupUser);
         paralGroupMain.addGroup(seqGroupPwd);
         paralGroupMain.addGroup(seqRadioButton);
 
@@ -73,6 +74,7 @@ public class FrmLogin extends JDialog implements ActionListener {
 
         btnLogin.addActionListener(this);
         btnCancel.addActionListener(this);
+        btnUserReRegister.addActionListener(this);
         jr1.addActionListener(this);
         jr2.addActionListener(this);
         this.addWindowListener(new WindowAdapter() {
@@ -98,11 +100,13 @@ public class FrmLogin extends JDialog implements ActionListener {
             String loginPwd = new String(this.edtPwd.getPassword());
             try {
                 if ("用户".equals(this.LoginAccountType)) {
-                    CurrentLogin.currentLoginType="用户";
-                    CurrentLogin.currentUser = new UserManage().login(loginName,loginPwd);
+                    SystemUtil.currentLoginType="用户";
+                    SystemUtil.currentUser = SystemUtil.userManage.login(loginName,loginPwd);
+                    System.out.println("用户登录成功");
                 } else if ("管理员".equals(this.LoginAccountType)) {
-                    CurrentLogin.currentLoginType="管理员";
-                    CurrentLogin.currentAdmin= new AdminManage().login(loginName,loginPwd);
+                    SystemUtil.currentLoginType="管理员";
+                    SystemUtil.currentAdmin= SystemUtil.adminManage.login(loginName,loginPwd);
+                    System.out.println("管理员登录成功");
                 } else {
                     throw new BusinessException("访问出错");
                 }
@@ -111,6 +115,9 @@ public class FrmLogin extends JDialog implements ActionListener {
             }
         } else if (e.getSource() == this.btnUserReRegister) {
             //TODO 用户注册 需要注册ui
+//            System.out.println(111);
+            FrmRegister Register = new FrmRegister(this,"注册",true);
+            Register.setVisible(true);
         }
     }
 }

@@ -17,11 +17,11 @@ import java.sql.SQLException;
 public class AdminManage {
     public BeanAdmin login(String adminName, String adminPwd) throws BaseException {
         //TODO 管理员登录
-        if (adminName.length() <= 0 || adminName.length() >= 30) {
-            throw new BusinessException("用户名应该在1——30个字符之间！");
+        if (adminName.length() <= 0 || adminName.length() >= 20) {
+            throw new BusinessException("用户名应该在1——20个字符之间！");
         }
-        if (adminPwd.length() <= 0 || adminPwd.length() >= 30) {
-            throw new BusinessException("密码应该在1——30个字符之间！");
+        if (adminPwd.length() <= 0 || adminPwd.length() >= 20) {
+            throw new BusinessException("密码应该在1——20个字符之间！");
         }
 
         Connection conn = null;
