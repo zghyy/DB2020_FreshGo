@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * @author ghy
- * @date 2020/7/3 ÏÂÎç8:34
+ * @date 2020/7/3 ä¸‹åˆ8:34
  */
 public class BeanUsers {
     private int userId;

@@ -9,20 +9,20 @@ import java.sql.*;
 
 /**
  * @author ghy
- * @date 2020/7/4 ÉÏÎç9:55
+ * @date 2020/7/4 ä¸Šåˆ9:55
  */
 public class UserManage {
     public BeanUsers register(String userName, String userPwd, String userPwd2
             , String userSex, int userPhone, String userCity, String userEmail) throws BusinessException {
-        //TODO ÓÃ»§×¢²á
+        //TODO ç”¨æˆ·æ³¨å†Œ
         if (userName.length() <= 0 || userName.length() >= 20) {
-            throw new BusinessException("ÓÃ»§ÃûÓ¦¸ÃÔÚ1¡ª¡ª20¸ö×Ö·ûÖ®¼ä£¡");
+            throw new BusinessException("ç”¨æˆ·ååº”è¯¥åœ¨1â€”â€”20ä¸ªå­—ç¬¦ä¹‹é—´ï¼");
         }
         if (userPwd.length() <= 0 || userPwd.length() >= 20) {
-            throw new BusinessException("ÃÜÂëÓ¦¸ÃÔÚ1¡ª¡ª20¸ö×Ö·ûÖ®¼ä£¡");
+            throw new BusinessException("å¯†ç åº”è¯¥åœ¨1â€”â€”20ä¸ªå­—ç¬¦ä¹‹é—´ï¼");
         }
         if (!userPwd.equals(userPwd2)) {
-            throw new BusinessException("Á½´ÎÊäÈëµÄÃÜÂë²»Ò»ÖÂ");
+            throw new BusinessException("ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸ä¸€è‡´");
         }
 
         Connection conn = null;
@@ -34,7 +34,7 @@ public class UserManage {
             pst.setString(1, userName);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                throw new BusinessException("ÕËºÅÒÔ´æÔÚ£¬Çë¸ü»»ÓÃ»§Ãû");
+                throw new BusinessException("è´¦å·ä»¥å­˜åœ¨ï¼Œè¯·æ›´æ¢ç”¨æˆ·å");
             }
             rs.close();
             pst.close();
@@ -61,11 +61,11 @@ public class UserManage {
             pst.setString(6, userEmail);
             pst.setString(7, userCity);
             pst.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
-            pst.setString(9,"·ñ");
+            pst.setString(9,"å¦");
             if (pst.executeUpdate() == 1) {
-                System.out.println("Ìí¼Ó³É¹¦");
+                System.out.println("æ·»åŠ æˆåŠŸ");
             } else {
-                throw new BusinessException("Ìí¼ÓÊı¾İÊ§°Ü");
+                throw new BusinessException("æ·»åŠ æ•°æ®å¤±è´¥");
             }
             rs.close();
             pst.close();
@@ -87,12 +87,12 @@ public class UserManage {
     }
 
     public BeanUsers login(String userName, String userPwd) throws BusinessException {
-        //TODO ÓÃ»§µÇÂ¼
+        //TODO ç”¨æˆ·ç™»å½•
         if (userName.length() <= 0 || userName.length() >= 20) {
-            throw new BusinessException("ÓÃ»§ÃûÓ¦¸ÃÔÚ1¡ª¡ª20¸ö×Ö·ûÖ®¼ä£¡");
+            throw new BusinessException("ç”¨æˆ·ååº”è¯¥åœ¨1â€”â€”20ä¸ªå­—ç¬¦ä¹‹é—´ï¼");
         }
         if (userPwd.length() <= 0 || userPwd.length() >= 20) {
-            throw new BusinessException("ÃÜÂëÓ¦¸ÃÔÚ1¡ª¡ª20¸ö×Ö·ûÖ®¼ä£¡");
+            throw new BusinessException("å¯†ç åº”è¯¥åœ¨1â€”â€”20ä¸ªå­—ç¬¦ä¹‹é—´ï¼");
         }
 
         Connection conn = null;
@@ -110,10 +110,10 @@ public class UserManage {
                     res.setUserName(userName);
                     return res;
                 } else {
-                    throw new BusinessException("ÃÜÂë´íÎó");
+                    throw new BusinessException("å¯†ç é”™è¯¯");
                 }
             } else {
-                throw new BusinessException("ÕËºÅ²»´æÔÚ");
+                throw new BusinessException("è´¦å·ä¸å­˜åœ¨");
             }
 
 

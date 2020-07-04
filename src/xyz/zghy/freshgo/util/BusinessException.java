@@ -2,7 +2,7 @@ package xyz.zghy.freshgo.util;
 
 /**
  * @author ghy
- * @date 2020/7/3 ÏÂÎç7:47
+ * @date 2020/7/3 ä¸‹åˆ7:47
  */
 
 public class BusinessException extends BaseException {

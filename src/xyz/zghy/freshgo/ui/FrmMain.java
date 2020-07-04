@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 /**
  * @author ghy
- * @date 2020/7/4 ÉÏÎç8:25
+ * @date 2020/7/4 ä¸Šåˆ8:25
  */
 public class FrmMain extends JFrame implements ActionListener {
 
@@ -14,8 +14,8 @@ public class FrmMain extends JFrame implements ActionListener {
 
     public FrmMain(){
         this.setExtendedState(FrmMain.MAXIMIZED_BOTH);
-        this.setTitle("ÉúÏÊÍø³¬");
-        Login = new FrmLogin(this,"µÇÂ¼",true);
+        this.setTitle("ç”Ÿé²œç½‘è¶…");
+        Login = new FrmLogin(this,"ç™»å½•",true);
         Login.setVisible(true);
     }
 

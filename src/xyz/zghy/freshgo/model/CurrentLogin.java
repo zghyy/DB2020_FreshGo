@@ -2,7 +2,7 @@ package xyz.zghy.freshgo.model;
 
 /**
  * @author ghy
- * @date 2020/7/4 ÉÏÎç11:50
+ * @date 2020/7/4 ä¸Šåˆ11:50
  */
 public class CurrentLogin {
     public static String currentLoginType="";

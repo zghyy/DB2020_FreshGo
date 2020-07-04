@@ -2,7 +2,7 @@ package xyz.zghy.freshgo.model;
 
 /**
  * @author ghy
- * @date 2020/7/4 上午12:12
+ * @date 2020/7/4 涓婂崍12:12
  */
 public class BeanComments {
     private int userId;
@@ -10,7 +10,7 @@ public class BeanComments {
     private String commentMsg;
     private String commentDate;
     private int commentStar;
-    //TODO 这里缺个图片变量
+    //TODO 杩欓噷缂轰釜鍥剧墖鍙橀噺
 
 
     public int getUserId() {

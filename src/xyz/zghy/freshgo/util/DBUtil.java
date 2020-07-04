@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 /**
  * @author ghy
- * @date 2020/7/3 œ¬ŒÁ7:47
+ * @date 2020/7/3 ‰∏ãÂçà7:47
  */
 public class DBUtil {
     private static final DBUtil dbUtil;
@@ -24,7 +24,7 @@ public class DBUtil {
             dataSource = new ComboPooledDataSource();
             dataSource.setUser("root");
             dataSource.setPassword("123abc456d");
-            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/freshgo?useSSL=false");
+            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/freshgo?useUnicode=true&characterEncoding=utf8&useSSL=false");
             dataSource.setDriverClass("com.mysql.jdbc.Driver");
             dataSource.setInitialPoolSize(2);
             dataSource.setMinPoolSize(1);
@@ -44,7 +44,7 @@ public class DBUtil {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
-            throw new RuntimeException("Œﬁ∑®¡¨Ω” ˝æ›ø‚");
+            throw new RuntimeException("Êó†Ê≥ïËøûÊé•Êï∞ÊçÆÂ∫ì");
         }
     }
 }

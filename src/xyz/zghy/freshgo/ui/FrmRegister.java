@@ -14,27 +14,27 @@ import java.awt.event.ActionListener;
 
 /**
  * @author ghy
- * @date 2020/7/4 ÏÂÎç1:02
+ * @date 2020/7/4 ä¸‹åˆ1:02
  */
 public class FrmRegister extends JDialog implements ActionListener {
     private JPanel toolBar = new JPanel();
     private JPanel workPane = new JPanel();
-    private Button btnOk = new Button("×¢²á");
-    private Button btnCancel = new Button("È¡Ïû");
+    private Button btnOk = new Button("æ³¨å†Œ");
+    private Button btnCancel = new Button("å–æ¶ˆ");
 
-    private JLabel labelUser = new JLabel("ÓÃ»§Ãû:");
-    private JLabel labelPwd = new JLabel("ÃÜÂë:");
-    private JLabel labelPwd2 = new JLabel("È·ÈÏÃÜÂë:");
-    private JLabel labelSex = new JLabel("ĞÔ±ğ:");
-    private JLabel labelPhone = new JLabel("µç»°ºÅÂë:");
-    private JLabel labelCity = new JLabel("ËùÔÚ³ÇÊĞ:");
-    private JLabel lableEmail = new JLabel("ÓÊÏä:");
+    private JLabel labelUser = new JLabel("ç”¨æˆ·å:");
+    private JLabel labelPwd = new JLabel("å¯†ç :");
+    private JLabel labelPwd2 = new JLabel("ç¡®è®¤å¯†ç :");
+    private JLabel labelSex = new JLabel("æ€§åˆ«:");
+    private JLabel labelPhone = new JLabel("ç”µè¯å·ç :");
+    private JLabel labelCity = new JLabel("æ‰€åœ¨åŸå¸‚:");
+    private JLabel lableEmail = new JLabel("é‚®ç®±:");
 
     private JTextField editUser = new JTextField(20);
     private JPasswordField editPwd = new JPasswordField(20);
     private JPasswordField editPwd2 = new JPasswordField(20);
-    private JRadioButton jr1 = new JRadioButton("ÄĞ");
-    private JRadioButton jr2 = new JRadioButton("Å®");
+    private JRadioButton jr1 = new JRadioButton("ç”·");
+    private JRadioButton jr2 = new JRadioButton("å¥³");
     private JTextField editPhone = new JTextField(11);
     private JTextField editCity = new JTextField(20);
     private JTextField editEmail = new JTextField(20);
@@ -95,7 +95,7 @@ public class FrmRegister extends JDialog implements ActionListener {
         this.getContentPane().add(workPane, BorderLayout.CENTER);
 
         this.setSize(305, 300);
-        // ÆÁÄ»¾ÓÖĞÏÔÊ¾
+        // å±å¹•å±…ä¸­æ˜¾ç¤º
         double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         this.setLocation((int) (width - this.getWidth()) / 2,
@@ -115,13 +115,13 @@ public class FrmRegister extends JDialog implements ActionListener {
             this.setVisible(false);
         }
         else if(e.getSource()==this.jr1){
-            this.SexType="ÄĞ";
+            this.SexType="ç”·";
         }
         else if(e.getSource()==this.jr2){
-            this.SexType = "Å®";
+            this.SexType = "å¥³";
         }
         else if(e.getSource()==this.btnOk){
-            //TODO ÓÃ»§×¢²á
+            //TODO ç”¨æˆ·æ³¨å†Œ
             String userName = editUser.getText();
             String userPwd = new String(editPwd.getPassword());
             String userPwd2 = new String(editPwd2.getPassword());
@@ -133,7 +133,7 @@ public class FrmRegister extends JDialog implements ActionListener {
                 SystemUtil.userManage.register(userName,userPwd,userPwd2,userSex,userPhone,userCity,userEmail);
                 this.setVisible(false);
             } catch (BaseException e1) {
-                JOptionPane.showMessageDialog(null, e1.getMessage(),"´íÎó",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e1.getMessage(),"é”™è¯¯",JOptionPane.ERROR_MESSAGE);
                 return;
             }
 

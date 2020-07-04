@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * @author ghy
- * @date 2020/7/4 ÉÏÎç12:09
+ * @date 2020/7/4 ä¸Šåˆ12:09
  */
 public class BeanLimitTimePromotion {
     private int limitTimePromotionId;

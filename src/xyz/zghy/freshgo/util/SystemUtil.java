@@ -7,7 +7,7 @@ import xyz.zghy.freshgo.model.BeanUsers;
 
 /**
  * @author ghy
- * @date 2020/7/4 ÏÂÎç3:33
+ * @date 2020/7/4 ä¸‹åˆ3:33
  */
 public class SystemUtil {
     public static String currentLoginType="";

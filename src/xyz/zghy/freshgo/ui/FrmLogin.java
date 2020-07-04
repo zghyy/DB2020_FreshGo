@@ -16,25 +16,25 @@ import java.awt.event.WindowEvent;
 
 /**
  * @author ghy
- * @date 2020/7/4 ÉÏÎç8:28
+ * @date 2020/7/4 ä¸Šåˆ8:28
  */
 public class FrmLogin extends JDialog implements ActionListener {
     private JPanel toolBar = new JPanel();
     private JPanel workPane = new JPanel();
-    private Button btnUserReRegister = new Button("ÓÃ»§×¢²á");
-    private Button btnLogin = new Button("µÇÂ½");
-    private Button btnCancel = new Button("ÍË³ö");
-    private JLabel labelUser = new JLabel("ÓÃ»§£º");
-    private JLabel labelPwd = new JLabel("ÃÜÂë£º");
+    private Button btnUserReRegister = new Button("ç”¨æˆ·æ³¨å†Œ");
+    private Button btnLogin = new Button("ç™»é™†");
+    private Button btnCancel = new Button("é€€å‡º");
+    private JLabel labelUser = new JLabel("ç”¨æˆ·ï¼š");
+    private JLabel labelPwd = new JLabel("å¯†ç ï¼š");
     private JTextField edtUserName = new JTextField(20);
     private JPasswordField edtPwd = new JPasswordField(20);
-    private JRadioButton jr1 = new JRadioButton("ÓÃ»§", true);
-    private JRadioButton jr2 = new JRadioButton("¹ÜÀíÔ±");
+    private JRadioButton jr1 = new JRadioButton("ç”¨æˆ·", true);
+    private JRadioButton jr2 = new JRadioButton("ç®¡ç†å‘˜");
     private GroupLayout glMain = new GroupLayout(workPane);
     private GroupLayout glRadioButton = new GroupLayout(workPane);
     private GroupLayout glUser = new GroupLayout(workPane);
     private GroupLayout glPwd = new GroupLayout(workPane);
-    private String LoginAccountType = "ÓÃ»§";
+    private String LoginAccountType = "ç”¨æˆ·";
 
 
     public FrmLogin(Frame owner, String title, boolean modal) {
@@ -64,7 +64,7 @@ public class FrmLogin extends JDialog implements ActionListener {
 
         this.getContentPane().add(workPane, BorderLayout.CENTER);
         this.setSize(300, 160);
-        // ÆÁÄ»¾ÓÖĞÏÔÊ¾
+        // å±å¹•å±…ä¸­æ˜¾ç¤º
         double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         this.setLocation((int) (width - this.getWidth()) / 2,
@@ -89,34 +89,34 @@ public class FrmLogin extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.jr1) {
-            this.LoginAccountType = "ÓÃ»§";
+            this.LoginAccountType = "ç”¨æˆ·";
         } else if (e.getSource() == this.jr2) {
-            this.LoginAccountType = "¹ÜÀíÔ±";
+            this.LoginAccountType = "ç®¡ç†å‘˜";
         } else if (e.getSource() == this.btnCancel) {
             System.exit(0);
         } else if (e.getSource() == this.btnLogin) {
-            //TODO ÓÃ»§ºÍ¹ÜÀíÔ±µÇÂ¼
+            //TODO ç”¨æˆ·å’Œç®¡ç†å‘˜ç™»å½•
             String loginName = this.edtUserName.getText();
             String loginPwd = new String(this.edtPwd.getPassword());
             try {
-                if ("ÓÃ»§".equals(this.LoginAccountType)) {
-                    SystemUtil.currentLoginType="ÓÃ»§";
+                if ("ç”¨æˆ·".equals(this.LoginAccountType)) {
+                    SystemUtil.currentLoginType="ç”¨æˆ·";
                     SystemUtil.currentUser = SystemUtil.userManage.login(loginName,loginPwd);
-                    System.out.println("ÓÃ»§µÇÂ¼³É¹¦");
-                } else if ("¹ÜÀíÔ±".equals(this.LoginAccountType)) {
-                    SystemUtil.currentLoginType="¹ÜÀíÔ±";
+                    System.out.println("ç”¨æˆ·ç™»å½•æˆåŠŸ");
+                } else if ("ç®¡ç†å‘˜".equals(this.LoginAccountType)) {
+                    SystemUtil.currentLoginType="ç®¡ç†å‘˜";
                     SystemUtil.currentAdmin= SystemUtil.adminManage.login(loginName,loginPwd);
-                    System.out.println("¹ÜÀíÔ±µÇÂ¼³É¹¦");
+                    System.out.println("ç®¡ç†å‘˜ç™»å½•æˆåŠŸ");
                 } else {
-                    throw new BusinessException("·ÃÎÊ³ö´í");
+                    throw new BusinessException("è®¿é—®å‡ºé”™");
                 }
             } catch (BaseException e1) {
-                JOptionPane.showMessageDialog(null, e1.getMessage(), "´íÎó", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e1.getMessage(), "é”™è¯¯", JOptionPane.ERROR_MESSAGE);
             }
         } else if (e.getSource() == this.btnUserReRegister) {
-            //TODO ÓÃ»§×¢²á ĞèÒª×¢²áui
+            //TODO ç”¨æˆ·æ³¨å†Œ éœ€è¦æ³¨å†Œui
 //            System.out.println(111);
-            FrmRegister Register = new FrmRegister(this,"×¢²á",true);
+            FrmRegister Register = new FrmRegister(this,"æ³¨å†Œ",true);
             Register.setVisible(true);
         }
     }

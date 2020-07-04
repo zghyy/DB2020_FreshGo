@@ -12,16 +12,16 @@ import java.sql.SQLException;
 
 /**
  * @author ghy
- * @date 2020/7/4 ÉÏÎç10:03
+ * @date 2020/7/4 ä¸Šåˆ10:03
  */
 public class AdminManage {
     public BeanAdmin login(String adminName, String adminPwd) throws BaseException {
-        //TODO ¹ÜÀíÔ±µÇÂ¼
+        //TODO ç®¡ç†å‘˜ç™»å½•
         if (adminName.length() <= 0 || adminName.length() >= 20) {
-            throw new BusinessException("ÓÃ»§ÃûÓ¦¸ÃÔÚ1¡ª¡ª20¸ö×Ö·ûÖ®¼ä£¡");
+            throw new BusinessException("ç”¨æˆ·ååº”è¯¥åœ¨1â€”â€”20ä¸ªå­—ç¬¦ä¹‹é—´ï¼");
         }
         if (adminPwd.length() <= 0 || adminPwd.length() >= 20) {
-            throw new BusinessException("ÃÜÂëÓ¦¸ÃÔÚ1¡ª¡ª20¸ö×Ö·ûÖ®¼ä£¡");
+            throw new BusinessException("å¯†ç åº”è¯¥åœ¨1â€”â€”20ä¸ªå­—ç¬¦ä¹‹é—´ï¼");
         }
 
         Connection conn = null;
@@ -38,10 +38,10 @@ public class AdminManage {
                     return res;
                 }
                 else {
-                    throw new BusinessException("ÃÜÂë´íÎó");
+                    throw new BusinessException("å¯†ç é”™è¯¯");
                 }
             } else {
-                throw new BusinessException("ÕËºÅ²»´æÔÚ");
+                throw new BusinessException("è´¦å·ä¸å­˜åœ¨");
             }
 
 

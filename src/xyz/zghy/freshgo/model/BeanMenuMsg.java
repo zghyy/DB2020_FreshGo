@@ -2,14 +2,14 @@ package xyz.zghy.freshgo.model;
 
 /**
  * @author ghy
- * @date 2020/7/3 下午8:31
+ * @date 2020/7/3 涓嬪崍8:31
  */
 public class BeanMenuMsg {
     private int menuId;
     private String menuName;
     private String menuDesc;
     private String menuStep;
-    //TODO 这里缺个图片变量
+    //TODO 杩欓噷缂轰釜鍥剧墖鍙橀噺
 
     public int getMenuId() {
         return menuId;

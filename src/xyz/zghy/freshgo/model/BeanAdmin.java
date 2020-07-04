@@ -2,7 +2,7 @@ package xyz.zghy.freshgo.model;
 
 /**
  * @author ghy
- * @date 2020/7/3 ÏÂÎç11:59
+ * @date 2020/7/3 ä¸‹åˆ11:59
  */
 public class BeanAdmin {
     private int adminId;

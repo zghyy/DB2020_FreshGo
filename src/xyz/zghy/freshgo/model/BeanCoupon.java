@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * @author ghy
- * @date 2020/7/4 ÉÏÎç12:02
+ * @date 2020/7/4 ä¸Šåˆ12:02
  */
 public class BeanCoupon {
     private int couponId;
