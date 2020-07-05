@@ -1,5 +1,7 @@
 package xyz.zghy.freshgo.ui;
 
+import xyz.zghy.freshgo.util.SystemUtil;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -101,6 +103,8 @@ public class FrmMain extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.menuFresh){
 
+        }
     }
 }

@@ -1,6 +1,7 @@
 package xyz.zghy.freshgo.util;
 
 import xyz.zghy.freshgo.control.AdminManage;
+import xyz.zghy.freshgo.control.FreshTypeManage;
 import xyz.zghy.freshgo.control.UserManage;
 import xyz.zghy.freshgo.model.BeanAdmin;
 import xyz.zghy.freshgo.model.BeanUsers;
@@ -15,4 +16,5 @@ public class SystemUtil {
     public static BeanUsers currentUser = null;
     public static AdminManage adminManage = new AdminManage();
     public static UserManage userManage = new UserManage();
+    public static FreshTypeManage freshTypeManage = new FreshTypeManage();
 }

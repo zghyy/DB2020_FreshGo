@@ -41,55 +41,99 @@ public class FrmRegister extends JDialog implements ActionListener {
 
     private String SexType = null;
 
-    private GroupLayout glMain = new GroupLayout(workPane);
-    private GroupLayout glUser = new GroupLayout(workPane);
-    private GroupLayout glPwd = new GroupLayout(workPane);
-    private GroupLayout glPwd2 = new GroupLayout(workPane);
-    private GroupLayout glSex = new GroupLayout(workPane);
-    private GroupLayout glPhone = new GroupLayout(workPane);
-    private GroupLayout glCity = new GroupLayout(workPane);
-    private GroupLayout glEmail = new GroupLayout(workPane);
+//    private GroupLayout glMain = new GroupLayout(workPane);
+//    private GroupLayout glUser = new GroupLayout(workPane);
+//    private GroupLayout glPwd = new GroupLayout(workPane);
+//    private GroupLayout glPwd2 = new GroupLayout(workPane);
+//    private GroupLayout glSex = new GroupLayout(workPane);
+//    private GroupLayout glPhone = new GroupLayout(workPane);
+//    private GroupLayout glCity = new GroupLayout(workPane);
+//    private GroupLayout glEmail = new GroupLayout(workPane);
 
 
-    public FrmRegister(Dialog owner,String title,boolean modal){
-        super(owner,title,modal);
+    public FrmRegister(Dialog owner, String title, boolean modal) {
+        super(owner, title, modal);
         toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
         toolBar.add(this.btnOk);
         toolBar.add(this.btnCancel);
         this.getContentPane().add(toolBar, BorderLayout.SOUTH);
-        GroupLayout.SequentialGroup sequentialGroupUser = glUser.createSequentialGroup();
-        sequentialGroupUser.addComponent(labelUser);
-        sequentialGroupUser.addComponent(editUser);
-        GroupLayout.SequentialGroup sequentialGroupPwd = glPwd.createSequentialGroup();
-        sequentialGroupPwd.addComponent(labelPwd);
-        sequentialGroupPwd.addComponent(editPwd);
-        GroupLayout.SequentialGroup sequentialGroupPwd2 = glPwd2.createSequentialGroup();
-        sequentialGroupPwd2.addComponent(labelPwd2);
-        sequentialGroupPwd2.addComponent(editPwd2);
-        ButtonGroup rbtGroup = new ButtonGroup();
-        rbtGroup.add(jr1);
-        rbtGroup.add(jr2);
-        GroupLayout.SequentialGroup sequentialGroupSex = glSex.createSequentialGroup();
-        sequentialGroupSex.addComponent(labelSex);
-        sequentialGroupSex.addComponent(jr1);
-        sequentialGroupSex.addComponent(jr2);
-        GroupLayout.SequentialGroup sequentialGroupPhone = glPhone.createSequentialGroup();
-        sequentialGroupPhone.addComponent(labelPhone);
-        sequentialGroupPhone.addComponent(editPhone);
-        GroupLayout.SequentialGroup sequentialGroupCity = glCity.createSequentialGroup();
-        sequentialGroupCity.addComponent(labelCity);
-        sequentialGroupCity.addComponent(editCity);
-        GroupLayout.SequentialGroup sequentialGroupEmail = glEmail.createSequentialGroup();
-        sequentialGroupEmail.addComponent(lableEmail);
-        sequentialGroupEmail.addComponent(editEmail);
-        GroupLayout.ParallelGroup parallelGroupMain = glMain.createParallelGroup();
-        parallelGroupMain.addGroup(sequentialGroupUser);
-        parallelGroupMain.addGroup(sequentialGroupPwd);
-        parallelGroupMain.addGroup(sequentialGroupPwd2);
-        parallelGroupMain.addGroup(sequentialGroupSex);
-        parallelGroupMain.addGroup(sequentialGroupPhone);
-        parallelGroupMain.addGroup(sequentialGroupCity);
-        parallelGroupMain.addGroup(sequentialGroupEmail);
+
+        GroupLayout glMain = new GroupLayout(workPane);
+        workPane.setLayout(glMain);
+        glMain.setAutoCreateGaps(true);
+        glMain.setAutoCreateContainerGaps(true);
+        ButtonGroup rbtgroup = new ButtonGroup();
+        rbtgroup.add(jr1);
+        rbtgroup.add(jr2);
+
+
+        GroupLayout.ParallelGroup vpgUser = glMain.createParallelGroup();
+        vpgUser.addComponent(labelUser).addComponent(editUser);
+        GroupLayout.ParallelGroup vpgPwd = glMain.createParallelGroup();
+        vpgPwd.addComponent(labelPwd).addComponent(editPwd);
+        GroupLayout.ParallelGroup vpgPwd2 = glMain.createParallelGroup();
+        vpgPwd2.addComponent(labelPwd2).addComponent(editPwd2);
+        GroupLayout.ParallelGroup vpgPhone = glMain.createParallelGroup();
+        vpgPhone.addComponent(labelPhone).addComponent(editPhone);
+        GroupLayout.ParallelGroup vpgCity = glMain.createParallelGroup();
+        vpgCity.addComponent(labelCity).addComponent(editCity);
+        GroupLayout.ParallelGroup vpgEmail = glMain.createParallelGroup();
+        vpgEmail.addComponent(lableEmail).addComponent(editEmail);
+        GroupLayout.ParallelGroup vpgSex = glMain.createParallelGroup();
+        vpgSex.addComponent(jr1).addComponent(jr2);
+        GroupLayout.SequentialGroup vsp = glMain.createSequentialGroup();
+        vsp.addGroup(vpgUser).addGroup(vpgPwd).addGroup(vpgPwd2).addGroup(vpgPhone);
+        vsp.addGroup(vpgCity).addGroup(vpgEmail).addGroup(vpgSex);
+        glMain.setVerticalGroup(vsp);
+
+        GroupLayout.ParallelGroup hpgLabel = glMain.createParallelGroup();
+        hpgLabel.addComponent(labelUser).addComponent(labelPwd).addComponent(labelPwd2);
+        hpgLabel.addComponent(labelPhone).addComponent(labelCity).addComponent(lableEmail);
+        GroupLayout.ParallelGroup hpgedit = glMain.createParallelGroup();
+        hpgedit.addComponent(editUser).addComponent(editPwd).addComponent(editPwd2);
+        hpgedit.addComponent(editPhone).addComponent(editCity).addComponent(editEmail);
+        GroupLayout.SequentialGroup hsgText = glMain.createSequentialGroup();
+        hsgText.addGroup(hpgLabel).addGroup(hpgedit);
+        GroupLayout.SequentialGroup hsgSex = glMain.createSequentialGroup();
+        hsgSex.addComponent(jr1).addComponent(jr2);
+        GroupLayout.ParallelGroup hpg = glMain.createParallelGroup();
+        hpg.addGroup(hsgText).addGroup(GroupLayout.Alignment.CENTER, hsgSex);
+        glMain.setHorizontalGroup(hpg);
+
+
+//        GroupLayout.SequentialGroup sequentialGroupUser = glUser.createSequentialGroup();
+//        sequentialGroupUser.addComponent(labelUser);
+//        sequentialGroupUser.addComponent(editUser);
+//        GroupLayout.SequentialGroup sequentialGroupPwd = glPwd.createSequentialGroup();
+//        sequentialGroupPwd.addComponent(labelPwd);
+//        sequentialGroupPwd.addComponent(editPwd);
+//        GroupLayout.SequentialGroup sequentialGroupPwd2 = glPwd2.createSequentialGroup();
+//        sequentialGroupPwd2.addComponent(labelPwd2);
+//        sequentialGroupPwd2.addComponent(editPwd2);
+//        ButtonGroup rbtGroup = new ButtonGroup();
+//        rbtGroup.add(jr1);
+//        rbtGroup.add(jr2);
+//        GroupLayout.SequentialGroup sequentialGroupSex = glSex.createSequentialGroup();
+//        sequentialGroupSex.addComponent(labelSex);
+//        sequentialGroupSex.addComponent(jr1);
+//        sequentialGroupSex.addComponent(jr2);
+//        GroupLayout.SequentialGroup sequentialGroupPhone = glPhone.createSequentialGroup();
+//        sequentialGroupPhone.addComponent(labelPhone);
+//        sequentialGroupPhone.addComponent(editPhone);
+//        GroupLayout.SequentialGroup sequentialGroupCity = glCity.createSequentialGroup();
+//        sequentialGroupCity.addComponent(labelCity);
+//        sequentialGroupCity.addComponent(editCity);
+//        GroupLayout.SequentialGroup sequentialGroupEmail = glEmail.createSequentialGroup();
+//        sequentialGroupEmail.addComponent(lableEmail);
+//        sequentialGroupEmail.addComponent(editEmail);
+//        GroupLayout.ParallelGroup parallelGroupMain = glMain.createParallelGroup();
+//        parallelGroupMain.addGroup(sequentialGroupUser);
+//        parallelGroupMain.addGroup(sequentialGroupPwd);
+//        parallelGroupMain.addGroup(sequentialGroupPwd2);
+//        parallelGroupMain.addGroup(sequentialGroupSex);
+//        parallelGroupMain.addGroup(sequentialGroupPhone);
+//        parallelGroupMain.addGroup(sequentialGroupCity);
+//        parallelGroupMain.addGroup(sequentialGroupEmail);
 
 
         this.getContentPane().add(workPane, BorderLayout.CENTER);
@@ -111,16 +155,13 @@ public class FrmRegister extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==this.btnCancel){
+        if (e.getSource() == this.btnCancel) {
             this.setVisible(false);
-        }
-        else if(e.getSource()==this.jr1){
-            this.SexType="男";
-        }
-        else if(e.getSource()==this.jr2){
+        } else if (e.getSource() == this.jr1) {
+            this.SexType = "男";
+        } else if (e.getSource() == this.jr2) {
             this.SexType = "女";
-        }
-        else if(e.getSource()==this.btnOk){
+        } else if (e.getSource() == this.btnOk) {
             //TODO 用户注册
             String userName = editUser.getText();
             String userPwd = new String(editPwd.getPassword());
@@ -129,11 +170,13 @@ public class FrmRegister extends JDialog implements ActionListener {
             int userPhone = Integer.parseInt(editPhone.getText());
             String userCity = editCity.getText();
             String userEmail = editEmail.getText();
+
             try {
-                SystemUtil.userManage.register(userName,userPwd,userPwd2,userSex,userPhone,userCity,userEmail);
+
+                SystemUtil.userManage.register(userName, userPwd, userPwd2, userSex, userPhone, userCity, userEmail);
                 this.setVisible(false);
             } catch (BaseException e1) {
-                JOptionPane.showMessageDialog(null, e1.getMessage(),"错误",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e1.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 

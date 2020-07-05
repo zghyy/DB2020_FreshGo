@@ -1,8 +1,6 @@
 package xyz.zghy.freshgo.ui;
 
-import xyz.zghy.freshgo.control.AdminManage;
-import xyz.zghy.freshgo.control.UserManage;
-import xyz.zghy.freshgo.model.CurrentLogin;
+
 import xyz.zghy.freshgo.util.BusinessException;
 import xyz.zghy.freshgo.util.BaseException;
 import xyz.zghy.freshgo.util.SystemUtil;
@@ -30,10 +28,6 @@ public class FrmLogin extends JDialog implements ActionListener {
     private JPasswordField edtPwd = new JPasswordField(20);
     private JRadioButton jr1 = new JRadioButton("用户", true);
     private JRadioButton jr2 = new JRadioButton("管理员");
-    private GroupLayout glMain = new GroupLayout(workPane);
-    private GroupLayout glRadioButton = new GroupLayout(workPane);
-    private GroupLayout glUser = new GroupLayout(workPane);
-    private GroupLayout glPwd = new GroupLayout(workPane);
     private String LoginAccountType = "用户";
 
 
@@ -45,22 +39,37 @@ public class FrmLogin extends JDialog implements ActionListener {
         toolBar.add(btnCancel);
         this.getContentPane().add(toolBar, BorderLayout.SOUTH);
 
-        GroupLayout.SequentialGroup seqGroupUser = glUser.createSequentialGroup();
-        seqGroupUser.addComponent(labelUser);
-        seqGroupUser.addComponent(edtUserName);
-        GroupLayout.SequentialGroup seqGroupPwd = glPwd.createSequentialGroup();
-        seqGroupPwd.addComponent(labelPwd);
-        seqGroupPwd.addComponent(edtPwd);
+        GroupLayout glMain = new GroupLayout(workPane);
+        workPane.setLayout(glMain);
+        glMain.setAutoCreateGaps(true);
+        glMain.setAutoCreateContainerGaps(true);
+
         ButtonGroup rbtgroup = new ButtonGroup();
         rbtgroup.add(jr1);
         rbtgroup.add(jr2);
-        GroupLayout.SequentialGroup seqRadioButton = glRadioButton.createSequentialGroup();
-        seqGroupPwd.addComponent(jr1);
-        seqGroupPwd.addComponent(jr2);
-        GroupLayout.ParallelGroup paralGroupMain = glMain.createParallelGroup();
-        paralGroupMain.addGroup(seqGroupUser);
-        paralGroupMain.addGroup(seqGroupPwd);
-        paralGroupMain.addGroup(seqRadioButton);
+
+        GroupLayout.ParallelGroup vpgUser = glMain.createParallelGroup();
+        vpgUser.addComponent(labelUser).addComponent(edtUserName);
+        GroupLayout.ParallelGroup vpgPwd = glMain.createParallelGroup();
+        vpgPwd.addComponent(labelPwd).addComponent(edtPwd);
+        GroupLayout.ParallelGroup vpgType = glMain.createParallelGroup();
+        vpgType.addComponent(jr1).addComponent(jr2);
+        GroupLayout.SequentialGroup vsp = glMain.createSequentialGroup();
+        vsp.addGroup(vpgUser).addGroup(vpgPwd).addGroup(vpgType);
+        glMain.setVerticalGroup(vsp);
+
+        GroupLayout.ParallelGroup hpgLabel = glMain.createParallelGroup();
+        hpgLabel.addComponent(labelUser).addComponent(labelPwd);
+        GroupLayout.ParallelGroup hpgEdit = glMain.createParallelGroup();
+        hpgEdit.addComponent(edtUserName).addComponent(edtPwd);
+        GroupLayout.SequentialGroup hsgText = glMain.createSequentialGroup();
+        hsgText.addGroup(hpgLabel).addGroup(hpgEdit);
+        GroupLayout.SequentialGroup hsgType = glMain.createSequentialGroup();
+        hsgType.addComponent(jr1).addComponent(jr2);
+        GroupLayout.ParallelGroup hpg = glMain.createParallelGroup();
+        hpg.addGroup(hsgText).addGroup(GroupLayout.Alignment.CENTER, hsgType);
+        glMain.setHorizontalGroup(hpg);
+
 
         this.getContentPane().add(workPane, BorderLayout.CENTER);
         this.setSize(300, 160);
@@ -100,13 +109,13 @@ public class FrmLogin extends JDialog implements ActionListener {
             String loginPwd = new String(this.edtPwd.getPassword());
             try {
                 if ("用户".equals(this.LoginAccountType)) {
-                    SystemUtil.currentLoginType="用户";
-                    SystemUtil.currentUser = SystemUtil.userManage.login(loginName,loginPwd);
+                    SystemUtil.currentLoginType = "用户";
+                    SystemUtil.currentUser = SystemUtil.userManage.login(loginName, loginPwd);
                     System.out.println("用户登录成功");
                     this.setVisible(false);
                 } else if ("管理员".equals(this.LoginAccountType)) {
-                    SystemUtil.currentLoginType="管理员";
-                    SystemUtil.currentAdmin= SystemUtil.adminManage.login(loginName,loginPwd);
+                    SystemUtil.currentLoginType = "管理员";
+                    SystemUtil.currentAdmin = SystemUtil.adminManage.login(loginName, loginPwd);
                     System.out.println("管理员登录成功");
                     this.setVisible(false);
                 } else {
@@ -118,8 +127,8 @@ public class FrmLogin extends JDialog implements ActionListener {
         } else if (e.getSource() == this.btnUserReRegister) {
             //TODO 用户注册 需要注册ui
 //            System.out.println(111);
-            FrmRegister Register = new FrmRegister(this,"注册",true);
-            Register.setVisible(true);
+            FrmRegister register = new FrmRegister(this, "注册", true);
+            register.setVisible(true);
         }
     }
 }

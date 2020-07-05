@@ -63,9 +63,9 @@ public class UserManage {
             pst.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
             pst.setString(9,"否");
             if (pst.executeUpdate() == 1) {
-                System.out.println("添加成功");
+                System.out.println("添加用户成功");
             } else {
-                throw new BusinessException("添加数据失败");
+                throw new BusinessException("添加用户失败");
             }
             rs.close();
             pst.close();
