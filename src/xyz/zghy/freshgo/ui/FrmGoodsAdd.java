@@ -11,9 +11,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @author ghy
@@ -35,8 +35,10 @@ public class FrmGoodsAdd extends JDialog implements ActionListener {
     private JTextField edtVipPrice = new JTextField(20);
     private JTextField edtSpec = new JTextField(20);
     private JTextField edtDesc = new JTextField(20);
-    private Map<String, BeanFreshType> TypeMap_name = new HashMap<String, BeanFreshType>();
-    private Map<Integer, BeanFreshType> TypeMap_id = new HashMap<Integer, BeanFreshType>();
+//    private Map<String, BeanFreshType> TypeMap_name = new HashMap<String, BeanFreshType>();
+//    private Map<Integer, BeanFreshType> TypeMap_id = new HashMap<Integer, BeanFreshType>();
+//    private Map<Integer,BeanFreshType> TypeMap_order = new HashMap<Integer,BeanFreshType>();
+    private List<BeanFreshType> Type = new ArrayList<BeanFreshType>();
     private JComboBox cmbType = null;
 
     public FrmGoodsAdd(JDialog owner, String title, boolean modal) throws BaseException {
@@ -56,9 +58,11 @@ public class FrmGoodsAdd extends JDialog implements ActionListener {
             String[] strTypes = new String[types.size() + 1];
             strTypes[0] = "";
             for (int i = 0; i < types.size(); i++) {
-                strTypes[i + 1] = types.get(i).getTypeName();
-                this.TypeMap_id.put(types.get(i).getTypeId(), types.get(i));
-                this.TypeMap_name.put(types.get(i).getTypeName(), types.get(i));
+                strTypes[i+1] = types.get(i).getTypeName();
+                this.Type.add(types.get(i));
+//                this.TypeMap_id.put(types.get(i).getTypeId(), types.get(i));
+//                this.TypeMap_order.put(types.get(i).getTypeOrder(),types.get(i));
+//                this.TypeMap_name.put(types.get(i).getTypeName(), types.get(i));
             }
             this.cmbType = new JComboBox(strTypes);
         } catch (BaseException e) {
@@ -130,7 +134,7 @@ public class FrmGoodsAdd extends JDialog implements ActionListener {
             }
             bgm.setGoodsSpecifications(this.edtSpec.getText());
             bgm.setGoodsDesc(this.edtDesc.getText());
-            bgm.setTypeId(this.cmbType.getSelectedIndex());
+            bgm.setTypeId(this.Type.get(this.cmbType.getSelectedIndex()-1).getTypeId());
 
             try {
                 new GoodsManage().addGoods(bgm);

@@ -21,7 +21,7 @@ public class FrmFreshTypeManage extends JDialog implements ActionListener {
     private JPanel toolBar = new JPanel();
     private Button btnAdd = new Button("添加生鲜类型");
     private Button btnDelete = new Button("删除生鲜类型");
-    private Object tblTitle[] = {"类型编号", "类型名称", "类型描述"};
+    private Object tblTitle[] = {"类型序号", "类型名称", "类型描述"};
     private Object tblData[][];
     List<BeanFreshType> freshTypes = null;
     DefaultTableModel tablmod = new DefaultTableModel();
@@ -32,7 +32,7 @@ public class FrmFreshTypeManage extends JDialog implements ActionListener {
             freshTypes = new FreshTypeManage().loadFreshType();
             tblData = new Object[freshTypes.size()][3];
             for (int i = 0; i < freshTypes.size(); i++) {
-                tblData[i][0] = freshTypes.get(i).getTypeId();
+                tblData[i][0] = freshTypes.get(i).getTypeOrder();
                 tblData[i][1] = freshTypes.get(i).getTypeName();
                 tblData[i][2] = freshTypes.get(i).getTypeDesc();
             }

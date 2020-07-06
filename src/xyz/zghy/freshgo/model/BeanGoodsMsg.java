@@ -6,6 +6,7 @@ package xyz.zghy.freshgo.model;
  */
 public class BeanGoodsMsg {
     private int goodsId;
+    private int goodsOrder;
     private int typeId;
     private String typeName;
     private String goodsName;
@@ -86,5 +87,13 @@ public class BeanGoodsMsg {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public int getGoodsOrder() {
+        return goodsOrder;
+    }
+
+    public void setGoodsOrder(int goodsOrder) {
+        this.goodsOrder = goodsOrder;
     }
 }

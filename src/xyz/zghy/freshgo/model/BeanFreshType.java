@@ -6,15 +6,14 @@ package xyz.zghy.freshgo.model;
  */
 public class BeanFreshType {
     private int typeId;
+    private int typeOrder;
+
+
     private String typeName;
     private String typeDesc;
 
     public int getTypeId() {
         return typeId;
-    }
-
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
     }
 
     public String getTypeName() {
@@ -31,5 +30,17 @@ public class BeanFreshType {
 
     public void setTypeDesc(String typeDesc) {
         this.typeDesc = typeDesc;
+    }
+
+    public int getTypeOrder() {
+        return typeOrder;
+    }
+
+    public void setTypeOrder(int typeOrder) {
+        this.typeOrder = typeOrder;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 }

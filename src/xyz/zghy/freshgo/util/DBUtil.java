@@ -24,7 +24,7 @@ public class DBUtil {
             dataSource = new ComboPooledDataSource();
             dataSource.setUser("root");
             dataSource.setPassword("123abc456d");
-            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/freshgo?useUnicode=true&characterEncoding=utf8&useSSL=false");
+            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/FreshGo?useUnicode=true&characterEncoding=utf8&useSSL=false");
             dataSource.setDriverClass("com.mysql.jdbc.Driver");
             dataSource.setInitialPoolSize(2);
             dataSource.setMinPoolSize(1);

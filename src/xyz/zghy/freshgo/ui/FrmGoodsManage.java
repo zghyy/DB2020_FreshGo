@@ -21,7 +21,7 @@ public class FrmGoodsManage extends JDialog implements ActionListener {
     private JPanel toolBar = new JPanel();
     private Button btnAdd = new Button("添加商品");
     private Button btnDelete = new Button("删除商品");
-    private Object tblTitle[] = {"商品编号", "类型名称", "商品名称", "商品价格", "会员价格", "商品数量"};
+    private Object tblTitle[] = {"商品序号", "类型名称", "商品名称", "商品价格", "会员价格", "商品数量"};
     private Object tblData[][];
     List<BeanGoodsMsg> goodsMsgs = null;
     DefaultTableModel tblMod = new DefaultTableModel();
@@ -33,7 +33,7 @@ public class FrmGoodsManage extends JDialog implements ActionListener {
             System.out.println(goodsMsgs.size());
             tblData = new Object[goodsMsgs.size()][6];
             for (int i = 0; i < goodsMsgs.size(); i++) {
-                tblData[i][0] = goodsMsgs.get(i).getGoodsId();
+                tblData[i][0] = goodsMsgs.get(i).getGoodsOrder();
                 tblData[i][1] = goodsMsgs.get(i).getTypeName();
                 tblData[i][2] = goodsMsgs.get(i).getGoodsName();
                 tblData[i][3] = goodsMsgs.get(i).getGoodsPrice();
