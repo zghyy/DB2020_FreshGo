@@ -1,8 +1,5 @@
 package xyz.zghy.freshgo.ui;
 
-import xyz.zghy.freshgo.control.UserManage;
-import xyz.zghy.freshgo.model.BeanUsers;
-import xyz.zghy.freshgo.model.CurrentLogin;
 import xyz.zghy.freshgo.util.BaseException;
 import xyz.zghy.freshgo.util.SystemUtil;
 
@@ -40,15 +37,6 @@ public class FrmRegister extends JDialog implements ActionListener {
     private JTextField editEmail = new JTextField(20);
 
     private String SexType = null;
-
-//    private GroupLayout glMain = new GroupLayout(workPane);
-//    private GroupLayout glUser = new GroupLayout(workPane);
-//    private GroupLayout glPwd = new GroupLayout(workPane);
-//    private GroupLayout glPwd2 = new GroupLayout(workPane);
-//    private GroupLayout glSex = new GroupLayout(workPane);
-//    private GroupLayout glPhone = new GroupLayout(workPane);
-//    private GroupLayout glCity = new GroupLayout(workPane);
-//    private GroupLayout glEmail = new GroupLayout(workPane);
 
 
     public FrmRegister(Dialog owner, String title, boolean modal) {
@@ -99,42 +87,6 @@ public class FrmRegister extends JDialog implements ActionListener {
         GroupLayout.ParallelGroup hpg = glMain.createParallelGroup();
         hpg.addGroup(hsgText).addGroup(GroupLayout.Alignment.CENTER, hsgSex);
         glMain.setHorizontalGroup(hpg);
-
-
-//        GroupLayout.SequentialGroup sequentialGroupUser = glUser.createSequentialGroup();
-//        sequentialGroupUser.addComponent(labelUser);
-//        sequentialGroupUser.addComponent(editUser);
-//        GroupLayout.SequentialGroup sequentialGroupPwd = glPwd.createSequentialGroup();
-//        sequentialGroupPwd.addComponent(labelPwd);
-//        sequentialGroupPwd.addComponent(editPwd);
-//        GroupLayout.SequentialGroup sequentialGroupPwd2 = glPwd2.createSequentialGroup();
-//        sequentialGroupPwd2.addComponent(labelPwd2);
-//        sequentialGroupPwd2.addComponent(editPwd2);
-//        ButtonGroup rbtGroup = new ButtonGroup();
-//        rbtGroup.add(jr1);
-//        rbtGroup.add(jr2);
-//        GroupLayout.SequentialGroup sequentialGroupSex = glSex.createSequentialGroup();
-//        sequentialGroupSex.addComponent(labelSex);
-//        sequentialGroupSex.addComponent(jr1);
-//        sequentialGroupSex.addComponent(jr2);
-//        GroupLayout.SequentialGroup sequentialGroupPhone = glPhone.createSequentialGroup();
-//        sequentialGroupPhone.addComponent(labelPhone);
-//        sequentialGroupPhone.addComponent(editPhone);
-//        GroupLayout.SequentialGroup sequentialGroupCity = glCity.createSequentialGroup();
-//        sequentialGroupCity.addComponent(labelCity);
-//        sequentialGroupCity.addComponent(editCity);
-//        GroupLayout.SequentialGroup sequentialGroupEmail = glEmail.createSequentialGroup();
-//        sequentialGroupEmail.addComponent(lableEmail);
-//        sequentialGroupEmail.addComponent(editEmail);
-//        GroupLayout.ParallelGroup parallelGroupMain = glMain.createParallelGroup();
-//        parallelGroupMain.addGroup(sequentialGroupUser);
-//        parallelGroupMain.addGroup(sequentialGroupPwd);
-//        parallelGroupMain.addGroup(sequentialGroupPwd2);
-//        parallelGroupMain.addGroup(sequentialGroupSex);
-//        parallelGroupMain.addGroup(sequentialGroupPhone);
-//        parallelGroupMain.addGroup(sequentialGroupCity);
-//        parallelGroupMain.addGroup(sequentialGroupEmail);
-
 
         this.getContentPane().add(workPane, BorderLayout.CENTER);
 
