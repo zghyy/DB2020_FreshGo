@@ -115,16 +115,14 @@ public class FrmRegister extends JDialog implements ActionListener {
             this.SexType = "女";
         } else if (e.getSource() == this.btnOk) {
             //TODO 用户注册
-            String userName = editUser.getText();
-            String userPwd = new String(editPwd.getPassword());
-            String userPwd2 = new String(editPwd2.getPassword());
-            String userSex = this.SexType;
-            int userPhone = Integer.parseInt(editPhone.getText());
-            String userCity = editCity.getText();
-            String userEmail = editEmail.getText();
-
+                String userName = editUser.getText();
+                String userPwd = new String(editPwd.getPassword());
+                String userPwd2 = new String(editPwd2.getPassword());
+                String userSex = this.SexType;
+                int userPhone = Integer.parseInt(editPhone.getText());
+                String userCity = editCity.getText();
+                String userEmail = editEmail.getText();
             try {
-
                 SystemUtil.userManage.register(userName, userPwd, userPwd2, userSex, userPhone, userCity, userEmail);
                 this.setVisible(false);
             } catch (BaseException e1) {

@@ -5,6 +5,7 @@ import xyz.zghy.freshgo.control.GoodsManage;
 import xyz.zghy.freshgo.model.BeanFreshType;
 import xyz.zghy.freshgo.model.BeanGoodsMsg;
 import xyz.zghy.freshgo.util.BaseException;
+import xyz.zghy.freshgo.util.BusinessException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -131,7 +132,11 @@ public class FrmGoodsAdd extends JDialog implements ActionListener {
             bgm.setGoodsDesc(this.edtDesc.getText());
             bgm.setTypeId(this.cmbType.getSelectedIndex());
 
-            new GoodsManage().addGoods(bgm);
+            try {
+                new GoodsManage().addGoods(bgm);
+            } catch (BusinessException businessException) {
+                JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
             this.setVisible(false);
         }
     }

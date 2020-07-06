@@ -71,7 +71,7 @@ public class FreshTypeManage {
 
     }
 
-    public void deleteFreshType(BeanFreshType deleteFT) {
+    public void deleteFreshType(BeanFreshType deleteFT) throws BusinessException {
         Connection conn = null;
 
         try {
@@ -83,6 +83,7 @@ public class FreshTypeManage {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 throw new BusinessException("当前有商品属于该生鲜类型，无法删除");
+
             }
             rs.close();
             pst.close();
@@ -94,7 +95,7 @@ public class FreshTypeManage {
             if (rs.next()) {
                 maxTypeId = rs.getInt(1);
             } else {
-                throw new BusinessException("数据异常");
+                    throw new BusinessException("数据异常");
             }
 
             sql = "delete from fresh_type where type_id = ?";
@@ -120,7 +121,7 @@ public class FreshTypeManage {
             conn.commit();
 
 
-        } catch (SQLException | BusinessException throwables) {
+        } catch (SQLException throwables) {
             try {
                 conn.rollback();
             } catch (SQLException e) {

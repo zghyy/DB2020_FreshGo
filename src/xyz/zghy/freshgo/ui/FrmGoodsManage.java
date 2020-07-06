@@ -3,6 +3,7 @@ package xyz.zghy.freshgo.ui;
 import xyz.zghy.freshgo.control.GoodsManage;
 import xyz.zghy.freshgo.model.BeanGoodsMsg;
 import xyz.zghy.freshgo.util.BaseException;
+import xyz.zghy.freshgo.util.BusinessException;
 import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
@@ -20,11 +21,12 @@ public class FrmGoodsManage extends JDialog implements ActionListener {
     private JPanel toolBar = new JPanel();
     private Button btnAdd = new Button("添加商品");
     private Button btnDelete = new Button("删除商品");
-    private Object tblTitle[] = {"商品编号", "类型名称", "商品名称","商品价格","会员价格","商品数量"};
+    private Object tblTitle[] = {"商品编号", "类型名称", "商品名称", "商品价格", "会员价格", "商品数量"};
     private Object tblData[][];
     List<BeanGoodsMsg> goodsMsgs = null;
     DefaultTableModel tblMod = new DefaultTableModel();
     private JTable dataTable = new JTable(tblMod);
+
     private void reloadTable() {
         try {
             goodsMsgs = new GoodsManage().loadGoods();
@@ -41,22 +43,21 @@ public class FrmGoodsManage extends JDialog implements ActionListener {
             tblMod.setDataVector(tblData, tblTitle);
             this.dataTable.validate();
             this.dataTable.repaint();
-        }
-        catch (BaseException e){
+        } catch (BaseException e) {
             e.printStackTrace();
         }
     }
 
 
     public FrmGoodsManage(Frame owner, String title, boolean modal) {
-        super(owner,title,modal);
+        super(owner, title, modal);
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
         toolBar.add(btnAdd);
         toolBar.add(btnDelete);
-        this.getContentPane().add(toolBar,BorderLayout.NORTH);
+        this.getContentPane().add(toolBar, BorderLayout.NORTH);
 
         this.reloadTable();
-        this.getContentPane().add(new JScrollPane(this.dataTable),BorderLayout.CENTER);
+        this.getContentPane().add(new JScrollPane(this.dataTable), BorderLayout.CENTER);
 
         this.setSize(1000, 600);
         double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -73,18 +74,25 @@ public class FrmGoodsManage extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==btnAdd){
+        if (e.getSource() == btnAdd) {
             FrmGoodsAdd dlg = null;
             try {
-                dlg = new FrmGoodsAdd(this,"添加商品",true);
+                dlg = new FrmGoodsAdd(this, "添加商品", true);
             } catch (BaseException baseException) {
                 baseException.printStackTrace();
             }
             dlg.setVisible(true);
             this.reloadTable();
-        }
-        else if(e.getSource()==btnDelete){
-            new GoodsManage().
+        } else if (e.getSource() == btnDelete) {
+            try {
+                int i = this.dataTable.getSelectedRow();
+                BeanGoodsMsg deleteGM = this.goodsMsgs.get(i);
+                new GoodsManage().deleteGoods(deleteGM);
+            } catch (BusinessException businessException) {
+                JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
+            this.reloadTable();
+
         }
 
     }

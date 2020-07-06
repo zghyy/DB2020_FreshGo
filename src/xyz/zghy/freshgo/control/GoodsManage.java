@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2020/7/6 上午11:07
  */
 public class GoodsManage {
-    public void addGoods(BeanGoodsMsg bgm) {
+    public void addGoods(BeanGoodsMsg bgm) throws BusinessException {
         Connection conn = null;
         try {
             conn = DBUtil.getConnection();
@@ -47,26 +47,25 @@ public class GoodsManage {
 
             sql = "insert into goods_msg values(?,?,?,?,?,0,?,?)";
             pst = conn.prepareStatement(sql);
-            pst.setInt(1,insertid);
-            pst.setInt(2,bgm.getTypeId());
-            pst.setString(3,bgm.getGoodsName());
-            pst.setDouble(4,bgm.getGoodsPrice());
-            pst.setDouble(5,bgm.getGoodsVipPrice());
-            pst.setString(6,bgm.getGoodsSpecifications());
-            pst.setString(7,bgm.getGoodsDesc());
-            if(pst.executeUpdate()==1){
+            pst.setInt(1, insertid);
+            pst.setInt(2, bgm.getTypeId());
+            pst.setString(3, bgm.getGoodsName());
+            pst.setDouble(4, bgm.getGoodsPrice());
+            pst.setDouble(5, bgm.getGoodsVipPrice());
+            pst.setString(6, bgm.getGoodsSpecifications());
+            pst.setString(7, bgm.getGoodsDesc());
+            if (pst.executeUpdate() == 1) {
                 System.out.println("商品添加成功");
-            }
-            else{
+            } else {
                 throw new BusinessException("异常！添加失败");
             }
 
             pst.close();
 
-        } catch (SQLException | BusinessException throwables) {
+        } catch (SQLException  throwables) {
             throwables.printStackTrace();
-        }finally {
-            if(conn!=null){
+        } finally {
+            if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException throwables) {
@@ -77,9 +76,69 @@ public class GoodsManage {
 
     }
 
-    public void deleteGoods(){
+    public void deleteGoods(BeanGoodsMsg deleteGM) throws BusinessException {
         Connection conn = null;
-        
+        try {
+            conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
+
+
+            //TODO 针对后面与商品关联的内容，防止误删
+            String sql = "";
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+
+            int maxGoodsId = 0;
+            sql = "select max(g_id) from goods_msg";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                maxGoodsId = rs.getInt(1);
+            } else {
+                throw new BusinessException("数据异常");
+            }
+            rs.close();
+            pst.close();
+
+
+            sql = "delete from goods_msg where g_id = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, deleteGM.getGoodsId());
+            if (pst.executeUpdate() == 1) {
+                System.out.println("删除商品成功");
+            } else {
+                throw new BusinessException("数据删除异常");
+            }
+            pst.close();
+
+
+            for (int i = deleteGM.getGoodsId() + 1; i <= maxGoodsId; i++) {
+                sql = "update goods_msg set g_id= ? where g_id = ?";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1, i - 1);
+                pst.setInt(2, i);
+                pst.executeUpdate();
+                pst.close();
+            }
+
+            conn.commit();
+
+        } catch (SQLException  throwables) {
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throwables.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
     }
 
 

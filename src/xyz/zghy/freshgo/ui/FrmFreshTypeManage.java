@@ -3,6 +3,7 @@ package xyz.zghy.freshgo.ui;
 import xyz.zghy.freshgo.control.FreshTypeManage;
 import xyz.zghy.freshgo.model.BeanFreshType;
 import xyz.zghy.freshgo.util.BaseException;
+import xyz.zghy.freshgo.util.BusinessException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -80,7 +81,11 @@ public class FrmFreshTypeManage extends JDialog implements ActionListener {
             int i = this.dataTable.getSelectedRow();
             System.out.println(i);
             BeanFreshType deleteFT = this.freshTypes.get(i);
-            new FreshTypeManage().deleteFreshType(deleteFT);
+            try {
+                new FreshTypeManage().deleteFreshType(deleteFT);
+            } catch (BusinessException businessException) {
+                JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
             this.reloadTable();
         }
     }
