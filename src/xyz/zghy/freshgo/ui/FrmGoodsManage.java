@@ -81,6 +81,10 @@ public class FrmGoodsManage extends JDialog implements ActionListener {
                 baseException.printStackTrace();
             }
             dlg.setVisible(true);
+            this.reloadTable();
+        }
+        else if(e.getSource()==btnDelete){
+            new GoodsManage().
         }
 
     }

@@ -120,8 +120,6 @@ public class FrmGoodsAdd extends JDialog implements ActionListener {
 
             BeanGoodsMsg bgm = new BeanGoodsMsg();
             bgm.setGoodsName(this.edtName.getText());
-//            double goodsPrice =0;
-//            double goodsVipPrice =0;
             try {
                 bgm.setGoodsPrice(Double.parseDouble(this.edtPrice.getText()));
                 bgm.setGoodsVipPrice(Double.parseDouble(this.edtVipPrice.getText()));
@@ -134,6 +132,7 @@ public class FrmGoodsAdd extends JDialog implements ActionListener {
             bgm.setTypeId(this.cmbType.getSelectedIndex());
 
             new GoodsManage().addGoods(bgm);
+            this.setVisible(false);
         }
     }
 }

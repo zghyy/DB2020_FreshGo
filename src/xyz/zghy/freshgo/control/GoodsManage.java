@@ -3,6 +3,7 @@ package xyz.zghy.freshgo.control;
 
 import xyz.zghy.freshgo.model.BeanGoodsMsg;
 import xyz.zghy.freshgo.util.BaseException;
+import xyz.zghy.freshgo.util.BusinessException;
 import xyz.zghy.freshgo.util.DBUtil;
 
 import java.sql.Connection;
@@ -19,10 +20,66 @@ import java.util.List;
 public class GoodsManage {
     public void addGoods(BeanGoodsMsg bgm) {
         Connection conn = null;
-//        try{
-//
-//        }
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "select * from goods_msg where g_name = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, bgm.getGoodsName());
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                throw new BusinessException("该商品已存在，请不要重复添加");
+            }
+            rs.close();
+            pst.close();
 
+
+            int insertid = 0;
+            sql = "select max(g_id) from goods_msg";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                insertid = rs.getInt(1) + 1;
+            } else {
+                insertid = 1;
+            }
+            rs.close();
+            pst.close();
+
+            sql = "insert into goods_msg values(?,?,?,?,?,0,?,?)";
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1,insertid);
+            pst.setInt(2,bgm.getTypeId());
+            pst.setString(3,bgm.getGoodsName());
+            pst.setDouble(4,bgm.getGoodsPrice());
+            pst.setDouble(5,bgm.getGoodsVipPrice());
+            pst.setString(6,bgm.getGoodsSpecifications());
+            pst.setString(7,bgm.getGoodsDesc());
+            if(pst.executeUpdate()==1){
+                System.out.println("商品添加成功");
+            }
+            else{
+                throw new BusinessException("异常！添加失败");
+            }
+
+            pst.close();
+
+        } catch (SQLException | BusinessException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(conn!=null){
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public void deleteGoods(){
+        Connection conn = null;
+        
     }
 
 
