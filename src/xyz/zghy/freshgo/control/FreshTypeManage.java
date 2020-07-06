@@ -1,10 +1,7 @@
 package xyz.zghy.freshgo.control;
 
 import xyz.zghy.freshgo.model.BeanFreshType;
-import xyz.zghy.freshgo.util.BaseException;
-import xyz.zghy.freshgo.util.BusinessException;
-import xyz.zghy.freshgo.util.DBUtil;
-import xyz.zghy.freshgo.util.SystemUtil;
+import xyz.zghy.freshgo.util.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -74,7 +71,72 @@ public class FreshTypeManage {
 
     }
 
-    public void deleteFreshType() {
+    public void deleteFreshType(BeanFreshType deleteFT) {
+        Connection conn = null;
+
+        try {
+            conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
+            String sql = "select * from goods_msg where type_id=?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, deleteFT.getTypeId());
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                throw new BusinessException("当前有商品属于该生鲜类型，无法删除");
+            }
+            rs.close();
+            pst.close();
+
+            int maxTypeId = 0;
+            sql = "select max(type_id) from fresh_type";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                maxTypeId = rs.getInt(1);
+            } else {
+                throw new BusinessException("数据异常");
+            }
+
+            sql = "delete from fresh_type where type_id = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, deleteFT.getTypeId());
+            if (pst.executeUpdate() == 1) {
+                System.out.println("删除成功");
+            } else {
+                throw new BusinessException("数据删除异常");
+            }
+            pst.close();
+
+            for (int i = deleteFT.getTypeId() + 1; i <= maxTypeId; i++) {
+                sql = "update fresh_type set type_id = ? where type_id=?";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1, i - 1);
+                pst.setInt(2, i);
+                pst.executeUpdate();
+                pst.close();
+            }
+
+
+            conn.commit();
+
+
+        } catch (SQLException | BusinessException throwables) {
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throwables.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
 
     }
 

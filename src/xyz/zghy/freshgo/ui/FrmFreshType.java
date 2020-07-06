@@ -3,6 +3,7 @@ package xyz.zghy.freshgo.ui;
 import xyz.zghy.freshgo.control.FreshTypeManage;
 import xyz.zghy.freshgo.model.BeanFreshType;
 import xyz.zghy.freshgo.util.BaseException;
+import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -64,6 +65,7 @@ public class FrmFreshType extends JDialog implements ActionListener {
         this.validate();
 
         this.btnAdd.addActionListener(this);
+        this.btnDelete.addActionListener(this);
 
     }
 
@@ -73,6 +75,13 @@ public class FrmFreshType extends JDialog implements ActionListener {
         if (e.getSource()==this.btnAdd){
             FrmFreshTypeAdd dlg = new FrmFreshTypeAdd(this,"添加生鲜类型",true);
             dlg.setVisible(true);
+            this.reloadTable();
+        }
+        else if(e.getSource()==this.btnDelete){
+            int i = this.dataTable.getSelectedRow();
+            System.out.println(i);
+            BeanFreshType deleteFT = this.freshTypes.get(i);
+            new FreshTypeManage().deleteFreshType(deleteFT);
             this.reloadTable();
         }
     }
