@@ -7,6 +7,7 @@ package xyz.zghy.freshgo.model;
 public class BeanLocation {
     private int locationId;
     private int userId;
+    private int locateOrder;
     private String province;
     private String city;
     private String area;
@@ -76,5 +77,13 @@ public class BeanLocation {
 
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getLocateOrder() {
+        return locateOrder;
+    }
+
+    public void setLocateOrder(int locateOrder) {
+        this.locateOrder = locateOrder;
     }
 }

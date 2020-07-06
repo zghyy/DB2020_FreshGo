@@ -25,6 +25,13 @@ public class FrmMain extends JFrame implements ActionListener {
     private JMenuItem fullDiscountManage = new JMenuItem("满折信息管理");
     private JMenuItem limitTimeManage = new JMenuItem("限时促销管理");
 
+    private JMenu menuUser = new JMenu("用户选择");
+    private JMenuItem goods = new JMenuItem("商品一览");
+    private JMenuItem locateManage = new JMenuItem("配送地址管理");
+//    private JMenuItem couponManage = new JMenuItem("优惠券管理");
+//    private JMenuItem fullDiscountManage = new JMenuItem("满折信息管理");
+//    private JMenuItem limitTimeManage = new JMenuItem("限时促销管理");
+
     private FrmLogin Login = null;
 
     public FrmMain() {
@@ -33,31 +40,38 @@ public class FrmMain extends JFrame implements ActionListener {
         Login = new FrmLogin(this, "登录", true);
         Login.setVisible(true);
 
+        if ("管理员".equals(SystemUtil.currentLoginType)) {
+            this.menuAdmin.add(this.freshManage);
+            this.freshManage.addActionListener(this);
+            this.menuAdmin.add(this.goodsManage);
+            this.goodsManage.addActionListener(this);
+            this.menuAdmin.add(this.menuManage);
+            this.menuManage.addActionListener(this);
+            this.menuAdmin.add(this.couponManage);
+            this.couponManage.addActionListener(this);
+            this.menuAdmin.add(this.fullDiscountManage);
+            this.fullDiscountManage.addActionListener(this);
+            this.menuAdmin.add(this.limitTimeManage);
+            this.limitTimeManage.addActionListener(this);
+            menuBar.add(menuAdmin);
+            this.setJMenuBar(menuBar);
+        }
+        else {
+            this.menuUser.add(goods);
+            this.goods.addActionListener(this);
+            this.menuUser.add(locateManage);
+            this.locateManage.addActionListener(this);
+            menuBar.add(menuUser);
+            this.setJMenuBar(menuBar);
+        }
 
-        this.menuAdmin.add(this.freshManage);
-        this.freshManage.addActionListener(this);
-        this.menuAdmin.add(this.goodsManage);
-        this.goodsManage.addActionListener(this);
-        this.menuAdmin.add(this.menuManage);
-        this.menuManage.addActionListener(this);
-        this.menuAdmin.add(this.couponManage);
-        this.couponManage.addActionListener(this);
-        this.menuAdmin.add(this.fullDiscountManage);
-        this.fullDiscountManage.addActionListener(this);
-        this.menuAdmin.add(this.limitTimeManage);
-        this.limitTimeManage.addActionListener(this);
-
-        menuBar.add(menuAdmin);
-
-        this.setJMenuBar(menuBar);
 
 
         statusBar.setLayout(new FlowLayout(FlowLayout.LEFT));
         JLabel label = null;
         if ("管理员".equals(SystemUtil.currentLoginType)) {
             label = new JLabel("您好!   尊敬的管理员:" + SystemUtil.currentAdmin.getAdminName());
-        }
-        else {
+        } else {
             label = new JLabel("您好! " + SystemUtil.currentUser.getUserName());
 
         }
@@ -77,13 +91,15 @@ public class FrmMain extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == this.freshManage){
-            FrmFreshTypeManage dlg = new FrmFreshTypeManage(this,"生鲜类型管理",true);
+        if (e.getSource() == this.freshManage) {
+            FrmFreshTypeManage dlg = new FrmFreshTypeManage(this, "生鲜类型管理", true);
+            dlg.setVisible(true);
+        } else if (e.getSource() == this.goodsManage) {
+            FrmGoodsManage dlg = new FrmGoodsManage(this, "商品管理", true);
             dlg.setVisible(true);
         }
-        else if (e.getSource()==this.goodsManage){
-            FrmGoodsManage dlg = new FrmGoodsManage(this,"商品管理",true);
-            dlg.setVisible(true);
+        else if(e.getSource() == this.locateManage){
+
         }
     }
 }
