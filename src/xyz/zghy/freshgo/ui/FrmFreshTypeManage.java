@@ -3,7 +3,6 @@ package xyz.zghy.freshgo.ui;
 import xyz.zghy.freshgo.control.FreshTypeManage;
 import xyz.zghy.freshgo.model.BeanFreshType;
 import xyz.zghy.freshgo.util.BaseException;
-import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,10 +16,10 @@ import java.util.List;
  * @author ghy
  * @date 2020/7/6 上午8:17
  */
-public class FrmFreshType extends JDialog implements ActionListener {
+public class FrmFreshTypeManage extends JDialog implements ActionListener {
     private JPanel toolBar = new JPanel();
-    private Button btnAdd = new Button("添加");
-    private Button btnDelete = new Button("删除");
+    private Button btnAdd = new Button("添加生鲜类型");
+    private Button btnDelete = new Button("删除生鲜类型");
     private Object tblTitle[] = {"类型编号", "类型名称", "类型描述"};
     private Object tblData[][];
     List<BeanFreshType> freshTypes = null;
@@ -45,7 +44,7 @@ public class FrmFreshType extends JDialog implements ActionListener {
         }
     }
 
-    public FrmFreshType(Frame owner, String title, boolean modal){
+    public FrmFreshTypeManage(Frame owner, String title, boolean modal){
         super(owner, title, modal);
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
         toolBar.add(btnAdd);

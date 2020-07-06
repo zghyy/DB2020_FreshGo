@@ -44,7 +44,7 @@ public class FrmMain extends JFrame implements ActionListener {
         this.couponManage.addActionListener(this);
         this.menuAdmin.add(this.fullDiscountManage);
         this.fullDiscountManage.addActionListener(this);
-        this.menuAdmin.add(limitTimeManage);
+        this.menuAdmin.add(this.limitTimeManage);
         this.limitTimeManage.addActionListener(this);
 
         menuBar.add(menuAdmin);
@@ -78,7 +78,11 @@ public class FrmMain extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.freshManage){
-            FrmFreshType dlg = new FrmFreshType(this,"生鲜类型管理",true);
+            FrmFreshTypeManage dlg = new FrmFreshTypeManage(this,"生鲜类型管理",true);
+            dlg.setVisible(true);
+        }
+        else if (e.getSource()==this.goodsManage){
+            FrmGoodsManage dlg = new FrmGoodsManage(this,"商品管理",true);
             dlg.setVisible(true);
         }
     }

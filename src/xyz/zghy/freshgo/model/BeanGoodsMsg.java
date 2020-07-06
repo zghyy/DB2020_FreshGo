@@ -7,9 +7,10 @@ package xyz.zghy.freshgo.model;
 public class BeanGoodsMsg {
     private int goodsId;
     private int typeId;
+    private String typeName;
     private String goodsName;
-    private int goodsPrice;
-    private int goodsVipPrice;
+    private double goodsPrice;
+    private double goodsVipPrice;
     private int goodsCount;
     private String goodsSpecifications;
     private String goodsDesc;
@@ -39,19 +40,19 @@ public class BeanGoodsMsg {
         this.goodsName = goodsName;
     }
 
-    public int getGoodsPrice() {
+    public double getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(int goodsPrice) {
+    public void setGoodsPrice(double goodsPrice) {
         this.goodsPrice = goodsPrice;
     }
 
-    public int getGoodsVipPrice() {
+    public double getGoodsVipPrice() {
         return goodsVipPrice;
     }
 
-    public void setGoodsVipPrice(int goodsVipPrice) {
+    public void setGoodsVipPrice(double goodsVipPrice) {
         this.goodsVipPrice = goodsVipPrice;
     }
 
@@ -77,5 +78,13 @@ public class BeanGoodsMsg {
 
     public void setGoodsDesc(String goodsDesc) {
         this.goodsDesc = goodsDesc;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }
