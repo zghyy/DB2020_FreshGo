@@ -1,5 +1,6 @@
 package xyz.zghy.freshgo.ui;
 
+import xyz.zghy.freshgo.control.LimitTimePromotionManage;
 import xyz.zghy.freshgo.model.BeanFreshType;
 import xyz.zghy.freshgo.model.BeanLimitTimePromotion;
 
@@ -26,7 +27,19 @@ public class FrmLimitTimePromotionManage extends JDialog implements ActionListen
     private JTable dataTable = new JTable(tablmod);
 
     private void reloadTable(){
-
+        limitTimePromotions = new LimitTimePromotionManage().loadLimitTimePromotion();
+        tblData = new Object[limitTimePromotions.size()][6];
+        for (int i = 0; i < limitTimePromotions.size(); i++) {
+            tblData[i][0]=limitTimePromotions.get(i).getLimitTimePromotionOrder();
+            tblData[i][1] = limitTimePromotions.get(i).getGoodsName();
+            tblData[i][2] = limitTimePromotions.get(i).getLimitTimePromotionPrice();
+            tblData[i][3] = limitTimePromotions.get(i).getLimitTimePromotionCount();
+            tblData[i][4] = limitTimePromotions.get(i).getLimitTimePromotionStartTime();
+            tblData[i][5] = limitTimePromotions.get(i).getLimitTimePromotionEndTime();
+        }
+        tablmod.setDataVector(tblData, tblTitle);
+        this.dataTable.validate();
+        this.dataTable.repaint();
     }
 
 
@@ -57,6 +70,9 @@ public class FrmLimitTimePromotionManage extends JDialog implements ActionListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource()==this.btnAdd){
+            FrmLimitTimePromotionAdd dlg = new FrmLimitTimePromotionAdd(this,"限时促销商品添加",true);
+            dlg.setVisible(true);
+        }
     }
 }
