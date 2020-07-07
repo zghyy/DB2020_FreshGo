@@ -76,11 +76,7 @@ public class FrmGoodsManage extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnAdd) {
             FrmGoodsAdd dlg = null;
-            try {
-                dlg = new FrmGoodsAdd(this, "添加商品", true);
-            } catch (BaseException baseException) {
-                baseException.printStackTrace();
-            }
+            dlg = new FrmGoodsAdd(this, "添加商品", true);
             dlg.setVisible(true);
             this.reloadTable();
         } else if (e.getSource() == btnDelete) {

@@ -55,6 +55,7 @@ public class FreshTypeManage {
             } else {
                 throw new BusinessException("添加生鲜类别失败");
             }
+            pst.close();
 
         } catch (BaseException | SQLException throwables) {
             throwables.printStackTrace();

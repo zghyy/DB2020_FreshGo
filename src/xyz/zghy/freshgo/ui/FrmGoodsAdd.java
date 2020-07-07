@@ -41,7 +41,7 @@ public class FrmGoodsAdd extends JDialog implements ActionListener {
     private List<BeanFreshType> Type = new ArrayList<BeanFreshType>();
     private JComboBox cmbType = null;
 
-    public FrmGoodsAdd(JDialog owner, String title, boolean modal) throws BaseException {
+    public FrmGoodsAdd(JDialog owner, String title, boolean modal){
         super(owner, title, true);
         toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
         toolBar.add(btnCheck);

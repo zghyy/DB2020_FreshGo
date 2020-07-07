@@ -99,7 +99,8 @@ public class FrmMain extends JFrame implements ActionListener {
             dlg.setVisible(true);
         }
         else if(e.getSource() == this.locateManage){
-
+            FrmLocationManage dlg = new FrmLocationManage(this,"配送地址管理",true);
+            dlg.setVisible(true);
         }
     }
 }
