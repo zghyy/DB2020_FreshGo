@@ -110,5 +110,9 @@ public class FrmMain extends JFrame implements ActionListener {
             FrmPurchaseManage dlg  = new FrmPurchaseManage(this,"商品采购",true);
             dlg.setVisible(true);
         }
+        else if(e.getSource()==this.limitTimeManage){
+            FrmLimitTimePromotionManage dlg = new FrmLimitTimePromotionManage(this,"显示促销商品",true);
+            dlg.setVisible(true);
+        }
     }
 }

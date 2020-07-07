@@ -4,8 +4,10 @@ import xyz.zghy.freshgo.model.BeanAdmin;
 import xyz.zghy.freshgo.model.BeanUsers;
 import xyz.zghy.freshgo.util.BusinessException;
 import xyz.zghy.freshgo.util.DBUtil;
+import xyz.zghy.freshgo.util.SystemUtil;
 
 import java.sql.*;
+import java.text.ParseException;
 
 /**
  * @author ghy
@@ -113,7 +115,7 @@ public class UserManage {
                     res.setUserEmail(rs.getString(6));
                     res.setUserCity(rs.getString(7));
                     res.setUserIsVip(rs.getString(9));
-                    res.setUserVipEndDate(rs.getDate(10));
+                    res.setUserVipEndDate(SystemUtil.SDF.parse(rs.getString(10)));
                     rs.close();
                     pst.close();
                     return res;
@@ -125,7 +127,7 @@ public class UserManage {
             }
 
 
-        } catch (SQLException throwables) {
+        } catch (SQLException | ParseException throwables) {
             throwables.printStackTrace();
         } finally {
             if (conn != null) {

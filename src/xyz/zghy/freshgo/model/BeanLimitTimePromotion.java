@@ -8,11 +8,29 @@ import java.util.Date;
  */
 public class BeanLimitTimePromotion {
     private int limitTimePromotionId;
+    private int limitTimePromotionOrder;
     private int goodsId;
+    private String goodsName;
     private int limitTimePromotionPrice;
     private int limitTimePromotionCount;
     private Date limitTimePromotionStartTime;
     private Date limitTimePromotionEndTime;
+
+    public int getLimitTimePromotionOrder() {
+        return limitTimePromotionOrder;
+    }
+
+    public void setLimitTimePromotionOrder(int limitTimePromotionOrder) {
+        this.limitTimePromotionOrder = limitTimePromotionOrder;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
 
     public int getLimitTimePromotionId() {
         return limitTimePromotionId;
