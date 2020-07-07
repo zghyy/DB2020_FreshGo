@@ -7,8 +7,35 @@ package xyz.zghy.freshgo.model;
 public class BeanPurchase {
     private int purchaseId;
     private int adminId;
+    private String adminName;
+    private int goodsId;
+    private String goodsName;
     private int purchaseNum;
     private String purchaseStatus;
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
+    }
 
     public int getPurchaseId() {
         return purchaseId;

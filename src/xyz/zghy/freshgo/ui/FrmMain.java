@@ -1,5 +1,6 @@
 package xyz.zghy.freshgo.ui;
 
+import com.mysql.jdbc.JDBC4MultiHostMySQLConnection;
 import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
@@ -24,6 +25,7 @@ public class FrmMain extends JFrame implements ActionListener {
     private JMenuItem couponManage = new JMenuItem("优惠券管理");
     private JMenuItem fullDiscountManage = new JMenuItem("满折信息管理");
     private JMenuItem limitTimeManage = new JMenuItem("限时促销管理");
+    private JMenuItem purchase = new JMenuItem("商品采购");
 
     private JMenu menuUser = new JMenu("用户选择");
     private JMenuItem goods = new JMenuItem("商品一览");
@@ -53,6 +55,8 @@ public class FrmMain extends JFrame implements ActionListener {
             this.fullDiscountManage.addActionListener(this);
             this.menuAdmin.add(this.limitTimeManage);
             this.limitTimeManage.addActionListener(this);
+            this.menuAdmin.add(this.purchase);
+            this.purchase.addActionListener(this);
             menuBar.add(menuAdmin);
             this.setJMenuBar(menuBar);
         }
@@ -100,6 +104,10 @@ public class FrmMain extends JFrame implements ActionListener {
         }
         else if(e.getSource() == this.locateManage){
             FrmLocationManage dlg = new FrmLocationManage(this,"配送地址管理",true);
+            dlg.setVisible(true);
+        }
+        else if(e.getSource() == this.purchase){
+            FrmPurchaseManage dlg  = new FrmPurchaseManage(this,"商品采购",true);
             dlg.setVisible(true);
         }
     }
