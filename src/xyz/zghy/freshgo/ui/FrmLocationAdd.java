@@ -106,6 +106,7 @@ public class FrmLocationAdd extends JDialog implements ActionListener {
             } catch (BusinessException businessException) {
                 JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
             }
+            this.setVisible(false);
         }
     }
 }

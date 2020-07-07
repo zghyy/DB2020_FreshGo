@@ -2,9 +2,11 @@ package xyz.zghy.freshgo.ui;
 
 import xyz.zghy.freshgo.control.GoodsManage;
 import xyz.zghy.freshgo.control.LocationManage;
+import xyz.zghy.freshgo.model.BeanFreshType;
 import xyz.zghy.freshgo.model.BeanGoodsMsg;
 import xyz.zghy.freshgo.model.BeanLocation;
 import xyz.zghy.freshgo.util.BaseException;
+import xyz.zghy.freshgo.util.BusinessException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -75,7 +77,14 @@ public class FrmLocationManage extends JDialog implements ActionListener {
             dlg.setVisible(true);
             reloadTable();
         } else if (e.getSource() == btnDelete) {
-
+            int i = this.dataTable.getSelectedRow();
+            BeanLocation deleteLocation = this.locations.get(i);
+            try {
+                new LocationManage().deleteLocation(deleteLocation);
+            } catch (BusinessException businessException) {
+                JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
+            this.reloadTable();
         }
     }
 }

@@ -61,7 +61,7 @@ public class UserManage {
             pst.setString(6, userEmail);
             pst.setString(7, userCity);
             pst.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
-            pst.setString(9,"否");
+            pst.setString(9, "否");
             if (pst.executeUpdate() == 1) {
                 System.out.println("添加用户成功");
             } else {
@@ -72,9 +72,9 @@ public class UserManage {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }finally {
-            if(conn!=null){
-                try{
+        } finally {
+            if (conn != null) {
+                try {
                     conn.close();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -98,16 +98,24 @@ public class UserManage {
         Connection conn = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select u_pwd from users where u_name=?";
+            String sql = "select * from users where u_name=?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, userName);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                if (rs.getString(1).equals(userPwd)) {
+                if (rs.getString(4).equals(userPwd)) {
+                    BeanUsers res = new BeanUsers();
+                    res.setUserId(rs.getInt(1));
+                    res.setUserName(rs.getString(2));
+                    res.setUserSex(rs.getString(3));
+                    res.setUserPwd(rs.getString(4));
+                    res.setUserPhone(rs.getInt(5));
+                    res.setUserEmail(rs.getString(6));
+                    res.setUserCity(rs.getString(7));
+                    res.setUserIsVip(rs.getString(9));
+                    res.setUserVipEndDate(rs.getDate(10));
                     rs.close();
                     pst.close();
-                    BeanUsers res = new BeanUsers();
-                    res.setUserName(userName);
                     return res;
                 } else {
                     throw new BusinessException("密码错误");
