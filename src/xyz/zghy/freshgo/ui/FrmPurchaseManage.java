@@ -1,8 +1,8 @@
 package xyz.zghy.freshgo.ui;
 
 import xyz.zghy.freshgo.control.PurchaseManage;
-import xyz.zghy.freshgo.model.BeanGoodsMsg;
 import xyz.zghy.freshgo.model.BeanPurchase;
+import xyz.zghy.freshgo.util.BusinessException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +18,7 @@ import java.util.List;
 public class FrmPurchaseManage extends JDialog implements ActionListener {
     private JPanel toolBar = new JPanel();
     private Button btnAdd = new Button("新增采购");
-    private Button btnSpeedOn = new Button("加速送货");
+    private Button btnSpeedUp = new Button("加速送货");
     private Object tblTitle[] = {"采购单编号", "操作管理员姓名", "商品名称", "商品采购数量", "采购订单状态"};
     private Object tblData[][];
     List<BeanPurchase> purchases = null;
@@ -46,7 +46,7 @@ public class FrmPurchaseManage extends JDialog implements ActionListener {
         super(owner, title, modal);
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
         toolBar.add(btnAdd);
-        toolBar.add(btnSpeedOn);
+        toolBar.add(btnSpeedUp);
         this.getContentPane().add(toolBar, BorderLayout.NORTH);
 
         this.reloadTable();
@@ -61,7 +61,7 @@ public class FrmPurchaseManage extends JDialog implements ActionListener {
         this.validate();
 
         this.btnAdd.addActionListener(this);
-        this.btnSpeedOn.addActionListener(this);
+        this.btnSpeedUp.addActionListener(this);
 
 
     }
@@ -69,8 +69,19 @@ public class FrmPurchaseManage extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnAdd) {
-
-        } else if (e.getSource() == btnSpeedOn) {
+            FrmPurchaseAdd dlg = new FrmPurchaseAdd(this,"新增采购单",true);
+            dlg.setVisible(true);
+            this.reloadTable();
+        } else if (e.getSource() == btnSpeedUp) {
+            //TODO
+            int i = this.dataTable.getSelectedRow();
+            BeanPurchase bp = this.purchases.get(i);
+            try {
+                new PurchaseManage().speedUp(bp);
+            } catch (BusinessException businessException) {
+                JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
+            this.reloadTable();
         }
 
     }

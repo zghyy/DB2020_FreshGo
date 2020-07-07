@@ -27,14 +27,18 @@ public class AdminManage {
         Connection conn = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "select a_pwd from admin where a_name=?";
+            String sql = "select * from admin where a_name=?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, adminName);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                if (rs.getString(1).equals(adminPwd)) {
+                if (rs.getString(3).equals(adminPwd)) {
                     BeanAdmin res = new BeanAdmin();
-                    res.setAdminName(adminName);
+                    res.setAdminId(rs.getInt(1));
+                    res.setAdminName(rs.getString(2));
+                    res.setAdminPwd(rs.getString(3));
+                    rs.close();
+                    pst.close();
                     return res;
                 }
                 else {
