@@ -93,7 +93,7 @@ public class FrmLimitTimePromotionAdd extends JDialog implements ActionListener 
 
         this.getContentPane().add(workPane, BorderLayout.CENTER);
 
-        this.setSize(300, 150);
+        this.setSize(300, 250);
         // 屏幕居中显示
         double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -122,7 +122,7 @@ public class FrmLimitTimePromotionAdd extends JDialog implements ActionListener 
                 blp.setLimitTimePromotionEndTime(SystemUtil.SDF.parse(this.edtEndTime.getText()));
 
             } catch (ParseException parseException) {
-                parseException.printStackTrace();
+                JOptionPane.showMessageDialog(null, "请按照yyyy-MM-dd HH:mm:ss的格式填写日期", "错误", JOptionPane.ERROR_MESSAGE);
             }
             try {
                 new LimitTimePromotionManage().addLimitTimePromotion(blp);

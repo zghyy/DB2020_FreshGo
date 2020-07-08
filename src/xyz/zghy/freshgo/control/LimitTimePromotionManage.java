@@ -43,7 +43,7 @@ public class LimitTimePromotionManage {
             rs.close();
             pst.close();
 
-            sql = "insert into goods_msg(ltp_order,g_id,g_name,ltp_price,ltp_count,ltp_start_date,ltp_end_date)" +
+            sql = "insert into LTpromotion(ltp_order,g_id,g_name,ltp_price,ltp_count,ltp_start_date,ltp_end_date)" +
                     " values(?,?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
             pst.setInt(1, insertOrder);
@@ -52,15 +52,73 @@ public class LimitTimePromotionManage {
             pst.setInt(4, blp.getLimitTimePromotionPrice());
             pst.setInt(5, blp.getLimitTimePromotionCount());
             pst.setTimestamp(6, new Timestamp(blp.getLimitTimePromotionStartTime().getTime()));
+            System.out.println(new Timestamp(blp.getLimitTimePromotionStartTime().getTime()));
             pst.setTimestamp(7, new Timestamp(blp.getLimitTimePromotionEndTime().getTime()));
-            if (pst.executeUpdate()==1){
+            if (pst.executeUpdate() == 1) {
                 System.out.println("促销商品信息添加成功");
-            }else {
+            } else {
                 throw new BusinessException("异常！添加失败");
             }
-
+            pst.close();
 
         } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public void deleteLimitTimePromotion(BeanLimitTimePromotion deleteBLTP) throws BusinessException {
+        Connection conn = null;
+        try {
+            conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
+
+            int maxPromotionOrder = 0;
+            String sql = "select max(ltp_order) from  LTpromotion";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                maxPromotionOrder = rs.getInt(1);
+            } else {
+                throw new BusinessException("数据异常");
+            }
+            rs.close();
+            pst.close();
+
+            sql = "delete from LTpromotion where ltp_id=?";
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, deleteBLTP.getLimitTimePromotionId());
+            if (pst.executeUpdate() == 1) {
+                System.out.println("删除促销商品成功");
+            } else {
+                throw new BusinessException("数据删除异常");
+            }
+
+            for (int i = deleteBLTP.getLimitTimePromotionOrder(); i <= maxPromotionOrder; i++) {
+                sql = "update LTpromotion set ltp_order = ? where ltp_order=?";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1, i - 1);
+                pst.setInt(2, i);
+                pst.executeUpdate();
+                pst.close();
+            }
+
+            conn.commit();
+
+        } catch (SQLException throwables) {
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             throwables.printStackTrace();
         } finally {
             if (conn != null) {
