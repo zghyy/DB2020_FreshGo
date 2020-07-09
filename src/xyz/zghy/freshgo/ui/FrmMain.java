@@ -117,7 +117,6 @@ public class FrmMain extends JFrame implements ActionListener {
 
 
     void reloadOrderDetails() {
-        System.out.println(this.orderDetails.size());
         tblDataOrdersDetail = new Object[this.orderDetails.size()][5];
         for (int i = 0; i < this.orderDetails.size(); i++) {
             tblDataOrdersDetail[i][0] = orderDetails.get(i).getGoodsName();
@@ -127,6 +126,7 @@ public class FrmMain extends JFrame implements ActionListener {
         tblModOrderDetails.setDataVector(tblDataOrdersDetail, tblTitleOrdersDetail);
         this.dataTableOrderDetails.validate();
         this.dataTableOrderDetails.repaint();
+        SystemUtil.globalOrderDetails=this.orderDetails;
 
     }
 
@@ -282,6 +282,14 @@ public class FrmMain extends JFrame implements ActionListener {
             } else {
                 this.orderDetails.remove(i);
                 this.reloadOrderDetails();
+            }
+        } else if (e.getSource() == this.btSub) {
+            if (this.orderDetails.size() == 0) {
+                JOptionPane.showMessageDialog(null, "购物车还是空的，无法提交订单哦！", "错误", JOptionPane.ERROR_MESSAGE);
+
+            } else {
+                FrmSelectLocation dlg = new FrmSelectLocation(this, "地址选择界面", true);
+                dlg.setVisible(true);
             }
         }
     }

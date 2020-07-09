@@ -1,7 +1,7 @@
 package xyz.zghy.freshgo.ui;
 
+import xyz.zghy.freshgo.control.UserManage;
 import xyz.zghy.freshgo.util.BaseException;
-import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -123,7 +123,7 @@ public class FrmRegister extends JDialog implements ActionListener {
                 String userCity = editCity.getText();
                 String userEmail = editEmail.getText();
             try {
-                SystemUtil.userManage.register(userName, userPwd, userPwd2, userSex, userPhone, userCity, userEmail);
+                new UserManage().register(userName, userPwd, userPwd2, userSex, userPhone, userCity, userEmail);
                 this.setVisible(false);
             } catch (BaseException e1) {
                 JOptionPane.showMessageDialog(null, e1.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);

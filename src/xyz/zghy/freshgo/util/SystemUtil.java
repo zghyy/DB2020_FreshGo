@@ -1,12 +1,12 @@
 package xyz.zghy.freshgo.util;
 
-import xyz.zghy.freshgo.control.AdminManage;
-import xyz.zghy.freshgo.control.FreshTypeManage;
-import xyz.zghy.freshgo.control.UserManage;
 import xyz.zghy.freshgo.model.BeanAdmin;
+import xyz.zghy.freshgo.model.BeanOrderDetail;
 import xyz.zghy.freshgo.model.BeanUsers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author ghy
@@ -17,7 +17,5 @@ public class SystemUtil {
     public static BeanAdmin currentAdmin = null;
     public static BeanUsers currentUser = null;
     public static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    public static AdminManage adminManage = new AdminManage();
-    public static UserManage userManage = new UserManage();
-    public static FreshTypeManage freshTypeManage = new FreshTypeManage();
+    public static List<BeanOrderDetail> globalOrderDetails = new ArrayList<BeanOrderDetail>();
 }

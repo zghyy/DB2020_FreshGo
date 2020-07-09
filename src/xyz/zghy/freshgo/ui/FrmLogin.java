@@ -1,6 +1,8 @@
 package xyz.zghy.freshgo.ui;
 
 
+import xyz.zghy.freshgo.control.AdminManage;
+import xyz.zghy.freshgo.control.UserManage;
 import xyz.zghy.freshgo.util.BusinessException;
 import xyz.zghy.freshgo.util.BaseException;
 import xyz.zghy.freshgo.util.SystemUtil;
@@ -113,13 +115,12 @@ public class FrmLogin extends JDialog implements ActionListener {
             try {
                 if ("用户".equals(this.LoginAccountType)) {
                     SystemUtil.currentLoginType = "用户";
-                    SystemUtil.currentUser = SystemUtil.userManage.login(loginName, loginPwd);
+                    SystemUtil.currentUser = new UserManage().login(loginName, loginPwd);
                     System.out.println("用户登录成功");
                     this.setVisible(false);
                 } else if ("管理员".equals(this.LoginAccountType)) {
                     SystemUtil.currentLoginType = "管理员";
-                    SystemUtil.currentAdmin = SystemUtil.adminManage.login(loginName, loginPwd);
-                    System.out.println("管理员登录成功");
+                    SystemUtil.currentAdmin = new AdminManage().login(loginName, loginPwd);
                     this.setVisible(false);
                 } else {
                     throw new BusinessException("访问出错");
