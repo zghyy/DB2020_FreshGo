@@ -115,7 +115,11 @@ public class UserManage {
                     res.setUserEmail(rs.getString(6));
                     res.setUserCity(rs.getString(7));
                     res.setUserIsVip(rs.getString(9));
-                    res.setUserVipEndDate(SystemUtil.SDF.parse(rs.getString(10)));
+                    if (rs.getString(10) == null) {
+                        res.setUserVipEndDate(null);
+                    } else {
+                        res.setUserVipEndDate(SystemUtil.SDF.parse(rs.getString(10)));
+                    }
                     rs.close();
                     pst.close();
                     return res;

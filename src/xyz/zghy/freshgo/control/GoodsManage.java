@@ -1,6 +1,7 @@
 package xyz.zghy.freshgo.control;
 
 
+import xyz.zghy.freshgo.model.BeanFreshType;
 import xyz.zghy.freshgo.model.BeanGoodsMsg;
 import xyz.zghy.freshgo.util.BaseException;
 import xyz.zghy.freshgo.util.BusinessException;
@@ -63,7 +64,7 @@ public class GoodsManage {
 
             pst.close();
 
-        } catch (SQLException  throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
             if (conn != null) {
@@ -124,7 +125,7 @@ public class GoodsManage {
 
             conn.commit();
 
-        } catch (SQLException  throwables) {
+        } catch (SQLException throwables) {
             try {
                 conn.rollback();
             } catch (SQLException e) {
@@ -180,5 +181,41 @@ public class GoodsManage {
         return res;
     }
 
+    public List<BeanGoodsMsg> loadGoodsByFresh(BeanFreshType bft) {
+        List<BeanGoodsMsg> res = new ArrayList<BeanGoodsMsg>();
+        Connection conn = null;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "select g_order,type_name,g_name,g_price,g_vipprice,g_count,g_id " +
+                    "from goods_msg gm,fresh_type ft where gm.type_id = ft.type_id and gm.type_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1,bft.getTypeId());
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                BeanGoodsMsg bgm = new BeanGoodsMsg();
+                bgm.setGoodsOrder(rs.getInt(1));
+                bgm.setTypeName(rs.getString(2));
+                bgm.setGoodsName(rs.getString(3));
+                bgm.setGoodsPrice(rs.getInt(4));
+                bgm.setGoodsVipPrice(rs.getInt(5));
+                bgm.setGoodsCount(rs.getInt(6));
+                bgm.setGoodsId(rs.getInt(7));
+                res.add(bgm);
+            }
+            rs.close();
+            pst.close();
 
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return res;
+    }
 }

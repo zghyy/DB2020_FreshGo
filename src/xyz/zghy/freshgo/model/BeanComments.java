@@ -1,5 +1,8 @@
 package xyz.zghy.freshgo.model;
 
+
+import java.util.Date;
+
 /**
  * @author ghy
  * @date 2020/7/4 上午12:12
@@ -7,8 +10,9 @@ package xyz.zghy.freshgo.model;
 public class BeanComments {
     private int userId;
     private int goodsId;
+    private int commentOrder;
     private String commentMsg;
-    private String commentDate;
+    private Date commentDate;
     private int commentStar;
     //TODO 这里缺个图片变量
 
@@ -29,6 +33,14 @@ public class BeanComments {
         this.goodsId = goodsId;
     }
 
+    public int getCommentOrder() {
+        return commentOrder;
+    }
+
+    public void setCommentOrder(int commentOrder) {
+        this.commentOrder = commentOrder;
+    }
+
     public String getCommentMsg() {
         return commentMsg;
     }
@@ -37,11 +49,11 @@ public class BeanComments {
         this.commentMsg = commentMsg;
     }
 
-    public String getCommentDate() {
+    public Date getCommentDate() {
         return commentDate;
     }
 
-    public void setCommentDate(String commentDate) {
+    public void setCommentDate(Date commentDate) {
         this.commentDate = commentDate;
     }
 
