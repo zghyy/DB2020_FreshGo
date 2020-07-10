@@ -52,7 +52,6 @@ public class LimitTimePromotionManage {
             pst.setInt(4, blp.getLimitTimePromotionPrice());
             pst.setInt(5, blp.getLimitTimePromotionCount());
             pst.setTimestamp(6, new Timestamp(blp.getLimitTimePromotionStartTime().getTime()));
-            System.out.println(new Timestamp(blp.getLimitTimePromotionStartTime().getTime()));
             pst.setTimestamp(7, new Timestamp(blp.getLimitTimePromotionEndTime().getTime()));
             if (pst.executeUpdate() == 1) {
                 System.out.println("促销商品信息添加成功");

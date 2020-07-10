@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class BeanComments {
     private int userId;
+    private String userName;
     private int goodsId;
     private int commentOrder;
     private String commentMsg;
@@ -16,6 +17,14 @@ public class BeanComments {
     private int commentStar;
     //TODO 这里缺个图片变量
 
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public int getUserId() {
         return userId;

@@ -1,7 +1,9 @@
 package xyz.zghy.freshgo.ui;
 
+import xyz.zghy.freshgo.control.CommentsManage;
 import xyz.zghy.freshgo.control.FreshTypeManage;
 import xyz.zghy.freshgo.control.GoodsManage;
+import xyz.zghy.freshgo.model.BeanComments;
 import xyz.zghy.freshgo.model.BeanFreshType;
 import xyz.zghy.freshgo.model.BeanGoodsMsg;
 import xyz.zghy.freshgo.model.BeanOrderDetail;
@@ -61,11 +63,16 @@ public class FrmMain extends JFrame implements ActionListener {
     DefaultTableModel tblModGoods = new DefaultTableModel();
     private JTable dataTableGoods = new JTable(tblModGoods);
 
-    //TODO 评价
+    //评价
+    private Object tblTitleComments[] = {"评论人", "评论内容", "星级", "评论日期"};
+    private Object tblDataComments[][];
+    List<BeanComments> comments = null;
+    DefaultTableModel tblModComments = new DefaultTableModel();
+    private JTable dataTableComments = new JTable(tblModComments);
 
 
     //订单
-    private Object tblTitleOrdersDetail[] = {"商品名称", "商品单价", "商品数量", ""};
+    private Object tblTitleOrdersDetail[] = {"商品名称", "商品单价", "商品数量"};
     private Object tblDataOrdersDetail[][];
     List<BeanOrderDetail> orderDetails = new ArrayList<BeanOrderDetail>();
     DefaultTableModel tblModOrderDetails = new DefaultTableModel();
@@ -115,6 +122,28 @@ public class FrmMain extends JFrame implements ActionListener {
         this.dataTableGoods.repaint();
     }
 
+    void reloadComments() {
+        comments = new CommentsManage().loadComments(this.goodsMsgs.get(this.dataTableGoods.getSelectedRow()).getGoodsId());
+        tblDataComments = new Object[comments.size()][4];
+        for (int i = 0; i < comments.size(); i++) {
+            tblDataComments[i][0] = comments.get(i).getUserName();
+            tblDataComments[i][1] = comments.get(i).getCommentMsg();
+            tblDataComments[i][2] = comments.get(i).getCommentStar();
+            tblDataComments[i][3] = SystemUtil.SDF.format(comments.get(i).getCommentDate());
+
+        }
+        tblModComments.setDataVector(tblDataComments, tblTitleComments);
+        this.dataTableComments.validate();
+        this.dataTableComments.repaint();
+    }
+
+    void reloadEmptyComments() {
+        tblDataComments = new Object[0][4];
+        tblModComments.setDataVector(tblDataComments, tblTitleComments);
+        this.dataTableComments.validate();
+        this.dataTableComments.repaint();
+    }
+
 
     void reloadOrderDetails() {
         tblDataOrdersDetail = new Object[this.orderDetails.size()][5];
@@ -126,7 +155,7 @@ public class FrmMain extends JFrame implements ActionListener {
         tblModOrderDetails.setDataVector(tblDataOrdersDetail, tblTitleOrdersDetail);
         this.dataTableOrderDetails.validate();
         this.dataTableOrderDetails.repaint();
-        SystemUtil.globalOrderDetails=this.orderDetails;
+        SystemUtil.globalOrderDetails = this.orderDetails;
 
     }
 
@@ -176,13 +205,16 @@ public class FrmMain extends JFrame implements ActionListener {
                     reloadGoodsTable(FrmMain.this.freshTypes.get(FrmMain.this.dataTableFresh.getSelectedRow()));
                 }
             });
+            JScrollPane newComments = new JScrollPane(this.dataTableComments);
+            newComments.setPreferredSize(new Dimension(750, 0));
+            this.mainPanel.add(newComments, BorderLayout.EAST);
 
-
-            this.mainPanel.add(new JScrollPane(this.dataTableGoods), BorderLayout.CENTER);
+            JScrollPane newGoods = new JScrollPane(this.dataTableGoods);
+            this.mainPanel.add(newGoods, BorderLayout.CENTER);
             this.dataTableGoods.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    reloadComments();
 //                    super.mouseClicked(e);
                 }
             });
@@ -211,6 +243,7 @@ public class FrmMain extends JFrame implements ActionListener {
 
             this.reloadFreshTable();
             this.reloadEmptyGoodsTable();
+            this.reloadEmptyComments();
             this.reloadOrderDetails();
 
         }
