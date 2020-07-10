@@ -317,6 +317,7 @@ public class FrmMain extends JFrame implements ActionListener {
                         return;
                     }
                 }
+                bod.setGoodsId(this.goodsMsgs.get(this.dataTableGoods.getSelectedRow()).getGoodsId());
                 bod.setGoodsName(this.goodsMsgs.get(this.dataTableGoods.getSelectedRow()).getGoodsName());
                 bod.setGoodsCount(1);
                 if (SystemUtil.currentUser.getUserIsVip().equals("y")) {
@@ -343,8 +344,10 @@ public class FrmMain extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "购物车还是空的，无法提交订单哦！", "错误", JOptionPane.ERROR_MESSAGE);
 
             } else {
-                FrmSelectLocation dlg = new FrmSelectLocation(this, "地址选择界面", true);
+                FrmSelectInfo dlg = new FrmSelectInfo(this, "地址选择界面", true);
                 dlg.setVisible(true);
+                this.orderDetails=SystemUtil.globalOrderDetails;
+                this.reloadOrderDetails();
             }
         }
     }

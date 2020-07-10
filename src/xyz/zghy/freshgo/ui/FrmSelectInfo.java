@@ -3,19 +3,23 @@ package xyz.zghy.freshgo.ui;
 import xyz.zghy.freshgo.control.LocationManage;
 import xyz.zghy.freshgo.control.OrdersManage;
 import xyz.zghy.freshgo.model.BeanLocation;
+import xyz.zghy.freshgo.model.BeanOrderDetail;
+import xyz.zghy.freshgo.util.BusinessException;
+import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author ghy
  * @date 2020/7/9 下午6:37
  */
-public class FrmSelectLocation extends JDialog implements ActionListener {
+public class FrmSelectInfo extends JDialog implements ActionListener {
     private JPanel toolBar = new JPanel();
     private Button btnCheck = new Button("确认");
     private Button btnDCanel = new Button("取消");
@@ -43,7 +47,7 @@ public class FrmSelectLocation extends JDialog implements ActionListener {
         this.dataTable.repaint();
     }
 
-    public FrmSelectLocation(Frame owner, String title, boolean modal) {
+    public FrmSelectInfo(Frame owner, String title, boolean modal) {
         super(owner, title, modal);
         toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
         toolBar.add(btnCheck);
@@ -67,14 +71,20 @@ public class FrmSelectLocation extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==btnDCanel){
+        if (e.getSource() == btnDCanel) {
             this.setVisible(false);
-        }
-        else if(e.getSource()==btnCheck){
+        } else if (e.getSource() == btnCheck) {
             //TODO 创建订单
             int i = this.dataTable.getSelectedRow();
-
-            new OrdersManage().createOrder(this.locations.get(i));
+            if (i == -1) {
+                JOptionPane.showMessageDialog(null, "还未选择地址！", "错误", JOptionPane.ERROR_MESSAGE);
+            }
+            try {
+                new OrdersManage().createOrder(this.locations.get(i));
+//                SystemUtil.globalOrderDetails = new ArrayList<BeanOrderDetail>();
+            } catch (BusinessException businessException) {
+                JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
             this.setVisible(false);
         }
 
