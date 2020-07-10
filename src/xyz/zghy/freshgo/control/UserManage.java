@@ -6,6 +6,7 @@ import xyz.zghy.freshgo.util.BusinessException;
 import xyz.zghy.freshgo.util.DBUtil;
 import xyz.zghy.freshgo.util.SystemUtil;
 
+import javax.swing.*;
 import java.sql.*;
 import java.text.ParseException;
 
@@ -144,6 +145,41 @@ public class UserManage {
             }
         }
         return null;
+    }
+
+    public void regVip() throws BusinessException {
+        if ("y".equals(SystemUtil.currentUser.getUserIsVip())) {
+            throw new BusinessException("无法重复注册");
+        }
+        Connection conn = null;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "update users set u_isvip=? , u_vip_end_date=?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, "y");
+            pst.setTimestamp(2, new Timestamp(System.currentTimeMillis() + (30 * 24 * 60 * 60 * 1000L)));
+            if (pst.executeUpdate() == 1) {
+                System.out.println("成功注册vip");
+                SystemUtil.currentUser.setUserIsVip("y");
+                JOptionPane.showMessageDialog(null, "你现在是vip啦！", "恭喜", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new BusinessException("数据添加失败");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void loadVip() {
+
     }
 
 }

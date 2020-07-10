@@ -3,11 +3,13 @@ package xyz.zghy.freshgo.ui;
 import xyz.zghy.freshgo.control.CommentsManage;
 import xyz.zghy.freshgo.control.FreshTypeManage;
 import xyz.zghy.freshgo.control.GoodsManage;
+import xyz.zghy.freshgo.control.UserManage;
 import xyz.zghy.freshgo.model.BeanComments;
 import xyz.zghy.freshgo.model.BeanFreshType;
 import xyz.zghy.freshgo.model.BeanGoodsMsg;
 import xyz.zghy.freshgo.model.BeanOrderDetail;
 import xyz.zghy.freshgo.util.BaseException;
+import xyz.zghy.freshgo.util.BusinessException;
 import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
@@ -40,6 +42,9 @@ public class FrmMain extends JFrame implements ActionListener {
     private JMenu menuUser = new JMenu("用户选择");
     private JMenuItem orders = new JMenuItem("查看我的订单");
     private JMenuItem locateManage = new JMenuItem("配送地址管理");
+
+    private JMenu menuVip = new JMenu("会员中心");
+    private JMenuItem vipRegister = new JMenuItem("注册会员");
 
     private JLabel labelShopping = new JLabel("购物车");
     private JLabel labelGoods = new JLabel("商品详情");
@@ -188,7 +193,10 @@ public class FrmMain extends JFrame implements ActionListener {
             this.orders.addActionListener(this);
             this.menuUser.add(locateManage);
             this.locateManage.addActionListener(this);
+            this.menuVip.add(vipRegister);
+            this.vipRegister.addActionListener(this);
             menuBar.add(menuUser);
+            menuBar.add(menuVip);
             this.setJMenuBar(menuBar);
 
             this.mainPanel.setLayout(new BorderLayout());
@@ -252,9 +260,12 @@ public class FrmMain extends JFrame implements ActionListener {
         statusBar.setLayout(new FlowLayout(FlowLayout.LEFT));
         JLabel label = null;
         if ("管理员".equals(SystemUtil.currentLoginType)) {
-            label = new JLabel("您好!   尊敬的管理员:" + SystemUtil.currentAdmin.getAdminName());
-        } else {
+            label = new JLabel("您好!   尊敬的管理员 : " + SystemUtil.currentAdmin.getAdminName());
+        } else if("y".equals(SystemUtil.currentUser.getUserIsVip())) {
+            label = new JLabel("您好!   尊敬的会员 : " + SystemUtil.currentUser.getUserName());
+        }else {
             label = new JLabel("您好! " + SystemUtil.currentUser.getUserName());
+
         }
         statusBar.add(label);
         this.getContentPane().add(statusBar, BorderLayout.SOUTH);
@@ -287,6 +298,13 @@ public class FrmMain extends JFrame implements ActionListener {
         } else if (e.getSource() == this.limitTimeManage) {
             FrmLimitTimePromotionManage dlg = new FrmLimitTimePromotionManage(this, "显示促销商品", true);
             dlg.setVisible(true);
+        } else if (e.getSource() == this.vipRegister) {
+            try {
+                new UserManage().regVip();
+            } catch (BusinessException businessException) {
+                JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
+
         } else if (e.getSource() == this.btAdd) {
             if (this.dataTableGoods.getSelectedRow() == -1) {
                 JOptionPane.showMessageDialog(null, "未选中商品", "错误", JOptionPane.ERROR_MESSAGE);
@@ -301,7 +319,11 @@ public class FrmMain extends JFrame implements ActionListener {
                 }
                 bod.setGoodsName(this.goodsMsgs.get(this.dataTableGoods.getSelectedRow()).getGoodsName());
                 bod.setGoodsCount(1);
-                bod.setGoodsPrice(this.goodsMsgs.get(this.dataTableGoods.getSelectedRow()).getGoodsPrice());
+                if (SystemUtil.currentUser.getUserIsVip().equals("y")) {
+                    bod.setGoodsPrice(this.goodsMsgs.get(this.dataTableGoods.getSelectedRow()).getGoodsVipPrice());
+                } else {
+                    bod.setGoodsPrice(this.goodsMsgs.get(this.dataTableGoods.getSelectedRow()).getGoodsPrice());
+                }
                 this.orderDetails.add(bod);
                 this.reloadOrderDetails();
             }

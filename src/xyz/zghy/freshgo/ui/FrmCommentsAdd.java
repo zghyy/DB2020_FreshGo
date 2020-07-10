@@ -18,7 +18,7 @@ public class FrmCommentsAdd extends JDialog implements ActionListener {
     private Button btnCheck = new Button("确定");
     private Button btnCancel = new Button("取消");
     private JLabel labelCommentMsg = new JLabel("评论内容：");
-    private JLabel labelStarts = new JLabel("星级(0~10)：");
+    private JLabel labelStarts = new JLabel("星级(0~5)：");
     private JTextField edtCommentMsg = new JTextField(50);
     private JTextField edtStarts = new JTextField(10);
 
