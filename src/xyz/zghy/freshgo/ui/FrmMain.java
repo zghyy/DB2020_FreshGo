@@ -289,7 +289,12 @@ public class FrmMain extends JFrame implements ActionListener {
         } else if (e.getSource() == this.goodsManage) {
             FrmGoodsManage dlg = new FrmGoodsManage(this, "商品管理", true);
             dlg.setVisible(true);
-        } else if (e.getSource() == this.locateManage) {
+        }
+        else if(e.getSource()==this.orders){
+            FrmOrderManage dlg = new FrmOrderManage(this,"订单管理",true);
+            dlg.setVisible(true);
+        }
+        else if (e.getSource() == this.locateManage) {
             FrmLocationManage dlg = new FrmLocationManage(this, "配送地址管理", true);
             dlg.setVisible(true);
         } else if (e.getSource() == this.purchase) {

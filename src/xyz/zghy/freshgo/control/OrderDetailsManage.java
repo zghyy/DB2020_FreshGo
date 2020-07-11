@@ -24,27 +24,58 @@ public class OrderDetailsManage {
 
         try {
             conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
             String sql = "";
             PreparedStatement pst = null;
             ResultSet rs = null;
             for (BeanOrderDetail detail : details) {
+                int ownGoodsCount=0;
                 sql = "select g_count from goods_msg where g_id = ?";
                 pst = conn.prepareStatement(sql);
                 pst.setInt(1, detail.getGoodsId());
                 rs = pst.executeQuery();
                 if (rs.next()) {
+                    ownGoodsCount=rs.getInt(1);
                     if (rs.getInt(1) < detail.getGoodsCount()) {
                         throw new BusinessException("商品库存不足，请重新选择商品");
                     }
                 }
+                else {
+                    throw new BusinessException("商品不存在");
+                }
                 rs.close();
                 pst.close();
-
-
+                sql = "update goods_msg set g_count =? where g_id=?";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1,(ownGoodsCount-detail.getGoodsCount()));
+                pst.setInt(2,detail.getGoodsId());
+                if(pst.executeUpdate()==1){
+                    System.out.println("商品数量更新成功");
+                }
+                else{
+                    throw new BusinessException("更新异常");
+                }
+                rs.close();
+                pst.close();
+            conn.commit();
                 oldPrice += detail.getGoodsPrice() * detail.getGoodsCount();
             }
+
         } catch (SQLException throwables) {
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             throwables.printStackTrace();
+        }finally {
+            if(conn!=null){
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
         }
         return oldPrice;
     }
