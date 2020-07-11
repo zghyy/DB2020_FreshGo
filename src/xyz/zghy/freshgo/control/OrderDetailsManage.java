@@ -49,19 +49,19 @@ public class OrderDetailsManage {
         return oldPrice;
     }
 
-    public double getNewPrice(int orderId) {
+    public double getNewPrice(int orderId) throws BusinessException {
         double newPrice = 0;
         List<BeanOrderDetail> details = SystemUtil.globalOrderDetails;
         Connection conn = null;
         try {
             conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
             String sql = "";
             PreparedStatement pst = null;
             ResultSet rs = null;
 
 
             for (BeanOrderDetail detail : details) {
-                //TODO 先查找限时促销商品，如果有就直接用限时促销商品的价格(同时判断促销数量，超过部分按原价)
                 sql = "select ltp_price,ltp_count,ltp_end_date from LTpromotion  where g_id = ?";
                 pst = conn.prepareStatement(sql);
                 pst.setInt(1, detail.getGoodsId());
@@ -69,17 +69,53 @@ public class OrderDetailsManage {
                 if (rs.next()) {
                     if (SystemUtil.SDF.parse(rs.getString(3)).getTime() > System.currentTimeMillis()){
                         if(rs.getInt(2)> detail.getGoodsCount()){
-                            newPrice+=rs.getInt(1)*detail.getGoodsCount();
+                            double simplePrice = rs.getDouble(1);
+                            newPrice+=rs.getDouble(1)*detail.getGoodsCount();
+                            rs.close();
+                            pst.close();
+                            sql = "insert into orders_detail(goods_id,goods_count,goods_price,order_id) " +
+                                    "values(?,?,?,?)";
+                            pst = conn.prepareStatement(sql);
+                            pst.setInt(1,detail.getGoodsId());
+                            pst.setInt(2,detail.getGoodsCount());
+                            pst.setDouble(3,simplePrice);
+                            pst.setInt(4,orderId);
+                            if(pst.executeUpdate()==1){
+                                System.out.println("订单数据插入成功");
+                            }
+                            else {
+                                throw new BusinessException("数据插入异常");
+                            }
+                            rs.close();
+                            pst.close();
                         }
                         else {
+                            double realPrice = newPrice;
                             newPrice+=rs.getInt(1)*rs.getInt(2);
                             newPrice+=detail.getGoodsPrice()*(detail.getGoodsCount()-rs.getInt(2));
+                            realPrice = (newPrice-realPrice)/detail.getGoodsCount();
+                            rs.close();
+                            pst.close();
+                            sql = "insert into orders_detail(goods_id,goods_count,goods_price,order_id) " +
+                                    "values(?,?,?,?)";
+                            pst = conn.prepareStatement(sql);
+                            pst.setInt(1,detail.getGoodsId());
+                            pst.setInt(2,detail.getGoodsCount());
+                            pst.setDouble(3,realPrice);
+                            pst.setInt(4,orderId);
+                            if(pst.executeUpdate()==1){
+                                System.out.println("订单数据插入成功");
+                            }
+                            else {
+                                throw new BusinessException("数据插入异常");
+                            }
+                            rs.close();
+                            pst.close();
                         }
                     }
                     continue;
                 }
-                rs.close();
-                pst.close();
+
 
 
                 //TODO 创建视图 判断当前数据是否满足满折优惠券 满折的话需要加上满折信息与id，后期更新details
@@ -90,8 +126,30 @@ public class OrderDetailsManage {
 //
 //            }
                 newPrice += detail.getGoodsPrice() * detail.getGoodsCount();
+                sql = "insert into orders_detail(goods_id,goods_count,goods_price,order_id) " +
+                        "values(?,?,?,?)";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1,detail.getGoodsId());
+                pst.setInt(2,detail.getGoodsCount());
+                pst.setDouble(3,detail.getGoodsPrice());
+                pst.setInt(4,orderId);
+                if(pst.executeUpdate()==1){
+                    System.out.println("订单数据插入成功");
+                }
+                else {
+                    throw new BusinessException("数据插入异常");
+                }
+                rs.close();
+                pst.close();
+
             }
+            conn.commit();
         } catch (SQLException | ParseException throwables) {
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             throwables.printStackTrace();
         }finally {
             if(conn!=null){

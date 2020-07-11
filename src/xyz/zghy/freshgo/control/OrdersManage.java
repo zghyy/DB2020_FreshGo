@@ -45,15 +45,21 @@ public class OrdersManage {
 
             sql = "insert into orders(location_id,u_id,o_old_price,o_new_price,o_gettime,o_status) values(?,?,?,?,?,?)";
             pst =conn.prepareStatement(sql);
-//            pst.setInt(1,bl.getLocationId());
-//            pst.setInt(2, SystemUtil.currentUser.getUserId());
-//            pst.setDouble(3,oldPriceSum);
-//            pst.setDouble(4,newPriceSum);
-//            pst.setTimestamp(5,new Timestamp(System.currentTimeMillis()));
-//            pst.setString(6,"下单");
-//
-//            rs.close();
-//            pst.close();
+            pst.setInt(1,bl.getLocationId());
+            pst.setInt(2, SystemUtil.currentUser.getUserId());
+            pst.setDouble(3,oldPriceSum);
+            pst.setDouble(4,newPriceSum);
+            pst.setTimestamp(5,new Timestamp(System.currentTimeMillis()));
+            pst.setString(6,"下单");
+            if(pst.executeUpdate()==1){
+                System.out.println("下单成功");
+            }
+            else {
+                throw new BusinessException("订单数据插入失败");
+            }
+
+            rs.close();
+            pst.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -109,7 +109,6 @@ public class FrmLogin extends JDialog implements ActionListener {
         } else if (e.getSource() == this.btnCancel) {
             System.exit(0);
         } else if (e.getSource() == this.btnLogin) {
-            //TODO 用户和管理员登录
             String loginName = this.edtUserName.getText();
             String loginPwd = new String(this.edtPwd.getPassword());
             try {
@@ -129,8 +128,6 @@ public class FrmLogin extends JDialog implements ActionListener {
                 JOptionPane.showMessageDialog(null, e1.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
             }
         } else if (e.getSource() == this.btnUserReRegister) {
-            //TODO 用户注册 需要注册ui
-//            System.out.println(111);
             FrmRegister register = new FrmRegister(this, "注册", true);
             register.setVisible(true);
         }

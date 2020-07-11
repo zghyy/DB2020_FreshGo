@@ -30,7 +30,6 @@ public class FrmLocationManage extends JDialog implements ActionListener {
     private JTable dataTable = new JTable(tblMod);
 
     private void reloadTable() {
-        //TODO reloadLocation
         locations = new LocationManage().loadLocation();
         tblData = new Object[locations.size()][7];
         for (int i = 0; i < locations.size(); i++) {

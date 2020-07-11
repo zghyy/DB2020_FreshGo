@@ -114,7 +114,6 @@ public class FrmRegister extends JDialog implements ActionListener {
         } else if (e.getSource() == this.jr2) {
             this.SexType = "女";
         } else if (e.getSource() == this.btnOk) {
-            //TODO 用户注册
                 String userName = editUser.getText();
                 String userPwd = new String(editPwd.getPassword());
                 String userPwd2 = new String(editPwd2.getPassword());

@@ -5,6 +5,7 @@ package xyz.zghy.freshgo.model;
  * @date 2020/7/9 下午12:04
  */
 public class BeanOrderDetail {
+    private int orderDetailId;
     private int goodsId;
     private String goodsName;
     private int goodsCount;
@@ -12,6 +13,14 @@ public class BeanOrderDetail {
     private int orderId;
     private int fulldId;
     private double fdData;
+
+    public int getOrderDetailId() {
+        return orderDetailId;
+    }
+
+    public void setOrderDetailId(int orderDetailId) {
+        this.orderDetailId = orderDetailId;
+    }
 
     public int getGoodsId() {
         return goodsId;

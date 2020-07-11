@@ -22,7 +22,7 @@ public class FrmLimitTimePromotionManage extends JDialog implements ActionListen
 
     private JPanel toolBar = new JPanel();
     private Button btnAdd = new Button("添加限时促销商品");
-    private Button btnDelete = new Button("删除显示促销商品");
+    private Button btnDelete = new Button("删除限时促销商品");
     private Object tblTitle[] = {"类型序号", "促销商品名称", "促销价格", "促销数量", "起始日期", "结束日期"};
     private Object tblData[][];
     List<BeanLimitTimePromotion> limitTimePromotions = null;

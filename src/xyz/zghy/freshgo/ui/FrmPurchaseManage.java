@@ -73,7 +73,6 @@ public class FrmPurchaseManage extends JDialog implements ActionListener {
             dlg.setVisible(true);
             this.reloadTable();
         } else if (e.getSource() == btnSpeedUp) {
-            //TODO
             int i = this.dataTable.getSelectedRow();
             BeanPurchase bp = this.purchases.get(i);
             try {

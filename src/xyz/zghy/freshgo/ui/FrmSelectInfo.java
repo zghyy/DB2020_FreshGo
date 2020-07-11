@@ -30,7 +30,6 @@ public class FrmSelectInfo extends JDialog implements ActionListener {
     private JTable dataTable = new JTable(tblMod);
 
     private void reloadTable() {
-        //TODO reloadLocation
         locations = new LocationManage().loadLocation();
         tblData = new Object[locations.size()][7];
         for (int i = 0; i < locations.size(); i++) {
@@ -74,7 +73,6 @@ public class FrmSelectInfo extends JDialog implements ActionListener {
         if (e.getSource() == btnDCanel) {
             this.setVisible(false);
         } else if (e.getSource() == btnCheck) {
-            //TODO 创建订单
             int i = this.dataTable.getSelectedRow();
             if (i == -1) {
                 JOptionPane.showMessageDialog(null, "还未选择地址！", "错误", JOptionPane.ERROR_MESSAGE);

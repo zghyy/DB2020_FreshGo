@@ -17,7 +17,6 @@ import java.text.ParseException;
 public class UserManage {
     public BeanUsers register(String userName, String userPwd, String userPwd2
             , String userSex, int userPhone, String userCity, String userEmail) throws BusinessException {
-        //TODO 用户注册
         if (userName.length() <= 0 || userName.length() >= 20) {
             throw new BusinessException("用户名应该在1——20个字符之间！");
         }
@@ -90,7 +89,6 @@ public class UserManage {
     }
 
     public BeanUsers login(String userName, String userPwd) throws BusinessException {
-        //TODO 用户登录
         if (userName.length() <= 0 || userName.length() >= 20) {
             throw new BusinessException("用户名应该在1——20个字符之间！");
         }
@@ -139,7 +137,6 @@ public class UserManage {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
