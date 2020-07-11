@@ -8,11 +8,20 @@ import java.util.Date;
  */
 public class BeanFullDiscountMsg {
     private int fullDiscountId;
+    private int fullDiscountOrder;
     private String fullDiscountDesc;
     private int fullDiscountNeedCount;
-    private String fullDiscountData;
+    private double fullDiscountData;
     private Date fullDiscountStartDate;
     private Date fullDiscountEndDate;
+
+    public int getFullDiscountOrder() {
+        return fullDiscountOrder;
+    }
+
+    public void setFullDiscountOrder(int fullDiscountOrder) {
+        this.fullDiscountOrder = fullDiscountOrder;
+    }
 
     public int getFullDiscountId() {
         return fullDiscountId;
@@ -38,11 +47,11 @@ public class BeanFullDiscountMsg {
         this.fullDiscountNeedCount = fullDiscountNeedCount;
     }
 
-    public String getFullDiscountData() {
+    public double getFullDiscountData() {
         return fullDiscountData;
     }
 
-    public void setFullDiscountData(String fullDiscountData) {
+    public void setFullDiscountData(double fullDiscountData) {
         this.fullDiscountData = fullDiscountData;
     }
 

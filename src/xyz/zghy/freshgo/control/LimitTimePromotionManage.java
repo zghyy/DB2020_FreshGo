@@ -100,6 +100,7 @@ public class LimitTimePromotionManage {
             } else {
                 throw new BusinessException("数据删除异常");
             }
+            pst.close();
 
             for (int i = deleteBLTP.getLimitTimePromotionOrder(); i <= maxPromotionOrder; i++) {
                 sql = "update LTpromotion set ltp_order = ? where ltp_order=?";

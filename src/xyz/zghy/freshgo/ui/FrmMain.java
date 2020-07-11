@@ -35,7 +35,9 @@ public class FrmMain extends JFrame implements ActionListener {
     private JMenuItem goodsManage = new JMenuItem("商品管理");
     private JMenuItem menuManage = new JMenuItem("菜谱管理");
     private JMenuItem couponManage = new JMenuItem("优惠券管理");
-    private JMenuItem fullDiscountManage = new JMenuItem("满折信息管理");
+    private JMenu fullDiscountManage = new JMenu("满折信息管理");
+    private JMenuItem fullDiscountType = new JMenuItem("满折种类管理");
+    private JMenuItem fullDiscountGoods = new JMenuItem("满折商品绑定");
     private JMenuItem limitTimeManage = new JMenuItem("限时促销管理");
     private JMenuItem purchase = new JMenuItem("商品采购");
 
@@ -182,6 +184,10 @@ public class FrmMain extends JFrame implements ActionListener {
             this.couponManage.addActionListener(this);
             this.menuAdmin.add(this.fullDiscountManage);
             this.fullDiscountManage.addActionListener(this);
+            this.fullDiscountManage.add(this.fullDiscountType);
+            this.fullDiscountType.addActionListener(this);
+            this.fullDiscountManage.add(this.fullDiscountGoods);
+            this.fullDiscountGoods.addActionListener(this);
             this.menuAdmin.add(this.limitTimeManage);
             this.limitTimeManage.addActionListener(this);
             this.menuAdmin.add(this.purchase);
@@ -292,6 +298,10 @@ public class FrmMain extends JFrame implements ActionListener {
         }
         else if(e.getSource()==this.orders){
             FrmOrderManage dlg = new FrmOrderManage(this,"订单管理",true);
+            dlg.setVisible(true);
+        }
+        else if(e.getSource()==this.fullDiscountType){
+            FrmFullDiscountType dlg = new FrmFullDiscountType(this,"满折信息分类",true);
             dlg.setVisible(true);
         }
         else if (e.getSource() == this.locateManage) {

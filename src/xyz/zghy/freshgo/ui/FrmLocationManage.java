@@ -1,11 +1,7 @@
 package xyz.zghy.freshgo.ui;
 
-import xyz.zghy.freshgo.control.GoodsManage;
 import xyz.zghy.freshgo.control.LocationManage;
-import xyz.zghy.freshgo.model.BeanFreshType;
-import xyz.zghy.freshgo.model.BeanGoodsMsg;
 import xyz.zghy.freshgo.model.BeanLocation;
-import xyz.zghy.freshgo.util.BaseException;
 import xyz.zghy.freshgo.util.BusinessException;
 
 import javax.swing.*;

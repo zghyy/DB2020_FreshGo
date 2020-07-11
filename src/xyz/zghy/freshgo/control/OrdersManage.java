@@ -60,7 +60,7 @@ public class OrdersManage {
             System.out.println(oldPriceSum);
             System.out.println(newPriceSum);
 
-            sql = "insert into orders(location_id,u_id,o_old_price,o_new_price,o_gettime,o_status,o_order) values(?,?,?,?,?,?)";
+            sql = "insert into orders(location_id,u_id,o_old_price,o_new_price,o_gettime,o_status,o_order) values(?,?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
             pst.setInt(1, bl.getLocationId());
             pst.setInt(2, SystemUtil.currentUser.getUserId());
