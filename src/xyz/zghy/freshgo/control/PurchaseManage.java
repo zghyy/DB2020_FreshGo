@@ -70,17 +70,17 @@ public class PurchaseManage {
         try{
             conn = DBUtil.getConnection();
             String nowStatus = bp.getPurchaseStatus();
-            if(nowStatus.equals("入库")){
+            if("入库".equals(nowStatus)){
                 throw new BusinessException("商品已入库，无法加速！");
             }
 
             String sql = "update purchase set pur_status = ? where pur_id=?";
             PreparedStatement pst  = conn.prepareStatement(sql);
-            if(nowStatus.equals("下单")){
+            if("下单".equals(nowStatus)){
                 pst.setString(1,"在途");
                 pst.setInt(2,bp.getPurchaseId());
             }
-            else if(nowStatus.equals("在途")){
+            else if("在途".equals(nowStatus)){
                 pst.setString(1,"入库");
                 pst.setInt(2,bp.getPurchaseId());
             }
@@ -90,7 +90,7 @@ public class PurchaseManage {
                 throw new BusinessException("加速失败");
             }
 
-            if(nowStatus.equals("在途")){
+            if("在途".equals(nowStatus)){
                 sql = "update goods_msg set g_count=? where g_id = ?";
                 pst = conn.prepareStatement(sql);
                 pst.setInt(1,bp.getPurchaseNum());

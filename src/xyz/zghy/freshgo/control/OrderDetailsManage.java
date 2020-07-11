@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,35 +30,33 @@ public class OrderDetailsManage {
             PreparedStatement pst = null;
             ResultSet rs = null;
             for (BeanOrderDetail detail : details) {
-                int ownGoodsCount=0;
+                int ownGoodsCount = 0;
                 sql = "select g_count from goods_msg where g_id = ?";
                 pst = conn.prepareStatement(sql);
                 pst.setInt(1, detail.getGoodsId());
                 rs = pst.executeQuery();
                 if (rs.next()) {
-                    ownGoodsCount=rs.getInt(1);
+                    ownGoodsCount = rs.getInt(1);
                     if (rs.getInt(1) < detail.getGoodsCount()) {
                         throw new BusinessException("商品库存不足，请重新选择商品");
                     }
-                }
-                else {
+                } else {
                     throw new BusinessException("商品不存在");
                 }
                 rs.close();
                 pst.close();
                 sql = "update goods_msg set g_count =? where g_id=?";
                 pst = conn.prepareStatement(sql);
-                pst.setInt(1,(ownGoodsCount-detail.getGoodsCount()));
-                pst.setInt(2,detail.getGoodsId());
-                if(pst.executeUpdate()==1){
+                pst.setInt(1, (ownGoodsCount - detail.getGoodsCount()));
+                pst.setInt(2, detail.getGoodsId());
+                if (pst.executeUpdate() == 1) {
                     System.out.println("商品数量更新成功");
-                }
-                else{
+                } else {
                     throw new BusinessException("更新异常");
                 }
                 rs.close();
                 pst.close();
-            conn.commit();
+                conn.commit();
                 oldPrice += detail.getGoodsPrice() * detail.getGoodsCount();
             }
 
@@ -68,8 +67,8 @@ public class OrderDetailsManage {
                 e.printStackTrace();
             }
             throwables.printStackTrace();
-        }finally {
-            if(conn!=null){
+        } finally {
+            if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException throwables) {
@@ -98,46 +97,43 @@ public class OrderDetailsManage {
                 pst.setInt(1, detail.getGoodsId());
                 rs = pst.executeQuery();
                 if (rs.next()) {
-                    if (SystemUtil.SDF.parse(rs.getString(3)).getTime() > System.currentTimeMillis()){
-                        if(rs.getInt(2)> detail.getGoodsCount()){
+                    if (SystemUtil.SDF.parse(rs.getString(3)).getTime() > System.currentTimeMillis()) {
+                        if (rs.getInt(2) > detail.getGoodsCount()) {
                             double simplePrice = rs.getDouble(1);
-                            newPrice+=rs.getDouble(1)*detail.getGoodsCount();
+                            newPrice += rs.getDouble(1) * detail.getGoodsCount();
                             rs.close();
                             pst.close();
                             sql = "insert into orders_detail(goods_id,goods_count,goods_price,order_id) " +
                                     "values(?,?,?,?)";
                             pst = conn.prepareStatement(sql);
-                            pst.setInt(1,detail.getGoodsId());
-                            pst.setInt(2,detail.getGoodsCount());
-                            pst.setDouble(3,simplePrice);
-                            pst.setInt(4,orderId);
-                            if(pst.executeUpdate()==1){
+                            pst.setInt(1, detail.getGoodsId());
+                            pst.setInt(2, detail.getGoodsCount());
+                            pst.setDouble(3, simplePrice);
+                            pst.setInt(4, orderId);
+                            if (pst.executeUpdate() == 1) {
                                 System.out.println("订单数据插入成功");
-                            }
-                            else {
+                            } else {
                                 throw new BusinessException("数据插入异常");
                             }
                             rs.close();
                             pst.close();
-                        }
-                        else {
+                        } else {
                             double realPrice = newPrice;
-                            newPrice+=rs.getInt(1)*rs.getInt(2);
-                            newPrice+=detail.getGoodsPrice()*(detail.getGoodsCount()-rs.getInt(2));
-                            realPrice = (newPrice-realPrice)/detail.getGoodsCount();
+                            newPrice += rs.getInt(1) * rs.getInt(2);
+                            newPrice += detail.getGoodsPrice() * (detail.getGoodsCount() - rs.getInt(2));
+                            realPrice = (newPrice - realPrice) / detail.getGoodsCount();
                             rs.close();
                             pst.close();
                             sql = "insert into orders_detail(goods_id,goods_count,goods_price,order_id) " +
                                     "values(?,?,?,?)";
                             pst = conn.prepareStatement(sql);
-                            pst.setInt(1,detail.getGoodsId());
-                            pst.setInt(2,detail.getGoodsCount());
-                            pst.setDouble(3,realPrice);
-                            pst.setInt(4,orderId);
-                            if(pst.executeUpdate()==1){
+                            pst.setInt(1, detail.getGoodsId());
+                            pst.setInt(2, detail.getGoodsCount());
+                            pst.setDouble(3, realPrice);
+                            pst.setInt(4, orderId);
+                            if (pst.executeUpdate() == 1) {
                                 System.out.println("订单数据插入成功");
-                            }
-                            else {
+                            } else {
                                 throw new BusinessException("数据插入异常");
                             }
                             rs.close();
@@ -146,7 +142,6 @@ public class OrderDetailsManage {
                     }
                     continue;
                 }
-
 
 
                 //TODO 创建视图 判断当前数据是否满足满折优惠券 满折的话需要加上满折信息与id，后期更新details
@@ -160,14 +155,13 @@ public class OrderDetailsManage {
                 sql = "insert into orders_detail(goods_id,goods_count,goods_price,order_id) " +
                         "values(?,?,?,?)";
                 pst = conn.prepareStatement(sql);
-                pst.setInt(1,detail.getGoodsId());
-                pst.setInt(2,detail.getGoodsCount());
-                pst.setDouble(3,detail.getGoodsPrice());
-                pst.setInt(4,orderId);
-                if(pst.executeUpdate()==1){
+                pst.setInt(1, detail.getGoodsId());
+                pst.setInt(2, detail.getGoodsCount());
+                pst.setDouble(3, detail.getGoodsPrice());
+                pst.setInt(4, orderId);
+                if (pst.executeUpdate() == 1) {
                     System.out.println("订单数据插入成功");
-                }
-                else {
+                } else {
                     throw new BusinessException("数据插入异常");
                 }
                 rs.close();
@@ -182,8 +176,8 @@ public class OrderDetailsManage {
                 e.printStackTrace();
             }
             throwables.printStackTrace();
-        }finally {
-            if(conn!=null){
+        } finally {
+            if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException throwables) {
@@ -192,5 +186,40 @@ public class OrderDetailsManage {
             }
         }
         return newPrice;
+    }
+
+    public List<BeanOrderDetail> loadOrderDetails(int o_id) {
+        Connection conn = null;
+        List<BeanOrderDetail> res = new ArrayList<BeanOrderDetail>();
+
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "select goods_id,goods_count from orders_detail where order_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, o_id);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                BeanOrderDetail bod = new BeanOrderDetail();
+                bod.setGoodsId(rs.getInt(1));
+                bod.setGoodsCount(rs.getInt(2));
+                res.add(bod);
+            }
+            rs.close();
+            pst.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+
+
+        return res;
     }
 }

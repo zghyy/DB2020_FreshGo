@@ -1,9 +1,8 @@
 package xyz.zghy.freshgo.ui;
 
 import xyz.zghy.freshgo.control.OrdersManage;
-import xyz.zghy.freshgo.control.PurchaseManage;
 import xyz.zghy.freshgo.model.BeanOrder;
-import xyz.zghy.freshgo.model.BeanPurchase;
+import xyz.zghy.freshgo.util.BusinessException;
 import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
@@ -21,7 +20,8 @@ public class FrmOrderManage extends JDialog implements ActionListener {
     private JPanel toolBar = new JPanel();
     private Button btnSpeedUp = new Button("加速送货");
     private Button btnBackOrder = new Button("退货");
-    private Object tblTitle[] = {"订单编号", "原始价格","实际支付", "订单创建时间", "订单状态"};
+    private Button btnComment = new Button("评价");
+    private Object tblTitle[] = {"订单编号", "原始价格", "实际支付", "订单创建时间", "订单状态"};
     private Object tblData[][];
     List<BeanOrder> orders = null;
     DefaultTableModel tblMod = new DefaultTableModel();
@@ -43,11 +43,12 @@ public class FrmOrderManage extends JDialog implements ActionListener {
         this.dataTable.repaint();
     }
 
-    public FrmOrderManage(Frame owner, String title, boolean modal){
+    public FrmOrderManage(Frame owner, String title, boolean modal) {
         super(owner, title, modal);
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
         toolBar.add(btnSpeedUp);
         toolBar.add(btnBackOrder);
+        toolBar.add(btnComment);
         this.getContentPane().add(toolBar, BorderLayout.NORTH);
 
         this.reloadTable();
@@ -66,10 +67,25 @@ public class FrmOrderManage extends JDialog implements ActionListener {
     }
 
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnSpeedUp) {
+            int i = this.dataTable.getSelectedRow();
+            try {
+                new OrdersManage().speedUp(this.orders.get(i));
+                this.reloadTable();
+            } catch (BusinessException businessException) {
+                JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
 
+            }
+        } else if (e.getSource() == btnBackOrder) {
+            int i = this.dataTable.getSelectedRow();
+            try {
+                new OrdersManage().backOrder(this.orders.get(i));
+            } catch (BusinessException businessException) {
+                JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
+        }
 
     }
 }

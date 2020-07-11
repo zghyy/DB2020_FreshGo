@@ -3,10 +3,12 @@ package xyz.zghy.freshgo.control;
 
 import xyz.zghy.freshgo.model.BeanLocation;
 import xyz.zghy.freshgo.model.BeanOrder;
+import xyz.zghy.freshgo.model.BeanOrderDetail;
 import xyz.zghy.freshgo.util.BusinessException;
 import xyz.zghy.freshgo.util.DBUtil;
 import xyz.zghy.freshgo.util.SystemUtil;
 
+import javax.swing.*;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class OrdersManage {
             pst.setDouble(4, newPriceSum);
             pst.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
             pst.setString(6, "下单");
-            pst.setInt(7,insertOrderOrder);
+            pst.setInt(7, insertOrderOrder);
             if (pst.executeUpdate() == 1) {
                 System.out.println("下单成功");
             } else {
@@ -83,17 +85,17 @@ public class OrdersManage {
         return insertOrderId;
     }
 
-    public List<BeanOrder> loadOrders(){
+    public List<BeanOrder> loadOrders() {
         Connection conn = null;
         List<BeanOrder> res = new ArrayList<BeanOrder>();
 
-        try{
+        try {
             conn = DBUtil.getConnection();
             String sql = "select * from orders where u_id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setInt(1,SystemUtil.currentUser.getUserId());
+            pst.setInt(1, SystemUtil.currentUser.getUserId());
             ResultSet rs = pst.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 BeanOrder bo = new BeanOrder();
                 bo.setoId(rs.getInt(1));
                 bo.setoOrder(rs.getInt(2));
@@ -111,9 +113,8 @@ public class OrdersManage {
 
         } catch (SQLException | ParseException throwables) {
             throwables.printStackTrace();
-        }
-        finally {
-            if(conn!=null){
+        } finally {
+            if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException throwables) {
@@ -123,5 +124,99 @@ public class OrdersManage {
         }
         return res;
     }
+
+    public void speedUp(BeanOrder bo) throws BusinessException {
+        Connection conn = null;
+        try {
+            conn = DBUtil.getConnection();
+            String nowStatus = bo.getOrderStatus();
+            if ("送达".equals(nowStatus) || "退货".equals(nowStatus)) {
+                throw new BusinessException("订单已送达或已退货，无法加速");
+            }
+            String sql = "update orders set o_status = ? where o_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            if ("下单".equals(nowStatus)) {
+                pst.setString(1, "配送");
+                pst.setInt(2, bo.getoId());
+            } else if ("配送".equals(nowStatus)) {
+                pst.setString(1, "送达");
+                pst.setInt(2, bo.getoId());
+            }
+            if (pst.executeUpdate() == 1) {
+                JOptionPane.showMessageDialog(null, "加速成功", "恭喜", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new BusinessException("加速失败");
+            }
+
+            pst.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void backOrder(BeanOrder bo) throws BusinessException {
+        Connection conn = null;
+        try {
+            conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
+            String sql = "update orders set o_status = ? where o_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, "退货");
+            pst.setInt(2, bo.getoId());
+            if (pst.executeUpdate() == 1) {
+                JOptionPane.showMessageDialog(null, "退货成功", "恭喜", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new BusinessException("退货失败");
+            }
+            pst.close();
+
+
+            List<BeanOrderDetail> bods = new OrderDetailsManage().loadOrderDetails(bo.getoId());
+            for (BeanOrderDetail bod : bods) {
+                int currentGoods;
+                sql = "select g_count from goods_msg where g_id = ?";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1, bod.getGoodsId());
+                ResultSet rs = pst.executeQuery();
+                if (!rs.next()) {
+                    throw new BusinessException("商品已被删除，无法退货");
+                } else {
+                    currentGoods = rs.getInt(1);
+                }
+                rs.close();
+                pst.close();
+
+                sql = "update goods_msg set g_count = ? where g_id = ?";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1,currentGoods+bod.getGoodsCount());
+                pst.setInt(2,bod.getGoodsId());
+                if(pst.executeUpdate()==1){
+                    System.out.println("商品回退仓库成功");
+                }
+                else {
+                    throw new BusinessException("退货失败");
+                }
+                pst.close();
+            }
+            conn.commit();
+
+        } catch (SQLException throwables) {
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throwables.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+    }
+
 
 }
