@@ -5,6 +5,8 @@ import xyz.zghy.freshgo.control.FullDiscountConnectMannage;
 import xyz.zghy.freshgo.model.BeanFreshType;
 import xyz.zghy.freshgo.model.BeanFullDiscountConnent;
 import xyz.zghy.freshgo.util.BaseException;
+import xyz.zghy.freshgo.util.BusinessException;
+import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -34,8 +36,8 @@ public class FrmFullDiscountGoodsConnection extends JDialog implements ActionLis
         for (int i = 0; i < fullDiscountConnents.size(); i++) {
             tblData[i][0] = fullDiscountConnents.get(i).getFdcOrder();
             tblData[i][1] = fullDiscountConnents.get(i).getgName();
-            tblData[i][2] = fullDiscountConnents.get(i).getStartDate();
-            tblData[i][3] = fullDiscountConnents.get(i).getEndDate();
+            tblData[i][2] = SystemUtil.SDF.format(fullDiscountConnents.get(i).getStartDate());
+            tblData[i][3] = SystemUtil.SDF.format(fullDiscountConnents.get(i).getEndDate());
         }
         tablmod.setDataVector(tblData, tblTitle);
         this.dataTable.validate();
@@ -77,9 +79,12 @@ public class FrmFullDiscountGoodsConnection extends JDialog implements ActionLis
             this.reloadTable();
         }else if(e.getSource()==btnDelete){
         //TODO 商品连接删除部分
-
-
-
+            int i = this.dataTable.getSelectedRow();
+            try {
+                new FullDiscountConnectMannage().deleteFullDiscountConnect(this.fullDiscountConnents.get(i));
+            } catch (BusinessException businessException) {
+                JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
             this.reloadTable();
         }
 

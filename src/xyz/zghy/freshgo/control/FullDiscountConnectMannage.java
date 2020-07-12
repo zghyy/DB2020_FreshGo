@@ -70,6 +70,67 @@ public class FullDiscountConnectMannage {
         }
     }
 
+    public void deleteFullDiscountConnect(BeanFullDiscountConnent bfdc) throws BusinessException {
+        Connection conn = null;
+
+        try{
+            conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
+
+            int maxOrder=0;
+            String sql = "select max(fdc_order) from f_g_connect";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                maxOrder = rs.getInt(1);
+            }
+            else {
+                throw new BusinessException("数据异常");
+            }
+            rs.close();
+            pst.close();
+
+            sql = "delete from f_g_connect where fdc_id = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1,bfdc.getFdcId());
+            if(pst.executeUpdate()==1){
+                System.out.println("商品断连成功");
+            }
+            else{
+                throw new BusinessException("数据删除异常");
+            }
+            pst.close();
+
+            for (int i = bfdc.getFdcOrder(); i <= maxOrder; i++) {
+                sql = "update f_g_connect set fdc_order = ? where fdc_order=?";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1,i-1);
+                pst.setInt(2,i);
+                pst.executeUpdate();
+                pst.close();
+            }
+
+            conn.commit();
+        } catch (SQLException throwables) {
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throwables.printStackTrace();
+        }
+        finally {
+            if(conn!=null){
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+
+    }
+
 
 
     public List<BeanFullDiscountConnent> loadFullDiscountConnect() {
