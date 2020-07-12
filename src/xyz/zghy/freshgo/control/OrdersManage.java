@@ -145,7 +145,7 @@ public class OrdersManage {
         try {
             conn = DBUtil.getConnection();
             String nowStatus = bo.getOrderStatus();
-            if ("送达".equals(nowStatus) || "退货".equals(nowStatus)) {
+            if ("送达".equals(nowStatus) || "退货".equals(nowStatus)||"已评价".equals(nowStatus)) {
                 throw new BusinessException("订单已送达或已退货，无法加速");
             }
             String sql = "update orders set o_status = ? where o_id = ?";

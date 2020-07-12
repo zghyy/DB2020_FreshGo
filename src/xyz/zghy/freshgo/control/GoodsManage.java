@@ -86,9 +86,13 @@ public class GoodsManage {
 
 
             //TODO 针对后面与商品关联的内容，通过g_id寻找，防止误删
-            String sql = "";
-            PreparedStatement pst = null;
-            ResultSet rs = null;
+            String sql = "select * from f_d_connect where g_id=?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1,deleteGM.getGoodsId());
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                throw new BusinessException("商品与满折信息绑定，无法删除，请先解除与满折信息的绑定！");
+            }
 
             int maxGoodsOrder = 0;
             sql = "select max(g_order) from goods_msg";

@@ -84,12 +84,6 @@ public class FrmFullDiscountTypeAdd extends JDialog implements ActionListener {
         this.btnCheck.addActionListener(this);
 
         this.validate();
-
-
-
-
-        this.btnCancel.addActionListener(this);
-        this.btnCheck.addActionListener(this);
     }
 
 
@@ -103,7 +97,7 @@ public class FrmFullDiscountTypeAdd extends JDialog implements ActionListener {
             bfdm.setFullDiscountDesc(this.edtContent.getText());
             bfdm.setFullDiscountNeedCount(Integer.parseInt(this.edtCount.getText()));
             try {
-                bfdm.setFullDiscountData(Integer.parseInt(this.edtData.getText()));
+                bfdm.setFullDiscountData(Double.parseDouble(this.edtData.getText()));
                 bfdm.setFullDiscountStartDate(SystemUtil.SDF.parse(this.edtStartDate.getText()));
                 bfdm.setFullDiscountEndDate(SystemUtil.SDF.parse(this.edtStartDate.getText()));
             } catch (ParseException parseException) {
@@ -112,6 +106,7 @@ public class FrmFullDiscountTypeAdd extends JDialog implements ActionListener {
 
             try {
                 new FullDiscountTypeMannage().addFullDiscountMsg(bfdm);
+                System.out.println(1);
             } catch (BusinessException businessException) {
                 JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
             }

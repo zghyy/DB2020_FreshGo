@@ -303,8 +303,10 @@ public class FrmMain extends JFrame implements ActionListener {
         else if(e.getSource()==this.fullDiscountType){
             FrmFullDiscountType dlg = new FrmFullDiscountType(this,"满折信息分类",true);
             dlg.setVisible(true);
-        }
-        else if (e.getSource() == this.locateManage) {
+        } else if (e.getSource()==this.fullDiscountGoods) {
+            FrmFullDiscountGoodsConnection dlg = new FrmFullDiscountGoodsConnection(this,"满折商品绑定",true);
+            dlg.setVisible(true);
+        } else if (e.getSource() == this.locateManage) {
             FrmLocationManage dlg = new FrmLocationManage(this, "配送地址管理", true);
             dlg.setVisible(true);
         } else if (e.getSource() == this.purchase) {
@@ -361,7 +363,7 @@ public class FrmMain extends JFrame implements ActionListener {
             } else {
                 FrmSelectInfo dlg = new FrmSelectInfo(this, "地址选择界面", true);
                 dlg.setVisible(true);
-                this.orderDetails=SystemUtil.globalOrderDetails;
+                this.orderDetails = SystemUtil.globalOrderDetails;
                 this.reloadOrderDetails();
             }
         }

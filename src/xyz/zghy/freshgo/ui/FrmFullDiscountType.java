@@ -3,6 +3,7 @@ package xyz.zghy.freshgo.ui;
 import xyz.zghy.freshgo.control.FullDiscountTypeMannage;
 import xyz.zghy.freshgo.model.BeanFullDiscountMsg;
 import xyz.zghy.freshgo.util.BusinessException;
+import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -29,12 +30,12 @@ public class FrmFullDiscountType extends JDialog implements ActionListener {
         fullDiscountMsgs = new FullDiscountTypeMannage().loadFullDiscountMsg();
         tblData = new Object[fullDiscountMsgs.size()][6];
         for (int i = 0; i < fullDiscountMsgs.size(); i++) {
-            tblData[i][0]=fullDiscountMsgs.get(i).getFullDiscountOrder();
-            tblData[i][1]=fullDiscountMsgs.get(i).getFullDiscountDesc();
-            tblData[i][2]=fullDiscountMsgs.get(i).getFullDiscountNeedCount();
-            tblData[i][3]=fullDiscountMsgs.get(i).getFullDiscountData();
-            tblData[i][4]=fullDiscountMsgs.get(i).getFullDiscountStartDate();
-            tblData[i][5]=fullDiscountMsgs.get(i).getFullDiscountEndDate();
+            tblData[i][0] = fullDiscountMsgs.get(i).getFullDiscountOrder();
+            tblData[i][1] = fullDiscountMsgs.get(i).getFullDiscountDesc();
+            tblData[i][2] = fullDiscountMsgs.get(i).getFullDiscountNeedCount();
+            tblData[i][3] = fullDiscountMsgs.get(i).getFullDiscountData();
+            tblData[i][4] = SystemUtil.SDF.format(fullDiscountMsgs.get(i).getFullDiscountStartDate());
+            tblData[i][5] = SystemUtil.SDF.format(fullDiscountMsgs.get(i).getFullDiscountEndDate());
         }
         tblMod.setDataVector(tblData, tblTitle);
         this.dataTable.validate();
@@ -68,10 +69,10 @@ public class FrmFullDiscountType extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAdd) {
-            FrmFullDiscountTypeAdd dlg = new FrmFullDiscountTypeAdd(this,"添加满折信息",true);
+            FrmFullDiscountTypeAdd dlg = new FrmFullDiscountTypeAdd(this, "添加满折信息", true);
             dlg.setVisible(true);
             this.reloadTable();
-        } else if ( e.getSource() == this.btnDelete) {
+        } else if (e.getSource() == this.btnDelete) {
             try {
                 int i = this.dataTable.getSelectedRow();
                 BeanFullDiscountMsg bfdm = this.fullDiscountMsgs.get(i);
