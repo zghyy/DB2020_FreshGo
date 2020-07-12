@@ -1,5 +1,6 @@
 package xyz.zghy.freshgo.ui;
 
+import xyz.zghy.freshgo.control.CommentsManage;
 import xyz.zghy.freshgo.control.OrdersManage;
 import xyz.zghy.freshgo.model.BeanOrder;
 import xyz.zghy.freshgo.util.BusinessException;
@@ -21,7 +22,7 @@ public class FrmOrderManage extends JDialog implements ActionListener {
     private Button btnSpeedUp = new Button("加速送货");
     private Button btnBackOrder = new Button("退货");
     private Button btnComment = new Button("评价");
-    private Object tblTitle[] = {"订单编号", "原始价格", "实际支付","订单详细地址", "订单创建时间", "订单状态"};
+    private Object tblTitle[] = {"订单编号", "原始价格", "实际支付", "订单详细地址", "订单创建时间", "订单状态"};
     private Object tblData[][];
     List<BeanOrder> orders = null;
     DefaultTableModel tblMod = new DefaultTableModel();
@@ -65,6 +66,7 @@ public class FrmOrderManage extends JDialog implements ActionListener {
 
         this.btnSpeedUp.addActionListener(this);
         this.btnBackOrder.addActionListener(this);
+        this.btnComment.addActionListener(this);
     }
 
 
@@ -83,9 +85,16 @@ public class FrmOrderManage extends JDialog implements ActionListener {
             int i = this.dataTable.getSelectedRow();
             try {
                 new OrdersManage().backOrder(this.orders.get(i));
+                this.reloadTable();
             } catch (BusinessException businessException) {
                 JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
             }
+        } else if (e.getSource() == btnComment) {
+            int i = this.dataTable.getSelectedRow();
+            FrmCommentsAdd dlg = new FrmCommentsAdd(this, "添加评论", true, this.orders.get(i));
+            dlg.setVisible(true);
+            this.reloadTable();
+
         }
 
     }

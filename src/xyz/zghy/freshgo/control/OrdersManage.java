@@ -60,19 +60,17 @@ public class OrdersManage {
             System.out.println(oldPriceSum);
             System.out.println(newPriceSum);
 
-            String insertLocationDetail="";
+            String insertLocationDetail = "";
 
             sql = "select l_detail from locationmsg where l_id=?";
-            pst=conn.prepareStatement(sql);
-            pst.setInt(1,bl.getLocationId());
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, bl.getLocationId());
             rs = pst.executeQuery();
-            if(rs.next()){
-                insertLocationDetail=rs.getString(1);
-            }
-            else {
+            if (rs.next()) {
+                insertLocationDetail = rs.getString(1);
+            } else {
                 throw new BusinessException("地址出错");
             }
-
 
 
             sql = "insert into orders(location_id,u_id,o_old_price,o_new_price,o_gettime,o_status,o_order,location_detail) values(?,?,?,?,?,?,?)";
@@ -84,7 +82,7 @@ public class OrdersManage {
             pst.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
             pst.setString(6, "下单");
             pst.setInt(7, insertOrderOrder);
-            pst.setString(8,insertLocationDetail);
+            pst.setString(8, insertLocationDetail);
             if (pst.executeUpdate() == 1) {
                 System.out.println("下单成功");
             } else {
@@ -97,7 +95,7 @@ public class OrdersManage {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
+        SystemUtil.globalOrderDetails = new ArrayList<BeanOrderDetail>();
         return insertOrderId;
     }
 
@@ -176,8 +174,22 @@ public class OrdersManage {
         try {
             conn = DBUtil.getConnection();
             conn.setAutoCommit(false);
-            String sql = "update orders set o_status = ? where o_id = ?";
+
+            String sql = "select o_status from orders where o_id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, bo.getoId());
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                if ("已评价".equals(rs.getString(1))) {
+                    throw new BusinessException("商品已评价，无法退货");
+                }
+            } else {
+                throw new BusinessException("查询出错");
+            }
+            rs.close();
+            pst.close();
+            sql = "update orders set o_status = ? where o_id = ?";
+            pst = conn.prepareStatement(sql);
             pst.setString(1, "退货");
             pst.setInt(2, bo.getoId());
             if (pst.executeUpdate() == 1) {
@@ -194,7 +206,7 @@ public class OrdersManage {
                 sql = "select g_count from goods_msg where g_id = ?";
                 pst = conn.prepareStatement(sql);
                 pst.setInt(1, bod.getGoodsId());
-                ResultSet rs = pst.executeQuery();
+                rs = pst.executeQuery();
                 if (!rs.next()) {
                     throw new BusinessException("商品已被删除，无法退货");
                 } else {
@@ -205,12 +217,11 @@ public class OrdersManage {
 
                 sql = "update goods_msg set g_count = ? where g_id = ?";
                 pst = conn.prepareStatement(sql);
-                pst.setInt(1,currentGoods+bod.getGoodsCount());
-                pst.setInt(2,bod.getGoodsId());
-                if(pst.executeUpdate()==1){
+                pst.setInt(1, currentGoods + bod.getGoodsCount());
+                pst.setInt(2, bod.getGoodsId());
+                if (pst.executeUpdate() == 1) {
                     System.out.println("商品回退仓库成功");
-                }
-                else {
+                } else {
                     throw new BusinessException("退货失败");
                 }
                 pst.close();

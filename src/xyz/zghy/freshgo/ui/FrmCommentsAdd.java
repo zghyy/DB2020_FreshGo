@@ -1,6 +1,8 @@
 package xyz.zghy.freshgo.ui;
 
 import xyz.zghy.freshgo.control.CommentsManage;
+import xyz.zghy.freshgo.model.BeanOrder;
+import xyz.zghy.freshgo.util.BaseException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,11 +23,13 @@ public class FrmCommentsAdd extends JDialog implements ActionListener {
     private JLabel labelStarts = new JLabel("星级(0~5)：");
     private JTextField edtCommentMsg = new JTextField(50);
     private JTextField edtStarts = new JTextField(10);
+    private BeanOrder commentOrder = null;
 
 
 
-    public FrmCommentsAdd(JDialog owner, String title, boolean modal){
+    public FrmCommentsAdd(JDialog owner, String title, boolean modal, BeanOrder bo){
         super(owner, title, modal);
+        commentOrder=bo;
         toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
         toolBar.add(btnCheck);
         toolBar.add(btnCancel);
@@ -75,7 +79,11 @@ public class FrmCommentsAdd extends JDialog implements ActionListener {
             this.setVisible(false);
         }
         else if(e.getSource()==btnCheck){
-            new CommentsManage().addComments();
+            String insertCommentMsg = this.edtCommentMsg.getText();
+            int insertStart = Integer.parseInt(this.edtStarts.getText());
+
+            new CommentsManage().addComments(insertCommentMsg,insertStart,commentOrder);
+            this.setVisible(false);
         }
     }
 }

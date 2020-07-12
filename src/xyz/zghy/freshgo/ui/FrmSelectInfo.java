@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,7 +78,6 @@ public class FrmSelectInfo extends JDialog implements ActionListener {
             }
             try {
                 new OrdersManage().createOrder(this.locations.get(i));
-//                SystemUtil.globalOrderDetails = new ArrayList<BeanOrderDetail>();
             } catch (BusinessException businessException) {
                 JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
             }
