@@ -10,12 +10,21 @@ public class BeanOrder {
     private int oId;
     private int oOrder;
     private int locationId;
+    private String locationDetail;
     private int userId;
     private double orderOldPrice;
     private double orderNewPrice;
     private int orderCoupon;
     private Date orderGettime;
     private String orderStatus;
+
+    public String getLocationDetail() {
+        return locationDetail;
+    }
+
+    public void setLocationDetail(String locationDetail) {
+        this.locationDetail = locationDetail;
+    }
 
     public int getoId() {
         return oId;

@@ -60,7 +60,22 @@ public class OrdersManage {
             System.out.println(oldPriceSum);
             System.out.println(newPriceSum);
 
-            sql = "insert into orders(location_id,u_id,o_old_price,o_new_price,o_gettime,o_status,o_order) values(?,?,?,?,?,?,?)";
+            String insertLocationDetail="";
+
+            sql = "select l_detail from locationmsg where l_id=?";
+            pst=conn.prepareStatement(sql);
+            pst.setInt(1,bl.getLocationId());
+            rs = pst.executeQuery();
+            if(rs.next()){
+                insertLocationDetail=rs.getString(1);
+            }
+            else {
+                throw new BusinessException("地址出错");
+            }
+
+
+
+            sql = "insert into orders(location_id,u_id,o_old_price,o_new_price,o_gettime,o_status,o_order,location_detail) values(?,?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
             pst.setInt(1, bl.getLocationId());
             pst.setInt(2, SystemUtil.currentUser.getUserId());
@@ -69,6 +84,7 @@ public class OrdersManage {
             pst.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
             pst.setString(6, "下单");
             pst.setInt(7, insertOrderOrder);
+            pst.setString(8,insertLocationDetail);
             if (pst.executeUpdate() == 1) {
                 System.out.println("下单成功");
             } else {
@@ -106,6 +122,7 @@ public class OrdersManage {
                 bo.setOrderCoupon(rs.getInt(7));
                 bo.setOrderGettime(SystemUtil.SDF.parse(rs.getString(8)));
                 bo.setOrderStatus(rs.getString(9));
+                bo.setLocationDetail(rs.getString(10));
                 res.add(bo);
             }
             rs.close();

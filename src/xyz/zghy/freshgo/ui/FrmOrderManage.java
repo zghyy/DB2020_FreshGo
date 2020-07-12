@@ -21,7 +21,7 @@ public class FrmOrderManage extends JDialog implements ActionListener {
     private Button btnSpeedUp = new Button("加速送货");
     private Button btnBackOrder = new Button("退货");
     private Button btnComment = new Button("评价");
-    private Object tblTitle[] = {"订单编号", "原始价格", "实际支付", "订单创建时间", "订单状态"};
+    private Object tblTitle[] = {"订单编号", "原始价格", "实际支付","订单详细地址", "订单创建时间", "订单状态"};
     private Object tblData[][];
     List<BeanOrder> orders = null;
     DefaultTableModel tblMod = new DefaultTableModel();
@@ -30,13 +30,14 @@ public class FrmOrderManage extends JDialog implements ActionListener {
 
     private void reloadTable() {
         orders = new OrdersManage().loadOrders();
-        tblData = new Object[orders.size()][5];
+        tblData = new Object[orders.size()][6];
         for (int i = 0; i < orders.size(); i++) {
             tblData[i][0] = orders.get(i).getoOrder();
             tblData[i][1] = orders.get(i).getOrderOldPrice();
             tblData[i][2] = orders.get(i).getOrderNewPrice();
-            tblData[i][3] = SystemUtil.SDF.format(orders.get(i).getOrderGettime());
-            tblData[i][4] = orders.get(i).getOrderStatus();
+            tblData[i][3] = orders.get(i).getLocationDetail();
+            tblData[i][4] = SystemUtil.SDF.format(orders.get(i).getOrderGettime());
+            tblData[i][5] = orders.get(i).getOrderStatus();
         }
         tblMod.setDataVector(tblData, tblTitle);
         this.dataTable.validate();
@@ -54,7 +55,7 @@ public class FrmOrderManage extends JDialog implements ActionListener {
         this.reloadTable();
         this.getContentPane().add(new JScrollPane(this.dataTable), BorderLayout.CENTER);
 
-        this.setSize(800, 600);
+        this.setSize(1200, 600);
         double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         this.setLocation((int) (width - this.getWidth()) / 2,
