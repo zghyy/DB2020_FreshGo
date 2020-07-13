@@ -108,7 +108,7 @@ public class FrmMain extends JFrame implements ActionListener {
 
     void reloadGoodsTable(BeanFreshType btf) {
         goodsMsgs = new GoodsManage().loadGoodsByFresh(btf);
-        System.out.println(goodsMsgs.size());
+//        System.out.println(goodsMsgs.size());
         tblDataGoods = new Object[goodsMsgs.size()][5];
         for (int i = 0; i < goodsMsgs.size(); i++) {
             tblDataGoods[i][0] = goodsMsgs.get(i).getGoodsOrder();

@@ -23,7 +23,7 @@ public class FrmFullDiscountGoodsConnection extends JDialog implements ActionLis
     private JPanel toolBar = new JPanel();
     private Button btnAdd = new Button("添加商品绑定类型");
     private Button btnDelete = new Button("删除商品绑定类型");
-    private Object tblTitle[] = {"绑定编号", "商品名称", "开始日期", "结束日期"};
+    private Object tblTitle[] = {"绑定编号", "商品名称","满折序号", "开始日期", "结束日期"};
     private Object tblData[][];
     List<BeanFullDiscountConnent> fullDiscountConnents = null;
     DefaultTableModel tablmod = new DefaultTableModel();
@@ -32,12 +32,13 @@ public class FrmFullDiscountGoodsConnection extends JDialog implements ActionLis
 
     private void reloadTable() {
         fullDiscountConnents = new FullDiscountConnectMannage().loadFullDiscountConnect();
-        tblData = new Object[fullDiscountConnents.size()][4];
+        tblData = new Object[fullDiscountConnents.size()][5];
         for (int i = 0; i < fullDiscountConnents.size(); i++) {
             tblData[i][0] = fullDiscountConnents.get(i).getFdcOrder();
             tblData[i][1] = fullDiscountConnents.get(i).getgName();
-            tblData[i][2] = SystemUtil.SDF.format(fullDiscountConnents.get(i).getStartDate());
-            tblData[i][3] = SystemUtil.SDF.format(fullDiscountConnents.get(i).getEndDate());
+            tblData[i][2] = fullDiscountConnents.get(i).getFdId();
+            tblData[i][3] = SystemUtil.SDF.format(fullDiscountConnents.get(i).getStartDate());
+            tblData[i][4] = SystemUtil.SDF.format(fullDiscountConnents.get(i).getEndDate());
         }
         tablmod.setDataVector(tblData, tblTitle);
         this.dataTable.validate();

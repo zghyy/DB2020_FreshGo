@@ -86,7 +86,7 @@ public class GoodsManage {
 
 
             //TODO 针对后面与商品关联的内容，通过g_id寻找，防止误删
-            String sql = "select * from f_d_connect where g_id=?";
+            String sql = "select * from f_g_connect where g_id=?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1,deleteGM.getGoodsId());
             ResultSet rs = pst.executeQuery();

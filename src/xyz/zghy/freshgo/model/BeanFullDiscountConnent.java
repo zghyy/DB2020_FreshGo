@@ -10,9 +10,18 @@ public class BeanFullDiscountConnent {
     private int fdcId;
     private int fdcOrder;
     private int gId;
+    private int fdId;
     private String gName;
     private Date startDate;
     private Date endDate;
+
+    public int getFdId() {
+        return fdId;
+    }
+
+    public void setFdId(int fdId) {
+        this.fdId = fdId;
+    }
 
     public String getgName() {
         return gName;

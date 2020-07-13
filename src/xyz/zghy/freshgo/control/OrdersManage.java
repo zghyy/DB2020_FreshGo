@@ -46,9 +46,9 @@ public class OrdersManage {
             pst.setInt(1, SystemUtil.currentUser.getUserId());
             rs = pst.executeQuery();
             if (rs.next()) {
-                insertOrderId = rs.getInt(1) + 1;
+                insertOrderOrder = rs.getInt(1) + 1;
             } else {
-                insertOrderId = 1;
+                insertOrderOrder = 1;
             }
 
             double oldPriceSum = 0;
@@ -73,7 +73,7 @@ public class OrdersManage {
             }
 
 
-            sql = "insert into orders(location_id,u_id,o_old_price,o_new_price,o_gettime,o_status,o_order,location_detail) values(?,?,?,?,?,?,?)";
+            sql = "insert into orders(location_id,u_id,o_old_price,o_new_price,o_gettime,o_status,o_order,location_detail) values(?,?,?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
             pst.setInt(1, bl.getLocationId());
             pst.setInt(2, SystemUtil.currentUser.getUserId());
@@ -183,6 +183,9 @@ public class OrdersManage {
                 if ("已评价".equals(rs.getString(1))) {
                     throw new BusinessException("商品已评价，无法退货");
                 }
+                if("退货".equals(rs.getString(1))){
+                    throw new BusinessException("商品已退货");
+                }
             } else {
                 throw new BusinessException("查询出错");
             }
@@ -201,6 +204,7 @@ public class OrdersManage {
 
 
             List<BeanOrderDetail> bods = new OrderDetailsManage().loadOrderDetails(bo.getoId());
+            System.out.println(bods.size());
             for (BeanOrderDetail bod : bods) {
                 int currentGoods;
                 sql = "select g_count from goods_msg where g_id = ?";
@@ -219,6 +223,10 @@ public class OrdersManage {
                 pst = conn.prepareStatement(sql);
                 pst.setInt(1, currentGoods + bod.getGoodsCount());
                 pst.setInt(2, bod.getGoodsId());
+                System.out.println(currentGoods);
+                System.out.println(bod.getGoodsCount());
+                System.out.println("=-===-=-=--=-=-=-=-");
+
                 if (pst.executeUpdate() == 1) {
                     System.out.println("商品回退仓库成功");
                 } else {

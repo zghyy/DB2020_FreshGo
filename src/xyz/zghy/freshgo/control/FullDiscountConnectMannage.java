@@ -42,13 +42,14 @@ public class FullDiscountConnectMannage {
                 insertOrder = 1;
             }
 
-            sql  = "insert into f_g_connect(fdc_order,g_id,g_name,start_date,end_date) values(?,?,?,?,?)";
+            sql  = "insert into f_g_connect(fdc_order,g_id,g_name,fd_id,start_date,end_date) values(?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
             pst.setInt(1,insertOrder);
             pst.setInt(2,bgm.getGoodsId());
             pst.setString(3,bgm.getGoodsName());
-            pst.setTimestamp(4,new Timestamp(bfdm.getFullDiscountStartDate().getTime()));
-            pst.setTimestamp(5,new Timestamp(bfdm.getFullDiscountEndDate().getTime()));
+            pst.setInt(4,bfdm.getFullDiscountId());
+            pst.setTimestamp(5,new Timestamp(bfdm.getFullDiscountStartDate().getTime()));
+            pst.setTimestamp(6,new Timestamp(bfdm.getFullDiscountEndDate().getTime()));
             if(pst.executeUpdate()==1){
                 System.out.println("商品连接成功");
             }
@@ -148,8 +149,9 @@ public class FullDiscountConnectMannage {
                 bfdc.setFdcOrder(rs.getInt(2));
                 bfdc.setgId(rs.getInt(3));
                 bfdc.setgName(rs.getString(4));
-                bfdc.setStartDate(SystemUtil.SDF.parse(rs.getString(5)));
-                bfdc.setEndDate(SystemUtil.SDF.parse(rs.getString(6)));
+                bfdc.setFdId(rs.getInt(5));
+                bfdc.setStartDate(SystemUtil.SDF.parse(rs.getString(6)));
+                bfdc.setEndDate(SystemUtil.SDF.parse(rs.getString(7)));
                 res.add(bfdc);
             }
             rs.close();

@@ -92,12 +92,12 @@ public class OrderDetailsManage {
 
 
             for (BeanOrderDetail detail : details) {
-                sql = "select ltp_price,ltp_count,ltp_end_date from LTpromotion  where g_id = ?";
+                sql = "select ltp_price,ltp_count,ltp_start_date,ltp_end_date from LTpromotion  where g_id = ?";
                 pst = conn.prepareStatement(sql);
                 pst.setInt(1, detail.getGoodsId());
                 rs = pst.executeQuery();
                 if (rs.next()) {
-                    if (SystemUtil.SDF.parse(rs.getString(3)).getTime() > System.currentTimeMillis()) {
+                    if (SystemUtil.SDF.parse(rs.getString(3)).getTime() < System.currentTimeMillis() && SystemUtil.SDF.parse(rs.getString(4)).getTime() > System.currentTimeMillis()) {
                         if (rs.getInt(2) > detail.getGoodsCount()) {
                             double simplePrice = rs.getDouble(1);
                             newPrice += rs.getDouble(1) * detail.getGoodsCount();
@@ -142,15 +142,42 @@ public class OrderDetailsManage {
                     }
                     continue;
                 }
+                rs.close();
+                pst.close();
 
 
                 //TODO 创建视图 判断当前数据是否满足满折优惠券 满折的话需要加上满折信息与id，后期更新details
-//            if (){
-//
-//            }
-//            else{
-//
-//            }
+                sql = "select fd_id,fd_needcount,fd_data,start_date,end_date from fulldiscountandgoodsmsg where g_id = ?";
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1, detail.getGoodsId());
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    if (rs.getInt(2) <= detail.getGoodsCount() &&
+                            SystemUtil.SDF.parse(rs.getString(4)).getTime() < System.currentTimeMillis() &&
+                            SystemUtil.SDF.parse(rs.getString(5)).getTime() > System.currentTimeMillis()) {
+                        System.out.println(rs.getDouble(3));
+                        newPrice += detail.getGoodsPrice() * detail.getGoodsCount() * rs.getDouble(3)/10;
+                        double discount = rs.getDouble(3)/10;
+                        int fulldID=rs.getInt(1);
+                        rs.close();
+                        pst.close();
+                        sql = "insert into orders_detail(goods_id,goods_count,goods_price,order_id,fd_data,fulld_id)" +
+                                " values(?,?,?,?,?,?)";
+                        pst = conn.prepareStatement(sql);
+                        pst.setInt(1, detail.getGoodsId());
+                        pst.setInt(2, detail.getGoodsCount());
+                        pst.setDouble(3, detail.getGoodsPrice()*discount);
+                        pst.setInt(4, orderId);
+                        pst.setDouble(5,discount*10);
+                        pst.setInt(6,fulldID);
+                        if (pst.executeUpdate() == 1) {
+                            System.out.println("使用满折成功");
+                        }
+                        continue;
+                    }
+                }
+
+
                 newPrice += detail.getGoodsPrice() * detail.getGoodsCount();
                 sql = "insert into orders_detail(goods_id,goods_count,goods_price,order_id) " +
                         "values(?,?,?,?)";
@@ -189,6 +216,7 @@ public class OrderDetailsManage {
     }
 
     public List<BeanOrderDetail> loadOrderDetails(int o_id) {
+        System.out.println("---"+o_id);
         Connection conn = null;
         List<BeanOrderDetail> res = new ArrayList<BeanOrderDetail>();
 
