@@ -6,10 +6,18 @@ package xyz.zghy.freshgo.model;
  */
 public class BeanMenuMsg {
     private int menuId;
+    private int menuOrder;
     private String menuName;
     private String menuDesc;
     private String menuStep;
-    //TODO 这里缺个图片变量
+
+    public int getMenuOrder() {
+        return menuOrder;
+    }
+
+    public void setMenuOrder(int menuOrder) {
+        this.menuOrder = menuOrder;
+    }
 
     public int getMenuId() {
         return menuId;

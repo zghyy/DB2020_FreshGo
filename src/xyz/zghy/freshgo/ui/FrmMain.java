@@ -43,6 +43,7 @@ public class FrmMain extends JFrame implements ActionListener {
 
     private JMenu menuUser = new JMenu("用户选择");
     private JMenuItem orders = new JMenuItem("查看我的订单");
+    private JMenuItem menu = new JMenuItem("查看菜谱");
     private JMenuItem locateManage = new JMenuItem("配送地址管理");
 
     private JMenu menuVip = new JMenu("会员中心");
@@ -197,6 +198,8 @@ public class FrmMain extends JFrame implements ActionListener {
         } else {
             this.menuUser.add(orders);
             this.orders.addActionListener(this);
+            this.menuUser.add(menu);
+            this.menu.addActionListener(this);
             this.menuUser.add(locateManage);
             this.locateManage.addActionListener(this);
             this.menuVip.add(vipRegister);
@@ -298,7 +301,12 @@ public class FrmMain extends JFrame implements ActionListener {
         } else if (e.getSource() == this.orders) {
             FrmOrderManage dlg = new FrmOrderManage(this, "订单管理", true);
             dlg.setVisible(true);
-        } else if (e.getSource() == this.fullDiscountType) {
+        }
+        else if(e.getSource()==this.menu||e.getSource()==this.menuManage){
+            FrmShowMenu dlg = new FrmShowMenu(this,"菜谱大全",true);
+            dlg.setVisible(true);
+        }
+        else if (e.getSource() == this.fullDiscountType) {
             FrmFullDiscountType dlg = new FrmFullDiscountType(this, "满折信息分类", true);
             dlg.setVisible(true);
         } else if (e.getSource() == this.fullDiscountGoods) {
