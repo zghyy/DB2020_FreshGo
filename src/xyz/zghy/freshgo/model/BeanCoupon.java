@@ -8,11 +8,20 @@ import java.util.Date;
  */
 public class BeanCoupon {
     private int couponId;
+    private int couponOrder;
     private String couponDesc;
-    private int couponAmount;
-    private int couponDiscount;
+    private double couponAmount;
+    private double couponDiscount;
     private Date couponStartDate;
     private Date couponEndDate;
+
+    public int getCouponOrder() {
+        return couponOrder;
+    }
+
+    public void setCouponOrder(int couponOrder) {
+        this.couponOrder = couponOrder;
+    }
 
     public int getCouponId() {
         return couponId;
@@ -30,19 +39,19 @@ public class BeanCoupon {
         this.couponDesc = couponDesc;
     }
 
-    public int getCouponAmount() {
+    public double getCouponAmount() {
         return couponAmount;
     }
 
-    public void setCouponAmount(int couponAmount) {
+    public void setCouponAmount(double couponAmount) {
         this.couponAmount = couponAmount;
     }
 
-    public int getCouponDiscount() {
+    public double getCouponDiscount() {
         return couponDiscount;
     }
 
-    public void setCouponDiscount(int couponDiscount) {
+    public void setCouponDiscount(double couponDiscount) {
         this.couponDiscount = couponDiscount;
     }
 

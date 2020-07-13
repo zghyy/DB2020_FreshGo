@@ -267,9 +267,9 @@ public class FrmMain extends JFrame implements ActionListener {
         JLabel label = null;
         if ("管理员".equals(SystemUtil.currentLoginType)) {
             label = new JLabel("您好!   尊敬的管理员 : " + SystemUtil.currentAdmin.getAdminName());
-        } else if("y".equals(SystemUtil.currentUser.getUserIsVip())) {
+        } else if ("y".equals(SystemUtil.currentUser.getUserIsVip())) {
             label = new JLabel("您好!   尊敬的会员 : " + SystemUtil.currentUser.getUserName());
-        }else {
+        } else {
             label = new JLabel("您好! " + SystemUtil.currentUser.getUserName());
 
         }
@@ -295,16 +295,17 @@ public class FrmMain extends JFrame implements ActionListener {
         } else if (e.getSource() == this.goodsManage) {
             FrmGoodsManage dlg = new FrmGoodsManage(this, "商品管理", true);
             dlg.setVisible(true);
-        }
-        else if(e.getSource()==this.orders){
-            FrmOrderManage dlg = new FrmOrderManage(this,"订单管理",true);
+        } else if (e.getSource() == this.orders) {
+            FrmOrderManage dlg = new FrmOrderManage(this, "订单管理", true);
             dlg.setVisible(true);
-        }
-        else if(e.getSource()==this.fullDiscountType){
-            FrmFullDiscountType dlg = new FrmFullDiscountType(this,"满折信息分类",true);
+        } else if (e.getSource() == this.fullDiscountType) {
+            FrmFullDiscountType dlg = new FrmFullDiscountType(this, "满折信息分类", true);
             dlg.setVisible(true);
-        } else if (e.getSource()==this.fullDiscountGoods) {
-            FrmFullDiscountGoodsConnection dlg = new FrmFullDiscountGoodsConnection(this,"满折商品绑定",true);
+        } else if (e.getSource() == this.fullDiscountGoods) {
+            FrmFullDiscountGoodsConnection dlg = new FrmFullDiscountGoodsConnection(this, "满折商品绑定", true);
+            dlg.setVisible(true);
+        } else if (e.getSource() == this.couponManage) {
+            FrmCoupon dlg = new FrmCoupon(this, "优惠券管理", true);
             dlg.setVisible(true);
         } else if (e.getSource() == this.locateManage) {
             FrmLocationManage dlg = new FrmLocationManage(this, "配送地址管理", true);
