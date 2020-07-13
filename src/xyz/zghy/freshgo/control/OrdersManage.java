@@ -21,6 +21,7 @@ import java.util.List;
 public class OrdersManage {
     public int createOrder(BeanLocation bl) throws BusinessException {
         int insertOrderId = 0;
+        int retId = 0;
 
         Connection conn = null;
 
@@ -88,7 +89,19 @@ public class OrdersManage {
             } else {
                 throw new BusinessException("订单数据插入失败");
             }
+            rs.close();
+            pst.close();
 
+
+            sql = "select max(o_id) from orders";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                retId = rs.getInt(1);
+            }
+            else {
+                throw new BusinessException("数据异常");
+            }
             rs.close();
             pst.close();
 
@@ -96,7 +109,7 @@ public class OrdersManage {
             throwables.printStackTrace();
         }
         SystemUtil.globalOrderDetails = new ArrayList<BeanOrderDetail>();
-        return insertOrderId;
+        return retId;
     }
 
     public List<BeanOrder> loadOrders() {

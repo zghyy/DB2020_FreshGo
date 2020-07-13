@@ -3,9 +3,7 @@ package xyz.zghy.freshgo.ui;
 import xyz.zghy.freshgo.control.LocationManage;
 import xyz.zghy.freshgo.control.OrdersManage;
 import xyz.zghy.freshgo.model.BeanLocation;
-import xyz.zghy.freshgo.model.BeanOrderDetail;
 import xyz.zghy.freshgo.util.BusinessException;
-import xyz.zghy.freshgo.util.SystemUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -77,11 +75,13 @@ public class FrmSelectInfo extends JDialog implements ActionListener {
                 JOptionPane.showMessageDialog(null, "还未选择地址！", "错误", JOptionPane.ERROR_MESSAGE);
             }
             try {
-                new OrdersManage().createOrder(this.locations.get(i));
+                int id =  new OrdersManage().createOrder(this.locations.get(i));
+                FrmSelectCoupon dlg = new FrmSelectCoupon(this,"选择优惠券",true,id);
+                dlg.setVisible(true);
+                this.setVisible(false);
             } catch (BusinessException businessException) {
                 JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
             }
-            this.setVisible(false);
         }
 
     }

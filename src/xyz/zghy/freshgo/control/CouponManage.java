@@ -94,8 +94,8 @@ public class CouponManage {
                 pst.setInt(1, i - 1);
                 pst.setInt(2, i);
                 pst.executeUpdate();
+                pst.close();
             }
-            pst.close();
             conn.commit();
 
 
@@ -155,5 +155,64 @@ public class CouponManage {
 
 
         return res;
+    }
+
+    public void useCoupon(BeanCoupon bc, int o_id) throws BusinessException {
+        Connection conn = null;
+        if (bc.getCouponStartDate().getTime() > System.currentTimeMillis()) {
+            throw new BusinessException("优惠券还未到使用期间");
+        }
+        if (bc.getCouponEndDate().getTime() < System.currentTimeMillis()) {
+            throw new BusinessException("优惠券已过期，请使用其他优惠券");
+        }
+
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "select o_new_price from orders where o_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, o_id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                double price = rs.getDouble(1);
+                if (price < bc.getCouponAmount()) {
+                    throw new BusinessException("该订单无法使用此优惠券:实际支付未达到使用金额");
+                } else {
+                    price = price - bc.getCouponDiscount();
+                    System.out.println("最新价格"+price);
+                    rs.close();
+                    pst.close();
+                    sql = "update orders set o_coupon = ? ,o_new_price=? where o_id=?";
+                    pst = conn.prepareStatement(sql);
+                    pst.setInt(1, bc.getCouponId());
+                    pst.setDouble(2, price);
+                    pst.setInt(3, o_id);
+                    if(pst.executeUpdate()==1){
+                        System.out.println("优惠券使用成功");
+                    }
+                    else {
+                        throw new BusinessException("数据异常");
+                    }
+                    pst.close();
+                    return;
+                }
+
+            } else {
+                throw new BusinessException("数据异常");
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+
+
     }
 }
