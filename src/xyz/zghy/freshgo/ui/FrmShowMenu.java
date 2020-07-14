@@ -111,10 +111,11 @@ public class FrmShowMenu extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnSearch) {
-            
+            FrmShowRecommand dlg = new FrmShowRecommand(this, "用户推荐商品", true);
+            dlg.setVisible(true);
 
         } else if (e.getSource() == btnAdd) {
-            FrmMenuAdd dlg = new FrmMenuAdd(this,"添加菜谱",true);
+            FrmMenuAdd dlg = new FrmMenuAdd(this, "添加菜谱", true);
             dlg.setVisible(true);
             this.reloadTableMenu();
         }
