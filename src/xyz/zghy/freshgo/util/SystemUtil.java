@@ -1,6 +1,7 @@
 package xyz.zghy.freshgo.util;
 
 import xyz.zghy.freshgo.model.BeanAdmin;
+import xyz.zghy.freshgo.model.BeanMenuDetail;
 import xyz.zghy.freshgo.model.BeanOrderDetail;
 import xyz.zghy.freshgo.model.BeanUsers;
 
@@ -18,4 +19,5 @@ public class SystemUtil {
     public static BeanUsers currentUser = null;
     public static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static List<BeanOrderDetail> globalOrderDetails = new ArrayList<BeanOrderDetail>();
+    public static List<BeanMenuDetail> globalMenuDetails = new ArrayList<>();
 }

@@ -11,6 +11,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 /**
@@ -78,6 +80,13 @@ public class FrmShowMenu extends JDialog implements ActionListener {
         this.reloadTableMenuDetail();
 
         this.getContentPane().add(new JScrollPane(this.dataTableMenu), BorderLayout.CENTER);
+        this.dataTableMenu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                reloadTableMenuDetail();
+            }
+        });
 
         JScrollPane detail = new JScrollPane(this.dataTableMenuDetail);
         detail.setPreferredSize(new Dimension(200, 0));
@@ -102,10 +111,12 @@ public class FrmShowMenu extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnSearch) {
+            
 
         } else if (e.getSource() == btnAdd) {
             FrmMenuAdd dlg = new FrmMenuAdd(this,"添加菜谱",true);
             dlg.setVisible(true);
+            this.reloadTableMenu();
         }
 
     }

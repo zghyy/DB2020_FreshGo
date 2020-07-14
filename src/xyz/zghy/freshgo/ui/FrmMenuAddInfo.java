@@ -1,6 +1,8 @@
 package xyz.zghy.freshgo.ui;
 
-import xyz.zghy.freshgo.control.FreshTypeManage;
+import xyz.zghy.freshgo.control.MenuDetailManage;
+import xyz.zghy.freshgo.control.MenuManage;
+import xyz.zghy.freshgo.model.BeanMenuMsg;
 import xyz.zghy.freshgo.util.BusinessException;
 
 import javax.swing.*;
@@ -10,19 +12,19 @@ import java.awt.event.ActionListener;
 
 /**
  * @author ghy
- * @date 2020/7/6 上午9:38
+ * @date 2020/7/14 上午8:38
  */
-public class FrmFreshTypeAdd extends JDialog implements ActionListener {
+public class FrmMenuAddInfo extends JDialog implements ActionListener {
     private JPanel toolBar = new JPanel();
     private JPanel workPane = new JPanel();
     private Button btnCheck = new Button("确定");
     private Button btnCancel = new Button("取消");
-    private JLabel labelName = new JLabel("类型名称：");
-    private JLabel labelDesc = new JLabel("类型描述：");
+    private JLabel labelName = new JLabel("菜谱名称：");
+    private JLabel labelDesc = new JLabel("菜谱描述：");
     private JTextField edtName = new JTextField(20);
     private JTextField edtDesc = new JTextField(50);
 
-    public FrmFreshTypeAdd(JDialog owner, String title, boolean modal) {
+    public FrmMenuAddInfo (JDialog owner, String title, boolean modal) {
         super(owner, title, modal);
         toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
         toolBar.add(btnCheck);
@@ -65,25 +67,27 @@ public class FrmFreshTypeAdd extends JDialog implements ActionListener {
 
         this.validate();
 
-
-
     }
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==this.btnCancel){
+        if(e.getSource()==btnCancel){
             this.setVisible(false);
         }
-        else if(e.getSource()==this.btnCheck){
-            String typeName = this.edtName.getText();
-            String typeDesc = this.edtDesc.getText();
-            FreshTypeManage ftm = new FreshTypeManage();
+        else if(e.getSource()==btnCheck){
+            BeanMenuMsg bmm = new BeanMenuMsg();
+            bmm.setMenuName(this.edtName.getText());
+            bmm.setMenuDesc(this.edtDesc.getText());
             try {
-                ftm.addFreshType(typeName,typeDesc);
-                this.setVisible(false);
+                int id = new MenuManage().createMenu(bmm);
+                new MenuDetailManage().addMenuDetail(id);
             } catch (BusinessException businessException) {
                 JOptionPane.showMessageDialog(null, businessException.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
             }
+            this.setVisible(false);
         }
+
     }
 }

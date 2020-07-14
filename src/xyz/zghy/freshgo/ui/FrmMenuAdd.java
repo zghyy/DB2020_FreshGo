@@ -121,7 +121,6 @@ public class FrmMenuAdd extends JDialog implements ActionListener {
         this.mainPanel.add(this.labelGoods, BorderLayout.NORTH);
 
 
-
         JScrollPane types = new JScrollPane(this.dataTableFresh);
         types.setPreferredSize(new Dimension(300, 0));
 
@@ -137,10 +136,10 @@ public class FrmMenuAdd extends JDialog implements ActionListener {
         this.mainPanel.add(newGoods, BorderLayout.CENTER);
 
 
-        JScrollPane  menuitem = new JScrollPane(this.dataTableMenuDetail);
+        JScrollPane menuitem = new JScrollPane(this.dataTableMenuDetail);
         menuitem.setPreferredSize(new Dimension(200, 0));
 
-        this.mainPanel.add(menuitem,BorderLayout.EAST);
+        this.mainPanel.add(menuitem, BorderLayout.EAST);
 
 
         this.reloadFreshTable();
@@ -156,20 +155,46 @@ public class FrmMenuAdd extends JDialog implements ActionListener {
 
         this.validate();
 
-
+        this.btnAdd.addActionListener(this);
+        this.btnDelete.addActionListener(this);
+        this.btnMake.addActionListener(this);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==btnAdd){
+        if (e.getSource() == btnAdd) {
+            if (this.dataTableGoods.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "未选中商品", "错误", JOptionPane.ERROR_MESSAGE);
+            } else {
+                BeanMenuDetail bmd = new BeanMenuDetail();
+                for (BeanMenuDetail indexbod : this.menuDetails) {
+                    if (this.goodsMsgs.get(this.dataTableGoods.getSelectedRow()).getGoodsName() == indexbod.getgName()) {
+                        JOptionPane.showMessageDialog(null, "不要重复添加哦", "错误", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+                bmd.setgId(this.goodsMsgs.get(this.dataTableGoods.getSelectedRow()).getGoodsId());
+                bmd.setgName(this.goodsMsgs.get(this.dataTableGoods.getSelectedRow()).getGoodsName());
 
-        }
-        else if(e.getSource()==btnDelete){
-
-        }
-        else if(e.getSource()==btnMake){
-
+                this.menuDetails.add(bmd);
+                this.reloadMenuDetail();
+            }
+        } else if (e.getSource() == btnDelete) {
+            int i = this.dataTableMenuDetail.getSelectedRow();
+            if (i == -1) {
+                JOptionPane.showMessageDialog(null, "未选中商品", "错误", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                this.menuDetails.remove(i);
+                this.reloadMenuDetail();
+            }
+        } else if (e.getSource() == btnMake) {
+            SystemUtil.globalMenuDetails = this.menuDetails;
+            FrmMenuAddInfo dlg = new FrmMenuAddInfo(this,"菜谱详情",true);
+            dlg.setVisible(true);
+            this.menuDetails = SystemUtil.globalMenuDetails;
+            this.reloadMenuDetail();
         }
 
     }
