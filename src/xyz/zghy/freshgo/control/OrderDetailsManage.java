@@ -18,6 +18,14 @@ import java.util.List;
  * @date 2020/7/10 上午10:40
  */
 public class OrderDetailsManage {
+    /**
+     * 这个函数用来没有使用优惠之前的原始价格总和//            // TODO 后面订单部分使用了地址而无法删除
+//            String sql = "";
+//            PreparedStatement pst = null;
+//            ResultSet rs = null;
+     * @return
+     * @throws BusinessException
+     */
     public double getOldPrice() throws BusinessException {
         double oldPrice = 0;
         List<BeanOrderDetail> details = SystemUtil.globalOrderDetails;
@@ -79,6 +87,12 @@ public class OrderDetailsManage {
         return oldPrice;
     }
 
+    /**
+     * 这个函数用来计算使用了限时促销券或者满折券后的新价格
+     * @param orderId
+     * @return
+     * @throws BusinessException
+     */
     public double getNewPrice(int orderId) throws BusinessException {
         double newPrice = 0;
         List<BeanOrderDetail> details = SystemUtil.globalOrderDetails;
@@ -215,6 +229,11 @@ public class OrderDetailsManage {
         return newPrice;
     }
 
+    /**
+     * 这个函数用来根据订单Id加载订单的商品内容
+     * @param o_id
+     * @return
+     */
     public List<BeanOrderDetail> loadOrderDetails(int o_id) {
         System.out.println("---"+o_id);
         Connection conn = null;

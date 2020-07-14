@@ -15,6 +15,11 @@ import java.util.List;
  * @date 2020/7/11 下午2:38
  */
 public class FullDiscountTypeMannage {
+    /**
+     * 这个函数用来添加满折信息
+     * @param bfdm
+     * @throws BusinessException
+     */
     public void addFullDiscountMsg(BeanFullDiscountMsg bfdm) throws BusinessException {
         Connection conn = null;
 
@@ -63,7 +68,10 @@ public class FullDiscountTypeMannage {
 
     }
 
-
+    /**
+     * 这个函数用来加载所有的满折优惠券信息
+     * @return
+     */
     public List<BeanFullDiscountMsg> loadFullDiscountMsg() {
         Connection conn = null;
         List<BeanFullDiscountMsg> res = new ArrayList<BeanFullDiscountMsg>();
@@ -101,6 +109,11 @@ public class FullDiscountTypeMannage {
         return res;
     }
 
+    /**
+     * 这个函数用来删除满折优惠券信息
+     * @param bfdm
+     * @throws BusinessException
+     */
     public void deleteFullDiscountMsg(BeanFullDiscountMsg bfdm) throws BusinessException {
         Connection conn = null;
 

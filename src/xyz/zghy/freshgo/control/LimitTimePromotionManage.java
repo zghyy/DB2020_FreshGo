@@ -15,6 +15,11 @@ import java.util.List;
  * @date 2020/7/7 下午7:20
  */
 public class LimitTimePromotionManage {
+    /**
+     * 这个函数用来添加限时促销商品信息
+     * @param blp
+     * @throws BusinessException
+     */
     public void addLimitTimePromotion(BeanLimitTimePromotion blp) throws BusinessException {
         Connection conn = null;
 
@@ -74,6 +79,11 @@ public class LimitTimePromotionManage {
 
     }
 
+    /**
+     * 这个函数用来删除限时促销商品信息
+     * @param deleteBLTP
+     * @throws BusinessException
+     */
     public void deleteLimitTimePromotion(BeanLimitTimePromotion deleteBLTP) throws BusinessException {
         Connection conn = null;
         try {
@@ -132,7 +142,10 @@ public class LimitTimePromotionManage {
 
     }
 
-
+    /**
+     * 这个函数用来加载所有的限时促销商品信息
+     * @return
+     */
     public List<BeanLimitTimePromotion> loadLimitTimePromotion() {
         List<BeanLimitTimePromotion> res = new ArrayList<BeanLimitTimePromotion>();
         Connection conn = null;

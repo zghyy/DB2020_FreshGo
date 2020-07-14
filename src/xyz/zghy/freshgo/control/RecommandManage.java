@@ -18,6 +18,11 @@ import java.util.List;
  * @date 2020/7/14 上午10:06
  */
 public class RecommandManage {
+    /**
+     * 这个函数用来加载推荐菜谱信息
+     * @return
+     * @throws BusinessException
+     */
     public List<BeanRecommand> loadRecommand() throws BusinessException {
         Connection conn = null;
         List<BeanRecommand> res = new ArrayList<BeanRecommand>();

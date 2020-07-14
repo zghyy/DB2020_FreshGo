@@ -15,7 +15,12 @@ import java.util.List;
  * @date 2020/7/5 上午8:25
  */
 public class FreshTypeManage {
-
+    /**
+     * 这个函数用来添加生鲜类型
+     * @param freshName
+     * @param freshDesc
+     * @throws BusinessException
+     */
     public void addFreshType(String freshName, String freshDesc) throws BusinessException {
         if ("".equals(freshName)) {
             throw new BusinessException("生鲜类型名不能为空");
@@ -72,6 +77,11 @@ public class FreshTypeManage {
 
     }
 
+    /**
+     * 这个函数用来删除生鲜类型(如果有对应生鲜类型的商品存在就无法删除)
+     * @param deleteFT
+     * @throws BusinessException
+     */
     public void deleteFreshType(BeanFreshType deleteFT) throws BusinessException {
         Connection conn = null;
 
@@ -141,6 +151,11 @@ public class FreshTypeManage {
 
     }
 
+    /**
+     * 这个函数用来加载所有的生鲜类型
+     * @return
+     * @throws BaseException
+     */
     public List<BeanFreshType> loadFreshType() throws BaseException {
         Connection conn = null;
         List<BeanFreshType> res = new ArrayList<BeanFreshType>();

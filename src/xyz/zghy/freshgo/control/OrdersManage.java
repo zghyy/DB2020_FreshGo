@@ -19,6 +19,12 @@ import java.util.List;
  * @date 2020/7/9 下午2:32
  */
 public class OrdersManage {
+    /**
+     * 这个函数用来创建订单
+     * @param bl
+     * @return
+     * @throws BusinessException
+     */
     public int createOrder(BeanLocation bl) throws BusinessException {
         int insertOrderId = 0;
         int retId = 0;
@@ -112,6 +118,10 @@ public class OrdersManage {
         return retId;
     }
 
+    /**
+     * 这个函数用来加载订单信息
+     * @return
+     */
     public List<BeanOrder> loadOrders() {
         Connection conn = null;
         List<BeanOrder> res = new ArrayList<BeanOrder>();
@@ -153,6 +163,11 @@ public class OrdersManage {
         return res;
     }
 
+    /**
+     * 这个函数用来让订单加速送货(模拟送货)
+     * @param bo
+     * @throws BusinessException
+     */
     public void speedUp(BeanOrder bo) throws BusinessException {
         Connection conn = null;
         try {

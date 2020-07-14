@@ -17,6 +17,12 @@ import java.util.List;
  * @date 2020/7/12 下午6:23
  */
 public class FullDiscountConnectMannage {
+    /**
+     * 建立满折优惠券与商品的连接
+     * @param bgm
+     * @param bfdm
+     * @throws BusinessException
+     */
     public void addFullDiscountConnect(BeanGoodsMsg bgm, BeanFullDiscountMsg bfdm) throws BusinessException {
         Connection conn = null;
 
@@ -71,6 +77,11 @@ public class FullDiscountConnectMannage {
         }
     }
 
+    /**
+     * 删除满折优惠券与商品的连接
+     * @param bfdc
+     * @throws BusinessException
+     */
     public void deleteFullDiscountConnect(BeanFullDiscountConnent bfdc) throws BusinessException {
         Connection conn = null;
 
@@ -133,7 +144,10 @@ public class FullDiscountConnectMannage {
     }
 
 
-
+    /**
+     * 加载所有已建立连接的商品满折信息
+     * @return
+     */
     public List<BeanFullDiscountConnent> loadFullDiscountConnect() {
         Connection conn = null;
         List<BeanFullDiscountConnent> res = new ArrayList<BeanFullDiscountConnent>();

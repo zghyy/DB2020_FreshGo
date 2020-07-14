@@ -17,6 +17,11 @@ import java.util.List;
  * @date 2020/7/7 下午1:36
  */
 public class PurchaseManage {
+    /**
+     * 这个函数用来创建采购订单
+     * @param bp
+     * @throws BusinessException
+     */
     public void addPurchase(BeanPurchase bp) throws BusinessException {
         Connection conn = null;
 
@@ -64,7 +69,11 @@ public class PurchaseManage {
 
     }
 
-
+    /**
+     * 这个函数用来让采购订单加速派送
+     * @param bp
+     * @throws BusinessException
+     */
     public void speedUp(BeanPurchase bp) throws BusinessException {
         Connection conn = null;
         try{
@@ -116,6 +125,10 @@ public class PurchaseManage {
         }
     }
 
+    /**
+     * 这个函数用来加载所有的采购订单
+     * @return
+     */
     public List<BeanPurchase> loadPurchase() {
         Connection conn = null;
         List<BeanPurchase> res = new ArrayList<BeanPurchase>();

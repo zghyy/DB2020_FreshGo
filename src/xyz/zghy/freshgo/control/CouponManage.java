@@ -15,6 +15,11 @@ import java.util.List;
  * @date 2020/7/13 上午10:10
  */
 public class CouponManage {
+    /**
+     * 这个函数用来添加优惠券
+     * @param bc
+     * @throws BusinessException
+     */
     public void addCoupons(BeanCoupon bc) throws BusinessException {
         Connection conn = null;
 
@@ -61,6 +66,11 @@ public class CouponManage {
         }
     }
 
+    /**
+     * 这个函数用来删除优惠券
+     * @param bc
+     * @throws BusinessException
+     */
     public void deleteCoupons(BeanCoupon bc) throws BusinessException {
         Connection conn = null;
 
@@ -117,7 +127,10 @@ public class CouponManage {
         }
     }
 
-
+    /**
+     * 这个函数用来加载所有的优惠券
+     * @return
+     */
     public List<BeanCoupon> loadCoupons() {
         List<BeanCoupon> res = new ArrayList<BeanCoupon>();
         Connection conn = null;
@@ -157,6 +170,12 @@ public class CouponManage {
         return res;
     }
 
+    /**
+     * 这个函数用来使用优惠券，并更新对应的数据库中的订单表
+     * @param bc
+     * @param o_id
+     * @throws BusinessException
+     */
     public void useCoupon(BeanCoupon bc, int o_id) throws BusinessException {
         Connection conn = null;
         if (bc.getCouponStartDate().getTime() > System.currentTimeMillis()) {

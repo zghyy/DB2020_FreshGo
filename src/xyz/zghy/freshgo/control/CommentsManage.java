@@ -16,6 +16,12 @@ import java.util.List;
  * @date 2020/7/9 下午8:09
  */
 public class CommentsManage {
+    /**
+     * 这个函数用来添加评论
+     * @param insertCommentMsg
+     * @param insertStar
+     * @param bo
+     */
     public void addComments(String insertCommentMsg, int insertStar, BeanOrder bo) {
         if(insertStar>5){
             insertStar=5;
@@ -91,6 +97,11 @@ public class CommentsManage {
 
     }
 
+    /**
+     * 这个函数用来根据商品Id加载评论
+     * @param goodId
+     * @return
+     */
     public List<BeanComments> loadComments(int goodId) {
         Connection conn = null;
         List<BeanComments> res = new ArrayList<BeanComments>();

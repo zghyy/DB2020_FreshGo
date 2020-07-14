@@ -19,6 +19,11 @@ import java.util.List;
  * @date 2020/7/6 上午11:07
  */
 public class GoodsManage {
+    /**
+     * 这个函数用来添加商品
+     * @param bgm
+     * @throws BusinessException
+     */
     public void addGoods(BeanGoodsMsg bgm) throws BusinessException {
         Connection conn = null;
         try {
@@ -78,6 +83,11 @@ public class GoodsManage {
 
     }
 
+    /**
+     * 这个函数用来删除商品
+     * @param deleteGM
+     * @throws BusinessException
+     */
     public void deleteGoods(BeanGoodsMsg deleteGM) throws BusinessException {
         Connection conn = null;
         try {
@@ -147,7 +157,11 @@ public class GoodsManage {
         }
     }
 
-
+    /**
+     * 这个函数用来加载所有的商品
+     * @return
+     * @throws BaseException
+     */
     public List<BeanGoodsMsg> loadGoods() throws BaseException {
         List<BeanGoodsMsg> res = new ArrayList<BeanGoodsMsg>();
         Connection conn = null;
@@ -185,6 +199,11 @@ public class GoodsManage {
         return res;
     }
 
+    /**
+     * 这个函数用于根据生鲜类型加载对应类型的所有商品
+     * @param bft
+     * @return
+     */
     public List<BeanGoodsMsg> loadGoodsByFresh(BeanFreshType bft) {
         List<BeanGoodsMsg> res = new ArrayList<BeanGoodsMsg>();
         Connection conn = null;

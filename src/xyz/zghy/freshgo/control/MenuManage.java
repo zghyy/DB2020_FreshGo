@@ -16,6 +16,12 @@ import java.util.List;
  * @date 2020/7/13 下午11:14
  */
 public class MenuManage {
+    /**
+     * 这个函数用来创建菜谱
+     * @param bmm
+     * @return
+     * @throws BusinessException
+     */
     public int createMenu(BeanMenuMsg bmm) throws BusinessException {
         int retId = 0;
         Connection conn = null;
@@ -75,7 +81,10 @@ public class MenuManage {
         return retId;
     }
 
-
+    /**
+     * 这个函数用来加载菜谱信息
+     * @return
+     */
     public List<BeanMenuMsg> loadMenuMsg() {
         Connection conn = null;
         List<BeanMenuMsg> res = new ArrayList<BeanMenuMsg>();

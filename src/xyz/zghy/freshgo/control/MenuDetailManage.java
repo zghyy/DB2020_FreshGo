@@ -17,6 +17,10 @@ import java.util.List;
  * @date 2020/7/13 下午11:22
  */
 public class MenuDetailManage {
+    /**
+     * 这个函数用来添加菜谱详细信息(菜谱使用的商品种类)
+     * @param menuId
+     */
     public void addMenuDetail(int menuId) {
         Connection conn = null;
 
@@ -50,6 +54,11 @@ public class MenuDetailManage {
 
     }
 
+    /**
+     * 这个函数用来加载所有的菜谱信息
+     * @param bmm
+     * @return
+     */
     public List<BeanMenuDetail> loadMenuDetail(BeanMenuMsg bmm) {
         Connection conn = null;
         List<BeanMenuDetail> res = new ArrayList<BeanMenuDetail>();

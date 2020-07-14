@@ -15,6 +15,13 @@ import java.sql.SQLException;
  * @date 2020/7/4 上午10:03
  */
 public class AdminManage {
+    /**
+     * 这个函数用于管理员账户的登录
+     * @param adminName
+     * @param adminPwd
+     * @return
+     * @throws BaseException
+     */
     public BeanAdmin login(String adminName, String adminPwd) throws BaseException {
         if (adminName.length() <= 0 || adminName.length() >= 20) {
             throw new BusinessException("用户名应该在1——20个字符之间！");

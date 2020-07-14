@@ -46,8 +46,8 @@ public class FrmLogin extends JDialog implements ActionListener {
         glMain.setAutoCreateGaps(true);
         glMain.setAutoCreateContainerGaps(true);
 
-        this.edtUserName.setText("1");
-        this.edtPwd.setText("1");
+//        this.edtUserName.setText("1");
+//        this.edtPwd.setText("1");
 
         ButtonGroup rbtgroup = new ButtonGroup();
         rbtgroup.add(jr1);

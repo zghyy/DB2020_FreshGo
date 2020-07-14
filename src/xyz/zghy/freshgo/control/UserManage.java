@@ -15,6 +15,18 @@ import java.text.ParseException;
  * @date 2020/7/4 上午9:55
  */
 public class UserManage {
+    /**
+     * 这个函数用来注册用户
+     * @param userName
+     * @param userPwd
+     * @param userPwd2
+     * @param userSex
+     * @param userPhone
+     * @param userCity
+     * @param userEmail
+     * @return
+     * @throws BusinessException
+     */
     public BeanUsers register(String userName, String userPwd, String userPwd2
             , String userSex, int userPhone, String userCity, String userEmail) throws BusinessException {
         if (userName.length() <= 0 || userName.length() >= 20) {
@@ -88,6 +100,13 @@ public class UserManage {
         return null;
     }
 
+    /**
+     * 这个函数用来用户登录
+     * @param userName
+     * @param userPwd
+     * @return
+     * @throws BusinessException
+     */
     public BeanUsers login(String userName, String userPwd) throws BusinessException {
         if (userName.length() <= 0 || userName.length() >= 20) {
             throw new BusinessException("用户名应该在1——20个字符之间！");
@@ -144,6 +163,10 @@ public class UserManage {
         return null;
     }
 
+    /**
+     * 这个函数用来注册Vip，用户注册后可以享受Vip价格
+     * @throws BusinessException
+     */
     public void regVip() throws BusinessException {
         if ("y".equals(SystemUtil.currentUser.getUserIsVip())) {
             throw new BusinessException("无法重复注册");

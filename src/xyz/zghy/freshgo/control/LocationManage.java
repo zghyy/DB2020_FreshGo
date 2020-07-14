@@ -17,6 +17,11 @@ import java.util.List;
  * @date 2020/7/7 上午8:17
  */
 public class LocationManage {
+    /**
+     * 这个函数用来添加地址信息
+     * @param bl
+     * @throws BusinessException
+     */
     public void addLocation(BeanLocation bl) throws BusinessException {
         Connection conn = null;
 
@@ -68,6 +73,11 @@ public class LocationManage {
         }
     }
 
+    /**
+     * 这个函数用来删除地址信息
+     * @param deleteLocation
+     * @throws BusinessException
+     */
     public void deleteLocation(BeanLocation deleteLocation) throws BusinessException {
         Connection conn = null;
 
@@ -136,7 +146,10 @@ public class LocationManage {
         }
     }
 
-
+    /**
+     * 这个函数用来加载当前登录用户的所有地址
+     * @return
+     */
     public List<BeanLocation> loadLocation() {
         Connection conn = null;
         List<BeanLocation> res = new ArrayList<BeanLocation>();
