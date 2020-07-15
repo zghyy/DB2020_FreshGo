@@ -19,10 +19,7 @@ import java.util.List;
  */
 public class OrderDetailsManage {
     /**
-     * 这个函数用来没有使用优惠之前的原始价格总和//            // TODO 后面订单部分使用了地址而无法删除
-//            String sql = "";
-//            PreparedStatement pst = null;
-//            ResultSet rs = null;
+     * 这个函数用来没有使用优惠之前的原始价格总和
      * @return
      * @throws BusinessException
      */

@@ -99,7 +99,7 @@ public class FrmFullDiscountTypeAdd extends JDialog implements ActionListener {
             try {
                 bfdm.setFullDiscountData(Double.parseDouble(this.edtData.getText()));
                 bfdm.setFullDiscountStartDate(SystemUtil.SDF.parse(this.edtStartDate.getText()));
-                bfdm.setFullDiscountEndDate(SystemUtil.SDF.parse(this.edtStartDate.getText()));
+                bfdm.setFullDiscountEndDate(SystemUtil.SDF.parse(this.edtEndDate.getText()));
             } catch (ParseException parseException) {
                 JOptionPane.showMessageDialog(null, "请按照yyyy-MM-dd HH:mm:ss的格式填写日期", "错误", JOptionPane.ERROR_MESSAGE);
             }
